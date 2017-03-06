@@ -1,0 +1,9 @@
+#<IfModule mod_rewrite.c >
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ ./index.php [PT,L]
+#</IfModule>
+
+  RemoveHandler .html .htm
+  AddType application/x-httpd-php .php .htm .html
