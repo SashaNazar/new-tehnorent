@@ -20,3 +20,9 @@ function __autoload($class_name)
         throw new Exception('Failed to include class: ' . $class_name);
     }
 }
+
+//глобальная функция для перевода
+function __($key, $default_value = '')
+{
+    return Lang::get($key, $default_value);
+}
