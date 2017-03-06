@@ -25,4 +25,9 @@ Config::set('default_controller', 'pages');
 Config::set('default_action', 'index');
 
 
+//Конфиги для подключения к базе данных
+Config::set('db.host', 'localhost');
+Config::set('db.user', 'admin');
+Config::set('db.password', 'admin');
+Config::set('db.db_name', 'new_tehnorent');
 

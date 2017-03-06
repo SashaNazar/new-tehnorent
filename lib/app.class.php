@@ -6,6 +6,9 @@ class App
     //для работы с объектом Роутера
     protected static $router;
 
+    //объект для работы с БД
+    public static $db;
+
     /**
      * @return mixed
      */
@@ -19,6 +22,9 @@ class App
     public static function run($uri)
     {
         self::$router = new Router($uri);
+
+        //Создаем подключение с базой данных
+        self::$db = new DB(Config::get('db.host'), Config::get('db.user'), Config::get('db.password'), Config::get('db.db_name'));
 
         //загружаем языковые настройки
         Lang::load(self::$router->getLanguage());
