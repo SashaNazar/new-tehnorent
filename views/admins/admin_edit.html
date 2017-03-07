@@ -1,0 +1,74 @@
+<h3 class="text-center">Edit Administrator <?= $data['admin']['admins_name']?></h3><br>
+
+<form class="form-horizontal" method="post" action="">
+    <input type="hidden" name="id" value="<?= $data['admin']['admins_id'] ?>">
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label">ID</label>
+        <div class="col-sm-10">
+            <p><?= $data['admin']['admins_id'] ?></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="login" class="col-sm-2 control-label">Login</label>
+        <div class="col-sm-10">
+            <input type="text" name="login" class="form-control" id="login" placeholder="Login" value="<?= $data['admin']['admins_login'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="<?= $data['admin']['admins_name'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="mobile_phone" class="col-sm-2 control-label">Mobile Phone</label>
+        <div class="col-sm-10">
+            <input type="text" name="mobile_phone" class="form-control" id="mobile_phone" placeholder="Mobile Phone" value="<?= $data['admin']['admins_mobile_phone'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="short_phone" class="col-sm-2 control-label">Short Phone</label>
+        <div class="col-sm-10">
+            <input type="text" name="short_phone" class="form-control" id="short_phone" placeholder="Short Phone" value="<?= $data['admin']['admins_short_phone'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="pass" class="col-sm-2 control-label">Pass</label>
+        <div class="col-sm-10">
+            <input type="text" name="pass" class="form-control" id="pass" placeholder="Пароль"  value="<?= $data['admin']['admins_pass'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="access" class="col-sm-2 control-label">Доступ</label>
+        <div class="col-sm-10">
+            <input type="text" name="access" class="form-control" id="access" placeholder="Доступ" value="<?= $data['admin']['admins_accessgroup'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="active" class="col-sm-2 control-label">Активен</label>
+        <div class="col-sm-10">
+            <input type="checkbox" name="active" id="active" <?php if ($data['admin']['admins_active'] == 'yes') { ?> checked="checked" <?php } ?>>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="manager" class="col-sm-2 control-label">Менеджер</label>
+        <div class="col-sm-10">
+            <input type="checkbox" name="manager" id="manager" <?php if ($data['admin']['admins_manager'] == 'yes') { ?> checked="checked" <?php } ?>>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success">Сохранить</button>
+            <button type="reset" class="btn btn-success">Сбросить</button>
+        </div>
+    </div>
+</form>

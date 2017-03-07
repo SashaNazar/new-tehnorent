@@ -1,0 +1,33 @@
+<h3 style="text-align: center;">Список администраторов</h3>
+<br>
+<table class="table table-striped table-bordered">
+    <tr>
+        <td><b>ID</b></td>
+        <td><b>Name</b></td>
+        <td><b>Active</b></td>
+        <td width="150px;"><b>Actions</b></td>
+    </tr>
+    <?php foreach($data['admins'] as $admin) { ?>
+        <tr>
+            <td><?= $admin['admins_id'] ?></td>
+            <td><?= $admin['admins_name'] ?></td>
+            <td><?= $admin['admins_active'] ?></td>
+            <td align="right">
+                <?php if($admin['admins_active'] == 'yes') {?>
+                    <a href="/admin/admins/unactive/<?= $admin['admins_id'] ?>"><button class="btn btn-sm btn-danger">Unactive</button></a>
+                <?php } ?>
+                <?php if($admin['admins_active'] == 'no') {?>
+                    <a href="/admin/admins/active/<?= $admin['admins_id'] ?>"><button class="btn btn-sm btn-success">Active</button></a>
+                <?php } ?>
+
+                <a href="/admin/admins/edit/<?= $admin['admins_id'] ?>"><button class="btn btn-sm btn-primary">Edit</button></a>
+            </td>
+        </tr>
+    <?php } ?>
+</table>
+
+<br>
+
+<div>
+    <a href="/admin/admins/add/"><button class="btn btn-sm btn-success">Add New Administrator</button></a>
+</div>
