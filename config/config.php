@@ -24,6 +24,9 @@ Config::set('default_controller', 'pages');
 //дефолтный action
 Config::set('default_action', 'index');
 
+//"соль" (будет использоваться при генерации хеша паролей)
+Config::set('salt', 'test1234567890test');
+
 
 //Конфиги для подключения к базе данных
 Config::set('db.host', 'localhost');

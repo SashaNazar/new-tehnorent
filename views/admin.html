@@ -24,11 +24,14 @@
             <a class="navbar-brand" href="/"><?= Config::get('site_name') ?> - <?= __('lng.admin', 'Admin Section'); ?></a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
+            <?php if (Session::get('login')) { ?>
             <ul class="nav navbar-nav">
                 <li <?php if (App::getRouter()->getController() == 'pages') {?> class='active'<?php } ?>><a href="/admin/pages/">Pages</a></li>
                 <li <?php if (App::getRouter()->getController() == 'contacts') {?> class='active'<?php } ?>><a href="/admin/contacts/">Contacts</a></li>
-                <li <?php if (App::getRouter()->getController() == 'administrators') {?> class='active'<?php } ?>><a href="/admin/administrators/">Администраторы</a></li>
+                <li <?php if (App::getRouter()->getController() == 'admins') {?> class='active'<?php } ?>><a href="/admin/admins/">Администраторы</a></li>
+                <li><a href="/admin/admins/logout">Разлогиниться</a></li>
             </ul>
+            <?php } ?>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
