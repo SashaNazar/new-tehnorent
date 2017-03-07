@@ -2,10 +2,16 @@
 
 class Message extends Model
 {
+    //метод для получение всех сообщений
+    public function getList()
+    {
+        $sql = 'SELECT * FROM messages WHERE 1';
+               return $this->db->query($sql);
+    }
     //метод для записи или обновления данных
     public function save($data, $id = null)
     {
-        if (!isset($data['name']) || !isset($data['email']) || !isset($data['message'])) {
+        if (empty($data['name']) || empty($data['email']) || empty($data['message'])) {
             return false;
         }
 
