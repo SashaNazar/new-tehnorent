@@ -1,30 +1,77 @@
-<h3>Categories Admin</h3>
-<table class="table table-striped table-bordered">
-    <tr>
-        <td><b>ID</b></td>
-        <td><b>P_id</b></td>
-        <td><b>Name</b></td>
-        <td><b>Ua_Name</b></td>
-        <td><b>Seo</b></td>
-        <td><b>Ua_Seo</b></td>
-        <td><b>Active</b></td>
-        <td align="right"><b>Actions</b></td>
-    </tr>
-    <?php foreach($data['pages'] as $page) { ?>
-    <tr>
-        <td><?= $page['id'] ?></td>
-        <td><?= $page['p_id'] ?></td>
-        <td><?= $page['name'] ?></td>
-        <td><?= $page['ua_name'] ?></td>
-        <td><?= $page['seo'] ?></td>
-        <td><?= $page['ua_seo'] ?></td>
-        <td><?= $page['active'] ?></td>
-        <td align="right">
-            <a href="/admin/category/edit/<?= $page['id'] ?>"><button class="btn btn-sm btn-primary">Edit</button></a>
-        </td>
-    </tr>
-    <?php } ?>
-</table>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <h3>Админка категорий</h3>
+        <ul>
+            <?php foreach($data['subcategories'] as $cat) { ?>
+                <li>
+                   <!-- --><?/*= $cat['name'] */?>
+                    <a style="font-size: 16px;" class="text-primary" href="/admin/category/index/<?= $cat['id'] ?>"><?= $cat['name']?></a> |
+                        <?php if($cat['active'] == 'yes') { ?>
+                            <a class="text-danger" href="/admin/category/unactive/<?= $cat['id'] ?>">Деактивировать</a>
+                        <?php } else {?>
+                            <a class="text-success" href="/admin/category/active/<?= $cat['id'] ?>">Активировать</a>
+                        <?php } ?>
+                    <ul>
+                        <?php foreach($data['pages'] as $page) { ?>
+                            <?php if ($page['p_id'] == $cat['id']) {?>
+<!--                                <li>--><?//= $page['name']?><!--</li>-->
+                                <li><a class="text-info" href="/admin/category/index/<?= $page['id'] ?>"><?= $page['name']?></a> |
+                                    <?php if($page['active'] == 'yes') { ?>
+                                    <a class="text-danger" href="/admin/category/unactive/<?= $page['id'] ?>">Деактивировать</a>
+                                    <?php } else {?>
+                                    <a class="text-success" href="/admin/category/active/<?= $page['id'] ?>">Активировать</a>
+                                    <?php } ?>
+                                </li>
+                            <?php } ?>
+                        <?php } ?>
+                    </ul>
+                </li>
+            <?php } ?>
+        </ul>
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <h4>Редактировать категорию: <?= $data['currentCategory']['name']?></h4><br>
+        <form method="post" action="">
+            <input type="hidden" name="id" value="<?= $data['currentCategory']['id'] ?>">
+            <div class="form-group">
+                <label for="name">Name Ru</label>
+                <input type="text" id="name" name="name" value="<?= $data['currentCategory']['name']?>" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_name">Name Ua</label>
+                <input type="text" id="ua_name" name="ua_name" value="<?= $data['currentCategory']['ua_name']?>" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="p_id">Parent Category</label>
+                <select class="form-control" name="p_id" id="p_id">
+                    <option value="1" <?php if ($data['currentCategory']['p_id'] == $category['id']) { ?> selected="selected" <?php } ?> >Кореневая категория</option>
+                    <?php foreach ($data['categories'] as $category) {?>
+                        <option value="<?= $category['id'] ?>" <?php if ($data['currentCategory']['p_id'] == $category['id']) { ?> selected="selected" <?php } ?> ><?= $category['name'] ?></option>
+                    <?php }?>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label for="seo">SEO RU</label>
+                <input type="text" id="seo" name="seo" value="<?= ($data['currentCategory']['seo']);?>" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_seo">SEO UA</label>
+                <input type="text" id="ua_seo" name="ua_seo" value="<?= $data['currentCategory']['ua_seo']?>" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="active">Active?</label>
+                <input type="checkbox" id="active" name="active" <?php if ($data['currentCategory']['active'] == 'yes') { ?> checked="checked" <?php } ?>>
+            </div>
+            <input type="submit" class="btn btn-success">
+        </form>
+    </div>
+</div>
 
 <br>
 

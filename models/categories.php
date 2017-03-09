@@ -8,6 +8,18 @@ class Categories extends Model
         return $this->db->query($sql);
     }
 
+    public function getCategoryForMenu()
+    {
+        $sql = "SELECT id, name, p_id FROM category where active='yes' order by name";
+        $result = $this->db->query($sql);
+
+        $arr_cat = array();
+        foreach ($result as $item) {
+            $arr_cat[$item['id']] = $item;
+        }
+        return $arr_cat;
+    }
+
     public function getById($id)
     {
         $id = (int)$id;
@@ -25,10 +37,9 @@ class Categories extends Model
 
     public function save($data, $id = null)
     {
-        // var_dump($data);die;
-//        if (empty($data['alias']) || empty($data['title']) || empty($data['content'])) {
-//            return false;
-//        }
+        if (empty($data['name'])) {
+            return false;
+        }
 
         $id = (int)$id;
         $p_id = (int)$data['p_id'];
@@ -59,4 +70,17 @@ class Categories extends Model
         return $this->db->query($sql);
     }
 
+    public function setUnactive($id)
+    {
+        $id = (int)$id;
+        $sql = "UPDATE category SET active = 'no' WHERE id = {$id}";
+        return $this->db->query($sql);
+    }
+
+    public function setActive($id)
+    {
+        $id = (int)$id;
+        $sql = "UPDATE category SET active = 'yes' WHERE id = {$id}";
+        return $this->db->query($sql);
+    }
 }
