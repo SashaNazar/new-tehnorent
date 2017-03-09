@@ -5,7 +5,7 @@
         <td><b>ID</b></td>
         <td><b>Name</b></td>
         <td><b>Active</b></td>
-        <td width="150px;"><b>Actions</b></td>
+        <td width="180px;"><b>Actions</b></td>
     </tr>
     <?php foreach($data['admins'] as $admin) { ?>
         <tr>
@@ -14,13 +14,14 @@
             <td><?= $admin['admins_active'] ?></td>
             <td align="right">
                 <?php if($admin['admins_active'] == 'yes') {?>
-                    <a href="/admin/admins/unactive/<?= $admin['admins_id'] ?>"><button class="btn btn-sm btn-danger">Unactive</button></a>
+                    <a href="/admin/admins/unactive/<?= $admin['admins_id'] ?>"><button class="btn btn-xs btn-warning">Unactive</button></a>
                 <?php } ?>
                 <?php if($admin['admins_active'] == 'no') {?>
-                    <a href="/admin/admins/active/<?= $admin['admins_id'] ?>"><button class="btn btn-sm btn-success">Active</button></a>
+                    <a href="/admin/admins/active/<?= $admin['admins_id'] ?>"><button class="btn btn-xs btn-success">Active</button></a>
                 <?php } ?>
 
-                <a href="/admin/admins/edit/<?= $admin['admins_id'] ?>"><button class="btn btn-sm btn-primary">Edit</button></a>
+                <a href="/admin/admins/edit/<?= $admin['admins_id'] ?>"><button class="btn btn-xs btn-primary">Edit</button></a>
+                <a href="/admin/admins/delete/<?= $admin['admins_id'] ?>"><button class="btn btn-xs btn-danger">Удалить</button></a>
             </td>
         </tr>
     <?php } ?>
@@ -29,5 +30,5 @@
 <br>
 
 <div>
-    <a href="/admin/admins/add/"><button class="btn btn-sm btn-success">Add New Administrator</button></a>
+    <a class="text-center" href="/admin/admins/add/"><button class="btn btn-sm btn-success">Добавить нового администратора</button></a>
 </div>
