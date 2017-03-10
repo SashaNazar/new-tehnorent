@@ -64,12 +64,12 @@ class App
 //        echo  $layout_view_object->render();
 
         if (!empty(Session::get('role'))) {
-            self::$template->addVar('admin_user', Session::get('role'));
+            self::$template->addVar('ADMIN_USER', Session::get('role'));
         }
         if (Session::hasFlash()) {
-            self::$template->addVar('message', Session::flash());
+            self::$template->addVar('MESSSAGE', Session::flash());
         }
-        self::$template->addVar('site_name', Config::get('site_name'));
+        self::$template->addVar('SITE_NAME', Config::get('site_name'));
         self::$template->parseFile('new_admin.html');
 
     }

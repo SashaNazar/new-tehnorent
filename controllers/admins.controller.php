@@ -17,7 +17,7 @@ class AdminsController extends Controller
     {
         $result = $this->model->getList();
         foreach ($result as $item) {
-            $this->template->addBlock('admins', array(
+            $this->template->addBlock('ADMINS', array(
                 'admins_id'			=>   $item['admins_id'] ,
                 'admins_name'			=>   $item['admins_name'],
                 'admins_active'			=>   $item['admins_active'] == 'yes' ? 'yes' : ''

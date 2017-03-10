@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{site_name}</title>
+    <title>{SITE_NAME}</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -34,10 +34,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">{site_name} - Admin Section</a>
+            <a class="navbar-brand" href="/">{SITE_NAME} - Admin Section</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-            <!-- TPL_IF admin_user -->
+            <!-- TPL_IF ADMIN_USER -->
 
             <ul class="nav navbar-nav">
                 <li><a href="/admin/pages/">Pages</a></li>
@@ -54,10 +54,10 @@
 <div class="container">
 
     <div class="starter-template">
-        <!-- TPL_IF message -->
+        <!-- TPL_IF MESSSAGE -->
             <div class="alert alert-info" role="alert">
                 <a href="#" class="close" data-dismiss="alert">&times;</a>
-                {message}
+                {MESSSAGE}
             </div>
         <!-- TPL_END -->
         {OUTPUTMAIN}

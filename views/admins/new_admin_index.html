@@ -8,16 +8,16 @@
         <td width="180px;"><b>Actions</b></td>
     </tr>
 
-    <!-- TPL_IF admins -->
+    <!-- TPL_IF ADMINS -->
 
-    <!-- TPL_BEGIN admins -->
+    <!-- TPL_BEGIN ADMINS -->
 
     <tr>
-        <td>{admins.admins_id}</td>
-        <td>{admins.admins_name}</td>
-        <td>{admins.admins_active}</td>
+        <td>{ADMINS.admins_id}</td>
+        <td>{ADMINS.admins_name}</td>
+        <td>{ADMINS.admins_active}</td>
         <td align="right">
-            <!-- TPL_IF admins.admins_active -->
+            <!-- TPL_IF ADMINS.admins_active -->
                 <a href="/admin/admins/unactive/{admins.admins_id}"><button class="btn btn-xs btn-warning">Unactive</button></a>
             <!-- TPL_ELSE -->
                 <a href="/admin/admins/active/{admins.admins_id}"><button class="btn btn-xs btn-success">Active</button></a>
@@ -27,7 +27,7 @@
         </td>
     </tr>
 
-    <!-- TPL_END admins -->
+    <!-- TPL_END ADMINS -->
 
     <!-- TPL_END -->
 
