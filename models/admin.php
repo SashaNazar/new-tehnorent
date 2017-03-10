@@ -83,4 +83,11 @@ class Admin extends Model
 
         return $this->db->query($sql);
     }
+
+    public function delete($id)
+    {
+        $id = (int)$id;
+        $sql = "DELETE FROM admins WHERE admins_id = {$id}";
+        return $this->db->query($sql);
+    }
 }

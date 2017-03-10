@@ -17,28 +17,6 @@ class CategoryController extends Controller
         }
     }
 
-//    public function admin_edit()
-//    {
-//        if ($_POST) {
-//            $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
-//            $result = $this->model->save($_POST, $id);
-//            if ($result) {
-//                Session::setFlash('Page was saved');
-//            } else {
-//                Session::setFlash("Page does not saved");
-//            }
-//            Router::redirect('/admin/category/');
-//        }
-//
-//        if (isset($this->params[0])) {
-//            $this->data['page'] = $this->model->getById($this->params[0]);
-//            $this->data['categories'] = $this->model->getAllCategories();
-//        } else {
-//            Session::setFlash("Wrong page id!");
-//            Router::redirect('/admin/category/');
-//        }
-//    }
-
     public function admin_index()
     {
         if ($_POST) {

@@ -1,0 +1,41 @@
+<h3 style="text-align: center;">Список администраторов</h3>
+<br>
+<table class="table table-striped table-bordered">
+    <tr>
+        <td><b>ID</b></td>
+        <td><b>Name</b></td>
+        <td><b>Active</b></td>
+        <td width="180px;"><b>Actions</b></td>
+    </tr>
+
+    <!-- TPL_IF admins -->
+
+    <!-- TPL_BEGIN admins -->
+
+    <tr>
+        <td>{admins.admins_id}</td>
+        <td>{admins.admins_name}</td>
+        <td>{admins.admins_active}</td>
+        <td align="right">
+            <!-- TPL_IF admins.admins_active -->
+                <a href="/admin/admins/unactive/{admins.admins_id}"><button class="btn btn-xs btn-warning">Unactive</button></a>
+            <!-- TPL_ELSE -->
+                <a href="/admin/admins/active/{admins.admins_id}"><button class="btn btn-xs btn-success">Active</button></a>
+            <!-- TPL_END -->
+            <a href="/admin/admins/edit/{admins.admins_id}"><button class="btn btn-xs btn-primary">Edit</button></a>
+            <a href="/admin/admins/delete/{admins.admins_id}" onclick="return confirmDelete();" class="btn btn-xs btn-danger">Delete</a>
+        </td>
+    </tr>
+
+    <!-- TPL_END admins -->
+
+    <!-- TPL_END -->
+
+
+</table>
+
+<br>
+
+<div>
+    <a class="text-center" href="/admin/admins/add/"><button class="btn btn-sm btn-success">Добавить нового администратора</button></a>
+</div>

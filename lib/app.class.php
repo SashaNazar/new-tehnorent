@@ -9,6 +9,9 @@ class App
     //объект для работы с БД
     public static $db;
 
+    //объект для работы с шаблонизатором
+    public static $template;
+
     /**
      * @return mixed
      */
@@ -25,6 +28,9 @@ class App
 
         //Создаем подключение с базой данных
         self::$db = new DB(Config::get('db.host'), Config::get('db.user'), Config::get('db.password'), Config::get('db.db_name'));
+
+        //загружаем Шаблонизатор
+        self::$template = new Template(VIEWS_PATH);
 
         //загружаем языковые настройки
         Lang::load(self::$router->getLanguage());
@@ -47,14 +53,24 @@ class App
         if (method_exists($controller_object, $controller_method)) {
             //controllers action may return a view path
             $view_path = $controller_object->$controller_method();
-            $view_object = new View($controller_object->getData(), $view_path);
-            $content = $view_object->render();
+//            $view_object = new View($controller_object->getData(), $view_path);
+//            $content = $view_object->render();
         } else {
             throw new Exception('Method '.$controller_method.' of class '.$controller_class.' does not exist.');
         }
 
-        $layout_path = VIEWS_PATH.DS.$layout.'.html';
-        $layout_view_object = new View(compact('content'), $layout_path);
-        echo  $layout_view_object->render();
+//        $layout_path = VIEWS_PATH.DS.$layout.'.html';
+//        $layout_view_object = new View(compact('content'), $layout_path);
+//        echo  $layout_view_object->render();
+
+        if (!empty(Session::get('role'))) {
+            self::$template->addVar('admin_user', Session::get('role'));
+        }
+        if (Session::hasFlash()) {
+            self::$template->addVar('message', Session::flash());
+        }
+        self::$template->addVar('site_name', Config::get('site_name'));
+        self::$template->parseFile('new_admin.html');
+
     }
 }

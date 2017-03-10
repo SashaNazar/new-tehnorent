@@ -1,39 +1,39 @@
 <?php
 
 /**
- * Класс шаблонного движка
+ * РљР»Р°СЃСЃ С€Р°Р±Р»РѕРЅРЅРѕРіРѕ РґРІРёР¶РєР°
  *
  */
 
 class Template {
     /**
-     * Массив переменных
+     * РњР°СЃСЃРёРІ РїРµСЂРµРјРµРЅРЅС‹С…
      *
      * @var array
      */
     var $vars = array();
 
     /**
-     * Каталог с файлами шаблонов
+     * РљР°С‚Р°Р»РѕРі СЃ С„Р°Р№Р»Р°РјРё С€Р°Р±Р»РѕРЅРѕРІ
      *
      * @var string
      */
     var $template_dir = '';
 
     /**
-     * Консутруктор
+     * РљРѕРЅСЃСѓС‚СЂСѓРєС‚РѕСЂ
      *
      * @return Template
      */
 
     /*
-     *  Язык преобразования шаблона  
-     *  По умолчанию русский
+     *  РЇР·С‹Рє РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ С€Р°Р±Р»РѕРЅР°  
+     *  РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ СЂСѓСЃСЃРєРёР№
      */
     private $lang;
     private $langDefault =  'ru';
     /*
-     *  поддерживаемые языки
+     *  РїРѕРґРґРµСЂР¶РёРІР°РµРјС‹Рµ СЏР·С‹РєРё
      */
     private $langSteach = 'ru|ua|en';
 
@@ -41,14 +41,14 @@ class Template {
         $this->setTemplateDir($template_dir);
     }
     /*
-     *  Сетер языка преобразования
+     *  РЎРµС‚РµСЂ СЏР·С‹РєР° РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ
      */
     function setLang ($lang) {
         $this->lang = $lang;
     }
 
     /**
-     * Установка базового каталога шаблонов
+     * РЈСЃС‚Р°РЅРѕРІРєР° Р±Р°Р·РѕРІРѕРіРѕ РєР°С‚Р°Р»РѕРіР° С€Р°Р±Р»РѕРЅРѕРІ
      *
      * @param string $template_dir
      */
@@ -63,20 +63,20 @@ class Template {
         $this->template_dir = $template_dir;
     }
     /*
-     *  Получить все данные
+     *  РџРѕР»СѓС‡РёС‚СЊ РІСЃРµ РґР°РЅРЅС‹Рµ
      */
     public function getVars () {
         return $this->vars;
     }
     /*
-     *  Добавление контента из другого обекта темплейтов
+     *  Р”РѕР±Р°РІР»РµРЅРёРµ РєРѕРЅС‚РµРЅС‚Р° РёР· РґСЂСѓРіРѕРіРѕ РѕР±РµРєС‚Р° С‚РµРјРїР»РµР№С‚РѕРІ
      */
     public function insetVars ($vars) {
         $this->vars = array_merge ($this->vars, $vars);
     }
 
     /**
-     * Регистрация переменных
+     * Р РµРіРёСЃС‚СЂР°С†РёСЏ РїРµСЂРµРјРµРЅРЅС‹С…
      *
      * @param array $vararray
      */
@@ -91,13 +91,13 @@ class Template {
         $this->vars[$key] = $val;
     }
 
-    // Количесво записей
+    // РљРѕР»РёС‡РµСЃРІРѕ Р·Р°РїРёСЃРµР№
     function getVarsCount ($key) {
         return is_array($this->vars[$key]) ? count($this->vars[$key]) : 0;
     }
 
     /**
-     * Регистрация блока переменных
+     * Р РµРіРёСЃС‚СЂР°С†РёСЏ Р±Р»РѕРєР° РїРµСЂРµРјРµРЅРЅС‹С…
      *
      * @param string $blockname
      * @param array $vararray
@@ -105,7 +105,7 @@ class Template {
     function addBlock($blockname, $vararray)
     {
         /*******************************************************
-         * проверка на вложенность блока
+         * РїСЂРѕРІРµСЂРєР° РЅР° РІР»РѕР¶РµРЅРЅРѕСЃС‚СЊ Р±Р»РѕРєР°
          *******************************************************/
         if (strstr($blockname, '.')) {
             $blocks = explode('.', $blockname);
@@ -128,7 +128,7 @@ class Template {
     }
 
     /**
-     * Генерация блока
+     * Р“РµРЅРµСЂР°С†РёСЏ Р±Р»РѕРєР°
      *
      * @param string $blockname
      * @param string $include_varname
@@ -153,7 +153,7 @@ class Template {
         return $varref;
     }
     /*
-     *  Статический Доступ к парсеру мультиязычных вставок
+     *  РЎС‚Р°С‚РёС‡РµСЃРєРёР№ Р”РѕСЃС‚СѓРї Рє РїР°СЂСЃРµСЂСѓ РјСѓР»СЊС‚РёСЏР·С‹С‡РЅС‹С… РІСЃС‚Р°РІРѕРє
      */
     static public function multilang ($code, $lang = null) {
         if ($lang === null) $lang = Lang::getSiteLang ();
@@ -162,10 +162,10 @@ class Template {
         return $obj->langParse($code);
     }
     /*
-     *  Парсинг мульти язычных вставок
+     *  РџР°СЂСЃРёРЅРі РјСѓР»СЊС‚Рё СЏР·С‹С‡РЅС‹С… РІСЃС‚Р°РІРѕРє
      */
     public function langParse ($code) {
-        $r = preg_match_all('/\{(\s*)(\"('.$this->langSteach.')\"\:\"(.[^\}]*)\")+(\s*)\}/s', $code, $found); // \s - не учитывать переводы строк
+        $r = preg_match_all('/\{(\s*)(\"('.$this->langSteach.')\"\:\"(.[^\}]*)\")+(\s*)\}/s', $code, $found); // \s - РЅРµ СѓС‡РёС‚С‹РІР°С‚СЊ РїРµСЂРµРІРѕРґС‹ СЃС‚СЂРѕРє
         if ($r) {
             $n = count ($found[0]);
             for ($i=0;$i<$n;$i++) {
@@ -174,10 +174,10 @@ class Template {
                 $ins = str_replace(array("\n","\r","\r\n"), "", $ins);
                 $arr = json_decode ($ins, true);
                 if (!array_key_exists ($this->lang, $arr)) {
-                    $insert = $arr[$this->langDefault]; // Если язык не найден - то выводить русский
+                    $insert = $arr[$this->langDefault]; // Р•СЃР»Рё СЏР·С‹Рє РЅРµ РЅР°Р№РґРµРЅ - С‚Рѕ РІС‹РІРѕРґРёС‚СЊ СЂСѓСЃСЃРєРёР№
                 }
                 else {
-                    $insert =  $arr[$this->lang]; // Вставка в зависимости от языка
+                    $insert =  $arr[$this->lang]; // Р’СЃС‚Р°РІРєР° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЏР·С‹РєР°
                 }
                 $code = str_replace ($found[0][$i], iconv('utf-8', 'cp1251', $insert), $code);
             }
@@ -186,13 +186,13 @@ class Template {
     }
 
     /**
-     * Парсинг строки
+     * РџР°СЂСЃРёРЅРі СЃС‚СЂРѕРєРё
      *
      * @param string $code
      */
     function parse($code) {
         /*
-         *  Парсим мультиязычные вставки
+         *  РџР°СЂСЃРёРј РјСѓР»СЊС‚РёСЏР·С‹С‡РЅС‹Рµ РІСЃС‚Р°РІРєРё
          */
         $code = $this->langParse($code);
 
@@ -282,7 +282,7 @@ class Template {
     }
 
     /**
-     * Парсинг файла
+     * РџР°СЂСЃРёРЅРі С„Р°Р№Р»Р°
      *
      * @param string $file
      * @param string $from_template_dir
@@ -319,7 +319,7 @@ class Template {
         return $code;
     }
     /*
-     *  Добавить код на страницу
+     *  Р”РѕР±Р°РІРёС‚СЊ РєРѕРґ РЅР° СЃС‚СЂР°РЅРёС†Сѓ
      */
     public function addHtml ($html) {
         echo $html;

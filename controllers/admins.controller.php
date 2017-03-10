@@ -15,7 +15,17 @@ class AdminsController extends Controller
 
     public function admin_index()
     {
-        $this->data['admins'] = $this->model->getList();
+        $result = $this->model->getList();
+        foreach ($result as $item) {
+            $this->template->addBlock('admins', array(
+                'admins_id'			=>   $item['admins_id'] ,
+                'admins_name'			=>   $item['admins_name'],
+                'admins_active'			=>   $item['admins_active'] == 'yes' ? 'yes' : ''
+            ));
+        }
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_index.html', false) );
+
+        //$this->data['admins'] = $this->model->getList();
     }
 
     public function admin_add()
@@ -29,6 +39,7 @@ class AdminsController extends Controller
             }
             Router::redirect('/admin/admins/');
         }
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_add.html', false) );
     }
 
     public function admin_edit()
@@ -47,12 +58,22 @@ class AdminsController extends Controller
 
         //  нужно доделать, чтобы при несуществующем айдишнике тоже перебрасывало на главную
         if (isset($this->params[0])) {
-            $this->data['admin'] = $this->model->getById($this->params[0]);
+            //$this->data['admin'] = $this->model->getById($this->params[0]);
 
-            if (!$this->data['admin']) {
-                Session::setFlash("Неправилный Id администратора!");
-                Router::redirect('/admin/admins/');
-            }
+            $result = $this->model->getById($this->params[0]);
+            $this->template->addVars(array(
+                'VAL_ADMINS_ID'			    =>   $result['admins_id'] ,
+                'VAL_ADMINS_LOGIN'			=>   $result['admins_login'],
+                'VAL_ADMINS_NAME'			=>   $result['admins_name'],
+                'VAL_ADMINS_MOBILE_PHONE'	=>   $result['admins_mobile_phone'],
+                'VAL_ADMINS_SHORT_PHONE'	=>   $result['admins_short_phone'],
+                'VAL_ADMINS_PASS'			=>   $result['admins_pass'],
+                'VAL_ADMINS_ACCESS'			=>   $result['admins_accessgroup'],
+                'CHK_ADMINS_ACTIVE'			=>   $result['admins_active'] == 'yes'? 'checked="checked"':'',
+                'CHK_ADMINS_MANAGER'		=>   $result['admins_manager'] == 'yes'? 'checked="checked"':'',
+            ));
+
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_edit.html', false) );
 
         } else {
             Session::setFlash("Неправилный Id администратора!");
@@ -60,9 +81,17 @@ class AdminsController extends Controller
         }
     }
 
-    public function admin_profile()
+    public function admin_delete()
     {
-
+        if (isset($this->params[0])) {
+            $result = $this->model->delete($this->params[0]);
+            if ($result) {
+                Session::setFlash('Page was deleted!');
+            } else {
+                Session::setFlash('Error!');
+            }
+            Router::redirect('/admin/admins/');
+        }
     }
 
     public function admin_unactive()
@@ -106,8 +135,9 @@ class AdminsController extends Controller
             } else {
                 Session::setFlash('Логин или пароль неверный!');
             }
-
         }
+
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_login.html', false) );
     }
 
     public function admin_logout()

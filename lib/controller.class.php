@@ -12,6 +12,9 @@ class Controller
     //Параметры из строки запроса
     protected $params;
 
+    //Объект шаблонизатора
+    protected $template;
+
     /**
      * @return mixed
      */
@@ -40,5 +43,6 @@ class Controller
     {
         $this->data = $data;
         $this->params = App::getRouter()->getParams();
+        $this->template = App::$template;
     }
 }

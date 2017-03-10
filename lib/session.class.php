@@ -20,7 +20,8 @@ class Session
     //вывод flash сообщения
     public static function flash()
     {
-        echo self::$flash_message;
+        //echo self::$flash_message;
+        return self::$flash_message;
         self::$flash_message = null;
     }
 
