@@ -29,12 +29,13 @@ class Page extends Model
     {
         $id = (int)$id;
 
-        $sql = "SELECT * FROM pages WHERE id = {$id} LIMIT 1";
+        $sql = "SELECT * FROM pages WHERE page_id = {$id} LIMIT 1";
         $result = $this->db->query($sql);
 
         return isset($result[0]) ? $result[0] : null;
     }
 
+    //СТАРЫЙ МЕТОД, ТАБЛИЦА ИЗМЕНИЛАСЬ
     public function save($data, $id = null)
     {
         if (empty($data['alias']) || empty($data['title']) || empty($data['content'])) {
@@ -66,7 +67,7 @@ class Page extends Model
     public function delete($id)
     {
         $id = (int)$id;
-        $sql = "DELETE FROM pages WHERE id = {$id}";
+        $sql = "DELETE FROM pages WHERE page_id = {$id}";
         return $this->db->query($sql);
     }
 }

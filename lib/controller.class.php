@@ -15,6 +15,9 @@ class Controller
     //Объект шаблонизатора
     protected $template;
 
+    //Текущий язык
+    protected $language;
+
     /**
      * @return mixed
      */
@@ -43,6 +46,8 @@ class Controller
     {
         $this->data = $data;
         $this->params = App::getRouter()->getParams();
+        $this->language = App::getRouter()->getLanguage();
         $this->template = App::$template;
+
     }
 }

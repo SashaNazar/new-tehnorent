@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <h3>Админка категорий</h3>
+       {CATEGORIES_MENU}
+    </div>
+
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <h4>Редактировать категорию: {CURRENT_CATEGORY_NAME}</h4><br>
+        <form method="post" action="">
+            <input type="hidden" name="id" value={CURRENT_CATEGORY_ID}>
+            <div class="form-group">
+                <label for="name">Name Ru</label>
+                <input type="text" id="name" name="name" value="{CURRENT_CATEGORY_NAME}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_name">Name Ua</label>
+                <input type="text" id="ua_name" name="ua_name" value="{CURRENT_CATEGORY_UA_NAME}" class="form-control">
+            </div>
+
+
+            <!-- TPL_IF ALL_CATEGORIES -->
+            <div class="form-group">
+                <label for="p_id">Parent Category</label>
+                <select class="form-control" name="p_id" id="p_id">
+                    <option value="1">Кореневая категория</option>
+                    <!-- TPL_BEGIN ALL_CATEGORIES -->
+                    <option value="{ALL_CATEGORIES.id}" {ALL_CATEGORIES.selected}>{ALL_CATEGORIES.name}</option>
+                    <!-- TPL_END ALL_CATEGORIES -->
+                </select>
+            </div>
+            <!-- TPL_END -->
+
+
+            <div class="form-group">
+                <label for="seo">SEO RU</label>
+                <input type="text" id="seo" name="seo" value="{CURRENT_CATEGORY_SEO}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_seo">SEO UA</label>
+                <input type="text" id="ua_seo" name="ua_seo" value="{CURRENT_CATEGORY_UA_SEO}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="active">Active?</label>
+                <input type="checkbox" id="active" name="active" {CURRENT_CATEGORY_ACTIVE}>
+            </div>
+            <input type="submit" class="btn btn-success">
+        </form>
+    </div>
+
+</div>
+
+<br>
+
+<div>
+    <a href="/admin/category/add/"><button class="btn btn-sm btn-success">New Page</button></a>
+</div>

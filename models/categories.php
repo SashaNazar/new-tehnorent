@@ -8,9 +8,24 @@ class Categories extends Model
         return $this->db->query($sql);
     }
 
-    public function getCategoryForMenu()
+    public function getListActive($lang = 'ru')
     {
-        $sql = "SELECT id, name, p_id FROM category where active='yes' order by name";
+        $suffix = '';
+        if ($lang == 'ua') {
+            $suffix = $lang.'_';
+        }
+        $sql = "SELECT id, p_id, {$suffix}name as name FROM category WHERE active='yes'";
+        return $this->db->query($sql);
+    }
+
+    public function getCategoryForMenu($lang = 'ru')
+    {
+        $suffix = '';
+        if ($lang == 'ua') {
+            $suffix = $lang.'_';
+        }
+
+        $sql = "SELECT id, p_id, {$suffix}name as name FROM category where active='yes'";
         $result = $this->db->query($sql);
 
         $arr_cat = array();

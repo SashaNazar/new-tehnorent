@@ -22,6 +22,10 @@ class Session
     {
         //echo self::$flash_message;
         return self::$flash_message;
+    }
+
+    public static function deleteFlash()
+    {
         self::$flash_message = null;
     }
 

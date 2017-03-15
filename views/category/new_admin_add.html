@@ -1,0 +1,50 @@
+<div class="row-fluid">
+    <div class="col-md-2 col-sm-2 col-xs-2">
+        <a href="/admin/category/" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Назад</a>
+    </div>
+    <div class="col-md-10 col-sm-10 col-xs-10">
+        <h3 class="text-center">Создать новую категорию</h3><br>
+
+        <form class="form-horizontal" action="" method="post">
+            <div class="form-group">
+                <label for="name">Name Ru</label>
+                <input type="text" id="name" name="name" value="" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_name">Name Ua</label>
+                <input type="text" id="ua_name" name="ua_name" value="" class="form-control">
+            </div>
+
+
+            <!-- TPL_IF ALL_CATEGORIES -->
+            <div class="form-group">
+                <label for="p_id">Parent Category</label>
+                <select class="form-control" name="p_id" id="p_id">
+                    <option value="1">Кореневая категория</option>
+                    <!-- TPL_BEGIN ALL_CATEGORIES -->
+                    <option value="{ALL_CATEGORIES.id}">{ALL_CATEGORIES.name}</option>
+                    <!-- TPL_END ALL_CATEGORIES -->
+                </select>
+            </div>
+            <!-- TPL_END -->
+
+
+            <div class="form-group">
+                <label for="seo">SEO RU</label>
+                <input type="text" id="seo" name="seo" value="" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_seo">SEO UA</label>
+                <input type="text" id="ua_seo" name="ua_seo" value="" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="active">Active?</label>
+                <input type="checkbox" id="active" name="active" checked="checked">
+            </div>
+            <input type="submit" class="btn btn-success">
+        </form>
+    </div>
+</div>

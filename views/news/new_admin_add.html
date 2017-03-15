@@ -1,0 +1,51 @@
+<div class="row-fluid">
+    <div class="col-md-2 col-sm-2 col-xs-2">
+        <a href="/admin/news/" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Назад</a>
+    </div>
+    <div class="col-md-10 col-sm-10 col-xs-10">
+        <h3 class="text-center">Создать новость</h3><br>
+
+        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title Ru</label>
+                <input type="text" id="title" name="title" value="" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_title">Title Ua</label>
+                <input type="text" id="ua_title" name="ua_title" value="" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description Ru</label>
+                <textarea id="description" name="description" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ua_description">Description Ua</label>
+                <textarea id="ua_description" name="ua_description" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content Ru</label>
+                <textarea id="content" name="content" rows="6" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ua_content">Content Ua</label>
+                <textarea id="ua_content" name="ua_content" rows="6" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="picture">Picture</label>
+                <input name="picture" id="picture" type="file" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label for="active">Active?</label>
+                <input type="checkbox" id="active" name="active" checked="checked">
+            </div>
+            <input type="submit" class="btn btn-success">
+        </form>
+    </div>
+</div>

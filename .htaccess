@@ -1,5 +1,10 @@
 #<IfModule mod_rewrite.c >
-    RewriteEngine on
-    RewriteRule ^$ webroot/ [L]
-    RewriteRule (.*) webroot/$1 [L]
+#Order deny,allow
+#Deny from all
+#Allow from 176.104.0.93
+
+RewriteEngine on
+RewriteRule ^$ webroot/ [L]
+RewriteRule (.*) webroot/$1 [L]
+
 #</IfModule>

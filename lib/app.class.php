@@ -63,14 +63,52 @@ class App
 //        $layout_view_object = new View(compact('content'), $layout_path);
 //        echo  $layout_view_object->render();
 
-        if (!empty(Session::get('role'))) {
+        //var_dump($_SERVER['REQUEST_URI']);
+
+        $uri_for_lang = $_SERVER['REQUEST_URI'];
+
+        $testLanguage = substr($uri_for_lang, 0, 3);
+        if ($testLanguage === '/ru' || $testLanguage === '/ua') {
+            $uri_for_lang = substr($uri_for_lang, 3);
+        }
+
+
+        $role = Session::get('role');
+        if (!empty($role)) {
             self::$template->addVar('ADMIN_USER', Session::get('role'));
         }
         if (Session::hasFlash()) {
             self::$template->addVar('MESSSAGE', Session::flash());
+            Session::deleteFlash();
         }
-        self::$template->addVar('SITE_NAME', Config::get('site_name'));
-        self::$template->parseFile('new_admin.html');
 
+        if (self::$router->getLanguage() == 'ru') {
+            //var_dump('fdgdfgggggg');die;
+            self::$template->addVar('DOMAIN_RU_CURR', ' curr');
+        } else {
+            //var_dump('ttttttttttttttt');die;
+            self::$template->addVar('DOMAIN_UA_CURR', ' curr');
+        }
+
+        self::$template->addVars(array(
+            'SITE_NAME' =>  Config::get('site_name'),
+            'LANG' => self::$router->getLanguage(),
+            'URI_FOR_LANG' => $uri_for_lang
+        ));
+
+        $main_template = ($layout == 'admin') ? 'new_admin.html' : 'new_default.html';
+        self::$template->parseFile($main_template);
+
+    }
+
+    /*
+     *  Получение протокола
+     */
+    static function protocol () {
+        if ($_SERVER['HTTPS'] == 'on') {
+            return 'https://';
+        } else {
+            return 'http://';
+        }
     }
 }

@@ -10,6 +10,7 @@ class DB
         if (mysqli_connect_error()) {
             throw new Exception("Could not connect to DB!");
         }
+        $this->connection->set_charset("utf8");
     }
 
     public function query($sql)
@@ -28,7 +29,7 @@ class DB
             return $result;
         }
 
-        $data = [];
+        $data = array();
         while($row = mysqli_fetch_assoc($result)) {
             $data[] = $row;
         }
