@@ -11,29 +11,13 @@ class PagesController extends Controller
     public function category()
     {
         if (isset($this->params[0])) {
-            $breadcrumbs_title = "Главная";
-            if ($this->language == 'ua') {
-                $breadcrumbs_title = "Головна";
-            }
 
             $category_id = (int)$this->params[0];
             $categoryModel = new Categories();
             $categoriesAll = $categoryModel->getCategoryForMenu($this->language);
 
             $breadcrumbs_array = $this->breadcrumbs($categoriesAll, $category_id);
-
-            if($breadcrumbs_array){
-                $breadcrumbs = "<a href='" . $this->languageForUrl . "'>{$breadcrumbs_title}</a> | ";
-                foreach($breadcrumbs_array as $id => $title){
-                    $breadcrumbs .= "<a href='" . $this->languageForUrl . "/pages/category/{$id}'>{$title}</a> | ";
-                    $title_text = $title.". ";
-                    $description = $title.": ";
-                }
-                $breadcrumbs = rtrim($breadcrumbs, " | ");
-                $breadcrumbs = preg_replace("#(.+)?<a.+>(.+)</a>$#", "$1$2", $breadcrumbs);
-            }else{
-                $breadcrumbs = "<a href='" . $this->languageForUrl . "/pages/'>{$breadcrumbs_title}</a> | Каталог";
-            }
+            $breadcrumbsTitleDescription = $this->view_breadcrumbs($breadcrumbs_array);
 
             $array_category = $this->getCategoriesForMenu();
             $categories_menu = $this->view_cat($array_category, 1, $category_id);
@@ -41,19 +25,62 @@ class PagesController extends Controller
             $pages = $this->model->getListActive($this->language);
             $pages_menu = $this->view_pages($pages);
 
+            $products = $categoryModel->getProductsByCategory($category_id, $this->language);
+            foreach ($products as $item) {
+                $this->template->addBlock('PRODUCTS', array(
+                    'items_id'			=>   $item['items_id'] ,
+                    'items_name'			=>   $item['items_name'],
+                    'items_param'			=>   $item['items_name'],
+                    'items_picture'			=>   $item['items_picture'],
+                    'items_typePrefix'			=>   $item['items_typePrefix'],
+                    'items_picture_loc'			=>   $item['items_picture_loc'],
+                    'items_picture_sm'			=>   $item['items_picture_sm'],
+                ));
+            }
+            //$this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_index.html', false) );
+
 
             $this->template->addVars(array(
-                'TITLE_TEXT' => $title_text,
-                'DESCRIPTION_TEXT' => $description,
-                'BREADCRUMBS' => $breadcrumbs,
+                'TITLE_TEXT' => $breadcrumbsTitleDescription['title_text'],
+                'DESCRIPTION_TEXT' => $breadcrumbsTitleDescription['description'],
+                'BREADCRUMBS' => $breadcrumbsTitleDescription['breadcrumbs'],
                 'CATEGORIES_MENU' => $categories_menu,
                 'PAGES_MENU' => $pages_menu
             ));
 
             $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_categories.html', false) );
 
+        } else {
+            Router::redirect($this->languageForUrl.'/pages/');
         }
 
+    }
+
+    protected function view_breadcrumbs($breadcrumbs_array)
+    {
+        $breadcrumbs_title = "Главная";
+        $array_response = array();
+        if ($this->language == 'ua') {
+            $breadcrumbs_title = "Головна";
+        }
+        if($breadcrumbs_array){
+            $breadcrumbs = "<a href='" . $this->languageForUrl . "'>{$breadcrumbs_title}</a> | ";
+            foreach($breadcrumbs_array as $id => $title){
+                $breadcrumbs .= "<a href='" . $this->languageForUrl . "/pages/category/{$id}'>{$title}</a> | ";
+                $title_text = $title.". ";
+                $description = $title.": ";
+            }
+            $breadcrumbs = rtrim($breadcrumbs, " | ");
+            $breadcrumbs = preg_replace("#(.+)?<a.+>(.+)</a>$#", "$1$2", $breadcrumbs);
+        }else{
+            $breadcrumbs = "<a href='" . $this->languageForUrl . "/pages/'>{$breadcrumbs_title}</a> | Каталог";
+        }
+
+        $array_response['breadcrumbs'] = $breadcrumbs;
+        $array_response['title_text'] = $title_text;
+        $array_response['description'] = $description;
+
+        return $array_response;
     }
 
     /**

@@ -1,3 +1,27 @@
-<div class="list">
+<style>
+    .test {
+        width: 300px;
+        border: #CCC solid 1px;
+        border-radius: 6px;
+        background: #FFF;
+        height: 220px;
+        margin: 10px;
+    }
+</style>
 
-</div>
+<!-- TPL_IF PRODUCTS -->
+<div class="row-fluid">
+    <!-- TPL_BEGIN PRODUCTS -->
+    <div class="col-md-3 col-sm-12 col-xs-12 my-col text-center">
+        <a href="https://tehnoskarb.ua/catalog/g11-aksessuary-dlya-mobilnyh">
+            <div class="favor">
+                <div class="pad">
+                    <p>{PRODUCTS.items_typePrefix}</p>
+                    <img src="{PRODUCTS.items_picture_sm}" alt="image1" class="text-center" />
+                </div>
+            </div>
+        </a>
+    </div>
+    <!-- TPL_END PRODUCTS -->
+</div><br>
+<!-- TPL_END -->

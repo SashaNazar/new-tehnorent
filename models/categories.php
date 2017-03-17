@@ -2,6 +2,13 @@
 
 class Categories extends Model
 {
+    public function getProductsByCategory($category_id, $lang = 'ru')
+    {
+        $category_id = (int)$category_id;
+        $sql = "SELECT * FROM items WHERE items_categoryId={$category_id}";
+        return $this->db->query($sql);
+    }
+
     public function getList()
     {
         $sql = "SELECT * FROM category WHERE 1";

@@ -1,0 +1,15 @@
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('sasha', 'sdsad', 'sadas');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('sasha', 'sdsad', 'sadas');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('sasha', 'sdsad', 'sadas');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('et', '', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('', '', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('rtet', '', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('eterter', '', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('', 'ertre', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('', '', 'etert');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('', 'cxvxc', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('', 'cxvxc', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('', 'ghhfgh', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('', '', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('', '', '');
+INSERT INTO new_tehnorent.messages (name, email, messages) VALUES ('dddddddddddddddddd', 'ddddddddddddddddddddd', 'dddddddddddddddddddddddddd');
