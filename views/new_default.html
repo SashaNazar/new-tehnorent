@@ -14,46 +14,50 @@
 
     <div class="sidebar">
         <div id="lan">
-            <a href="/ua{URI_FOR_LANG}" title="Українська версія" class="lang icon ua {DOMAIN_UA_CURR}">UA</a><br>
+            <a href="{URI_FOR_LANG}" title="Українська версія" class="lang icon ua {DOMAIN_UA_CURR}">UA</a><br>
             <a href="/ru{URI_FOR_LANG}" title="Русская версия" class="lang icon ru {DOMAIN_RU_CURR}">RU</a>
         </div>
 
-        <a href="/{LANG}/"><img src="/webroot/image/logo1.png" width="220" height="88" style="display:block; float:left"></a>
+        <a href="{LANG}/"><img src="/webroot/image/logo1.png" width="220" height="88" style="display:block; float:left"></a>
 
 
-        <!--<a href="" data-popup="cart_popup" title="" onclick="return ajax_basket({id:'cart_popup'});return false;" class="show_popup">
-        <div id="bask"><center>
-
-		  <img src="../img/basket.png" width="40" height="38"></center>
-		    <strong>Корзина<br>
-		    товаров <span id="basket_count"><?php echo $bcount ?></span>
-		    </strong></div></a>-->
         <div style="clear:both"></div><br>
         <br>
-
-
-        <ul class="category">
-            <div class="tmen"><strong>Электроинструменты<br>
-                    напрокат</strong></div>
 
             {CATEGORIES_MENU}
 
         </ul><br>
-        <div class="cotc">Расскажите про нас в соцсетях:</div>
+        <div class="cotc">
+            {
+                "ru":"Расскажите про нас в соцсетях:",
+                "ua":"Розкажіть про нас в соцмережах:"
+            }
+        </div>
         <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
         <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus" data-counter="" style="text-align:center"></div>
     </div>
     <div class="content">
-        <div class="cont"><div class="pad"><b>ПН-СБ 9-00 - 19-00<br>
-                    тел 050-463-01-55 <a href="#">Перезвонить?</a></b> <br>
-                Петропавловская Борщаговка, Петропавловская 14
-                (напротив Обойного рынка)</div></div>
+        <div class="cont">
+            <div class="pad"><b>ПН-СБ 9-00 - 19-00<br>
+                    тел 050-463-01-55
+                    <a href="#">
+                        {
+                        "ru":"Перезвонить?",
+                        "ua":"Передзвонити?"
+                        }
+                    </a></b> <br>
+                {
+                "ru":"Петропавловская Борщаговка, Петропавловская 14 (напротив Обойного рынка)",
+                "ua":"Петропавлівська Борщагівка, Петропавлівська 14 (напроти Шпалерного ринку)"
+                }
+            </div>
+        </div>
         <div class="men_form">
             <div class="menu_top">
-                <p>
-                    <a href="/{LANG}/pages/infopage/3">Условия аренды</a> | <a href="/{LANG}/pages/infopage/2">Доставка и оплата</a> | <a href="/{LANG}/pages/infopage/1">Контакты</a> | <a href="/{LANG}/pages/infopage/1">Новости</a>
-                </p>
+
+                {PAGES_MENU}
+
             </div>
 
             <div class="topform"><form method="get" action="/" >
@@ -70,10 +74,7 @@
         </p>
         <br>
 
-
         {OUTPUTMAIN}
-
-
 
     </div>
 </div>
@@ -99,11 +100,15 @@
 
         <div class="men_form">
             <div class="menu_top">
-                <p><a href="/{LANG}/pages/infopage/3">Условия аренды</a> | <a href="/{LANG}/pages/infopage/2">Доставка и оплата</a> | <a href="/{LANG}/pages/infopage/1">Контакты</a> | <a href="/{LANG}/pages/infopage/1">Новости</a></p>
+
+                {PAGES_MENU}
+
             </div>
         </div>
-        Наши партнеры: Техноскарб<br>
-        copyright (c) 2017<br>
+        {
+            "ru":" Наши партнеры: Техноскарб<br>copyright (c) 2017<br>",
+            "ua":" Наші партнери: Техноскарб<br>copyright (c) 2017<br>"
+        }
         <br><br>
     </div>
 </div>

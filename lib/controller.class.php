@@ -18,6 +18,9 @@ class Controller
     //Текущий язык
     protected $language;
 
+    //Язык для вставки в урл
+    protected $languageForUrl = '';
+
     /**
      * @return mixed
      */
@@ -49,5 +52,9 @@ class Controller
         $this->language = App::getRouter()->getLanguage();
         $this->template = App::$template;
 
+        if ($this->language == 'ru') {
+            $this->languageForUrl = DS.$this->language;
+        }
     }
+
 }

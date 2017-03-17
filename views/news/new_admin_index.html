@@ -1,5 +1,8 @@
 <h3 class="text-center">Список новостей</h3>
 <br>
+<div class="text-center">
+    {PAGINATION}
+</div>
 <table class="table table-striped table-bordered">
     <tr>
         <td><b>ID</b></td>
@@ -16,17 +19,22 @@
     <!-- TPL_IF NEWS -->
         <!-- TPL_BEGIN NEWS -->
         <tr>
-            <td>{ADMINS.id}</td>
-            <td>{ADMINS.admins_name}</td>
-            <td>{ADMINS.admins_active}</td>
+            <td>{NEWS.id}</td>
+            <td>{NEWS.title}</td>
+            <td>{NEWS.ua_title}</td>
+            <td>{NEWS.alias}</td>
+            <td>{NEWS.description}</td>
+            <td>{NEWS.ua_description}</td>
+            <td>{NEWS.picture}</td>
+            <td>{NEWS.active}</td>
             <td align="right">
                 <!-- TPL_IF ADMINS.admins_active -->
-                <a href="/admin/admins/unactive/{ADMINS.admins_id}"><button class="btn btn-xs btn-warning">Unactive</button></a>
+                <a href="/admin/news/unactive/{NEWS.id}"><button class="btn btn-xs btn-warning">Unactive</button></a>
                 <!-- TPL_ELSE -->
-                <a href="/admin/admins/active/{ADMINS.admins_id}"><button class="btn btn-xs btn-success">Active</button></a>
+                <a href="/admin/news/active/{NEWS.id}"><button class="btn btn-xs btn-success">Active</button></a>
                 <!-- TPL_END -->
-                <a href="/admin/admins/edit/{ADMINS.admins_id}"><button class="btn btn-xs btn-primary">Edit</button></a>
-                <a href="/admin/admins/delete/{ADMINS.admins_id}" onclick="return confirmDelete();" class="btn btn-xs btn-danger">Delete</a>
+                <a href="/admin/news/edit/{NEWS.id}"><button class="btn btn-xs btn-primary">Edit</button></a>
+                <a href="/admin/news/delete/{NEWS.id}" onclick="return confirmDelete();" class="btn btn-xs btn-danger">Delete</a>
             </td>
         </tr>
         <!-- TPL_END NEWS -->

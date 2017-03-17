@@ -5,7 +5,7 @@
 //название сайта
 Config::set('site_name', 'Технорент');
 //список языков проекта
-Config::set('languages', array('en', 'ru', 'ua'));
+Config::set('languages', array('ru', 'ua'));
 
 //добавляем роуты
 // Routes. Route name => method_prefix
@@ -17,7 +17,7 @@ Config::set('routes', array(
 //дефолтный роут
 Config::set('default_route', 'default');
 //дефолтный язык
-Config::set('default_language', 'ru');
+Config::set('default_language', 'ua');
 //дефолтный контроллер
 Config::set('default_controller', 'pages');
 //дефолтный action

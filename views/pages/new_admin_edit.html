@@ -1,0 +1,63 @@
+<div class="row-fluid">
+    <div class="col-md-2 col-sm-2 col-xs-2">
+        <a href="/admin/pages/" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Назад</a>
+    </div>
+    <div class="col-md-10 col-sm-10 col-xs-10">
+        <h3 class="text-center">Редактировать страницу</h3><br>
+
+        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value={PAGE_ID}>
+            <div class="form-group">
+                <label for="title">Title Ru</label>
+                <input type="text" id="title" name="title" value="{PAGE_TITLE_RU}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_title">Title Ua</label>
+                <input type="text" id="ua_title" name="ua_title" value="{PAGE_TITLE_UA}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="alias">Alias</label>
+                <input type="text" id="alias" name="alias" value={PAGE_ALIAS} class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description Ru</label>
+                <textarea id="description" name="description" class="form-control">{PAGE_DESCRIPTION_RU}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ua_description">Description Ua</label>
+                <textarea id="ua_description" name="ua_description" class="form-control">{PAGE_DESCRIPTION_UA}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="keywords">Keywords Ru</label>
+                <textarea id="keywords" name="keywords" class="form-control">{PAGE_KEYWORDS_RU}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ua_keywords">Keywords Ua</label>
+                <textarea id="ua_keywords" name="ua_keywords" class="form-control">{PAGE_KEYWORDS_UA}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="text">Text Ru</label>
+                <textarea id="text" name="text" rows="10" class="form-control">{PAGE_TEXT_RU}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ua_text">Text Ua</label>
+                <textarea id="ua_text" name="ua_text" rows="10" class="form-control">{PAGE_TEXT_UA}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="position">Position</label>
+                <input type="number" min="1" name="position" id="position" class="form-control" value={PAGE_POSITION} />
+            </div>
+
+            <input type="submit" class="btn btn-success" value="Отправить">
+        </form>
+    </div>
+</div>

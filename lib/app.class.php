@@ -29,11 +29,12 @@ class App
         //Создаем подключение с базой данных
         self::$db = new DB(Config::get('db.host'), Config::get('db.user'), Config::get('db.password'), Config::get('db.db_name'));
 
-        //загружаем Шаблонизатор
-        self::$template = new Template(VIEWS_PATH);
-
         //загружаем языковые настройки
         Lang::load(self::$router->getLanguage());
+
+        //загружаем Шаблонизатор
+        self::$template = new Template(VIEWS_PATH);
+        self::$template->setLang(self::$router->getLanguage());
 
         $controller_class = ucfirst(self::$router->getController()).'Controller';
         $controller_method = strtolower(self::$router->getMethodPrefix().self::$router->getAction());
@@ -51,24 +52,15 @@ class App
         //Создаем объект нужного контролера
         $controller_object = new $controller_class();
         if (method_exists($controller_object, $controller_method)) {
-            //controllers action may return a view path
-            $view_path = $controller_object->$controller_method();
-//            $view_object = new View($controller_object->getData(), $view_path);
-//            $content = $view_object->render();
+            $controller_object->$controller_method();
         } else {
             throw new Exception('Method '.$controller_method.' of class '.$controller_class.' does not exist.');
         }
 
-//        $layout_path = VIEWS_PATH.DS.$layout.'.html';
-//        $layout_view_object = new View(compact('content'), $layout_path);
-//        echo  $layout_view_object->render();
-
-        //var_dump($_SERVER['REQUEST_URI']);
-
         $uri_for_lang = $_SERVER['REQUEST_URI'];
 
-        $testLanguage = substr($uri_for_lang, 0, 3);
-        if ($testLanguage === '/ru' || $testLanguage === '/ua') {
+        $currentLanguage = substr($uri_for_lang, 0, 3);
+        if ($currentLanguage === '/ru' || $currentLanguage === '/ua') {
             $uri_for_lang = substr($uri_for_lang, 3);
         }
 
@@ -83,16 +75,16 @@ class App
         }
 
         if (self::$router->getLanguage() == 'ru') {
-            //var_dump('fdgdfgggggg');die;
             self::$template->addVar('DOMAIN_RU_CURR', ' curr');
         } else {
-            //var_dump('ttttttttttttttt');die;
             self::$template->addVar('DOMAIN_UA_CURR', ' curr');
         }
 
+        $lang = (self::$router->getLanguage() == 'ua') ? '' : DS.self::$router->getLanguage();
+
         self::$template->addVars(array(
             'SITE_NAME' =>  Config::get('site_name'),
-            'LANG' => self::$router->getLanguage(),
+            'LANG' => $lang,
             'URI_FOR_LANG' => $uri_for_lang
         ));
 

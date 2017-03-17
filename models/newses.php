@@ -2,20 +2,44 @@
 
 class Newses extends Model
 {
+    public function getTotalCount($active = false)
+    {
+        $sql = "SELECT count(*) AS total FROM news WHERE 1";
+        if ($active) {
+            $sql .= " AND active = 'yes'";
+        }
+        $result = $this->db->query($sql);
+
+        return isset($result[0]) ? $result[0]['total'] : null;
+    }
     //метод для получение всех yjdjcntq
-    public function getList($active = false)
+    public function getList($start = 1, $per_page = 10, $active = false)
     {
         $sql = 'SELECT * FROM news WHERE 1';
         if ($active) {
             $sql .= ' AND active = 1';
         }
+        //if ((int)$start && (int)$per_page) {
+            $sql .= " LIMIT {$start}, {$per_page}";
+       // }
 
         return $this->db->query($sql);
     }
 
+    //метод для получения новости по ее id
+    public function getById($id)
+    {
+        $id = (int)$id;
+
+        $sql = "SELECT * FROM news WHERE id = {$id} LIMIT 1";
+        $result = $this->db->query($sql);
+
+        return isset($result[0]) ? $result[0] : null;
+    }
+
     public function save($data, $id = null)
     {
-        if (empty($data['title']) || empty($data['description']) || empty($data['content'])) {
+        if (empty($data['title']) || empty($data['description']) || empty($data['text'])) {
             return false;
         }
 
@@ -28,68 +52,48 @@ class Newses extends Model
         $ua_title = $this->db->escape($data['ua_title']);
         $description = $this->db->escape($data['description']);
         $ua_description = $this->db->escape($data['ua_description']);
-        $content = $this->db->escape($data['content']);
-        $ua_content = $this->db->escape($data['ua_content']);
+        $text = $this->db->escape($data['text']);
+        $picture = $this->db->escape($data['picture']);
+        $ua_text = $this->db->escape($data['ua_text']);
         $active = isset($data['active']) ? 'yes' : 'no';
-        $alias = $this->slugify($title);
+        $alias = $this->translit($title);
 
-
-        var_dump($title);
-        var_dump($alias);die;
         if (!$id) { //Add new record
-            $sql = "INSERT INTO pages SET title = '{$title}',
+            $sql = "INSERT INTO news SET title = '{$title}',
                                           ua_title = '{$ua_title}',
                                           alias = '{$alias}',
                                           description = '{$description}',
                                           ua_description = '{$ua_description}',
-                                          content = '{$content}',
-                                          ua_content = '{$ua_content}',
-                                          content = '{$content}',
+                                          text = '{$text}',
+                                          ua_text = '{$ua_text}',
+                                          picture = '{$picture}',
                                           active = '{$active}'";
         } else {
-            $sql = "UPDATE pages SET title = '{$title}',
+            $sql = "UPDATE news SET title = '{$title}',
                                      ua_title = '{$ua_title}',
                                      alias = '{$alias}',
                                      description = '{$description}',
                                      ua_description = '{$ua_description}',
-                                     content = '{$content}',
-                                     ua_content = '{$ua_content}',
-                                     content = '{$content}',
+                                     text = '{$text}',
+                                     ua_text = '{$ua_text}',
                                      active = '{$active}'
                                   WHERE id = {$id}";
         }
 
+        //var_dump($sql);die;
         return $this->db->query($sql);
     }
 
-    //Метод для создания alias для новостей
-    protected function slugify($text)
-    {
-        var_dump($text);
-        // replace non letter or digits by -
-        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
-
-        // transliterate
-        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-
-        var_dump($text);die;
-
-        // remove unwanted characters
-        $text = preg_replace('~[^-\w]+~', '', $text);
-
-        // trim
-        $text = trim($text, '-');
-
-        // remove duplicate -
-        $text = preg_replace('~-+~', '-', $text);
-
-        // lowercase
-        $text = strtolower($text);
-
-        if (empty($text)) {
-            return 'n-a';
-        }
-
-        return $text;
+    protected function translit($s) {
+        $s = (string) $s; // преобразуем в строковое значение
+        $s = strip_tags($s); // убираем HTML-теги
+        $s = str_replace(array("\n", "\r"), " ", $s); // убираем перевод каретки
+        $s = preg_replace("/\s+/", ' ', $s); // удаляем повторяющие пробелы
+        $s = trim($s); // убираем пробелы в начале и конце строки
+        $s = function_exists('mb_strtolower') ? mb_strtolower($s, 'UTF-8') : strtolower($s); // переводим строку в нижний регистр (иногда надо задать локаль)
+        $s = strtr($s, array('а'=>'a','б'=>'b','в'=>'v','г'=>'g','д'=>'d','е'=>'e','ё'=>'e','ж'=>'j','з'=>'z','и'=>'i','й'=>'y','к'=>'k','л'=>'l','м'=>'m','н'=>'n','о'=>'o','п'=>'p','р'=>'r','с'=>'s','т'=>'t','у'=>'u','ф'=>'f','х'=>'h','ц'=>'c','ч'=>'ch','ш'=>'sh','щ'=>'shch','ы'=>'y','э'=>'e','ю'=>'yu','я'=>'ya','ъ'=>'','ь'=>''));
+        $s = preg_replace("/[^0-9a-z-_ ]/i", "", $s); // очищаем строку от недопустимых символов
+        $s = str_replace(" ", "-", $s); // заменяем пробелы знаком минус
+        return $s; // возвращаем результат
     }
 }
