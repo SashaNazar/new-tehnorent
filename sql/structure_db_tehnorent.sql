@@ -105,3 +105,25 @@ CREATE TABLE users
     password CHAR(32) NOT NULL,
     is_active TINYINT(1) unsigned DEFAULT '1'
 );
+
+
+
+CREATE TABLE `products` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL,
+  `available_kiev` enum('true','false') NOT NULL DEFAULT 'false',
+  `title` varchar(100) NOT NULL,
+  `name` text NOT NULL,
+  `description` text NOT NULL,
+  `params` text NOT NULL,
+  `ua_title` varchar(100) NOT NULL,
+  `ua_name` text NOT NULL,
+  `ua_description` text NOT NULL,
+  `ua_params` text NOT NULL,
+  `price` decimal(8,2) NOT NULL,
+  `picture` varchar(255) DEFAULT NULL,
+  `picture_small` varchar(255) DEFAULT NULL,
+  `vendor` varchar(50) NOT NULL,
+  `vendor_code` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8

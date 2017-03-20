@@ -1,0 +1,86 @@
+<div class="row-fluid">
+    <div class="col-md-2 col-sm-2 col-xs-2">
+        <a href="/admin/products/" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Назад</a>
+    </div>
+    <div class="col-md-10 col-sm-10 col-xs-10">
+        <h3 class="text-center">Редактировать продукт</h3><br>
+
+        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value={PRODUCT_ID}>
+
+            <div class="form-group">
+                <label for="title">Title Ru</label>
+                <input type="text" id="title" name="title" value="{PRODUCT_TITLE_RU}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_title">Title Ua</label>
+                <input type="text" id="ua_title" name="ua_title" value="{PRODUCT_TITLE_UA}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Name Ru</label>
+                <input type="text" id="name" name="name" value="{PRODUCT_NAME_RU}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ua_name">Name Ua</label>
+                <input type="text" id="ua_name" name="ua_name" value="{PRODUCT_NAME_UA}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description Ru</label>
+                <textarea id="description" name="description" class="form-control" rows="6">{PRODUCT_DESCRIPTION_RU}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ua_description">Description Ua</label>
+                <textarea id="ua_description" name="ua_description" class="form-control" rows="6">{PRODUCT_DESCRIPTION_UA}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="params">Params Ru</label>
+                <textarea id="params" name="params" class="form-control" rows="6">{PRODUCT_PARAMS_RU}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ua_params">Params Ua</label>
+                <textarea id="ua_params" name="ua_params" class="form-control" rows="6">{PRODUCT_PARAMS_RU}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" min="1" step="0.01" name="price" id="price" class="form-control" value="{PRODUCT_PRICE}"/>
+            </div>
+
+            <!-- TPL_IF ALL_CATEGORIES -->
+            <div class="form-group">
+                <label for="category_id">Category</label>
+                <select class="form-control" name="category_id" id="category_id">
+                    <option value="1">Кореневая категория</option>
+                    <!-- TPL_BEGIN ALL_CATEGORIES -->
+                    <option value="{ALL_CATEGORIES.id}" {ALL_CATEGORIES.selected}>{ALL_CATEGORIES.name}</option>
+                    <!-- TPL_END ALL_CATEGORIES -->
+                </select>
+            </div>
+            <!-- TPL_END -->
+
+            <div class="form-group">
+                <label for="vendor">Vendor</label>
+                <input type="text" id="vendor" name="vendor" value="{PRODUCT_VENDOR}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="vendorCode">Vendor Code</label>
+                <input type="text" id="vendorCode" name="vendorCode" value="{PRODUCT_VENDOR_CODE}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="available_kiev">Available Kiev?</label>
+                <input type="checkbox" id="available_kiev" name="available_kiev" checked="checked">
+            </div>
+
+            <input type="submit" class="btn btn-success" value="Отправить">
+        </form>
+    </div>
+</div>
