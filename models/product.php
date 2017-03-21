@@ -48,9 +48,7 @@ class Product extends Model
         $ua_description = $this->db->escape($data['ua_description']);
         $params = $this->db->escape($data['params']);
         $ua_params = $this->db->escape($data['ua_params']);
-        $price = number_format($this->db->escape($data['price']), 2);
-        $picture = $this->db->escape($data['picture']);
-        $picture_small = $this->db->escape($data['picture_small']);
+        $price = number_format($this->db->escape($data['price']), 2, '.', '');
         $category_id = (int)$data['category_id'];
         $vendor = $this->db->escape($data['vendor']);
         $vendor_code = $this->db->escape($data['vendor_code']);
@@ -66,8 +64,6 @@ class Product extends Model
                                              params = '{$params}',
                                              ua_params = '{$ua_params}',
                                              price = '{$price}',
-                                             picture = '{$picture}',
-                                             picture_small = '{$picture_small}',
                                              category_id = '{$category_id}',
                                              vendor = '{$vendor}',
                                              vendor_code = '{$vendor_code}',
@@ -83,8 +79,6 @@ class Product extends Model
                                              params = '{$params}',
                                              ua_params = '{$ua_params}',
                                              price = '{$price}',
-                                             picture = '{$picture}',
-                                             picture_small = '{$picture_small}',
                                              category_id = '{$category_id}',
                                              vendor = '{$vendor}',
                                              vendor_code = '{$vendor_code}',
@@ -93,6 +87,48 @@ class Product extends Model
 
         }
 
+        $this->db->query($sql);
+        if (!$id) {
+            $id = $this->db->getLastInsertId();
+        }
+
+        return $id;
+
+        //return $this->db->query($sql);
+    }
+
+    public function saveImageForProduct($id_product, $big_image, $small_image)
+    {
+        $id = (int)$id_product;
+        $big_image = $this->db->escape($big_image);
+        $small_image = $this->db->escape($small_image);
+
+        $sql = "UPDATE products SET picture = '{$big_image}',
+                                    picture_small = '{$small_image}'
+                                WHERE id = {$id}";
         return $this->db->query($sql);
+    }
+
+    public function delete($id)
+    {
+        $id = (int)$id;
+        $this->deleteImageForProduct($id);
+        $sql = "DELETE FROM products WHERE id = {$id}";
+        return $this->db->query($sql);
+    }
+
+    public function deleteImageForProduct($id)
+    {
+        $id = (int)$id;
+        $sql = "SELECT picture, picture_small FROM products WHERE id = {$id} LIMIT 1";
+        $images = $this->db->query($sql);
+
+        if ($images && $images[0]) {
+            foreach ($images[0] as $image) {
+                if (!empty($image) && file_exists(ROOT . $image)) {
+                    unlink(ROOT . $image);
+                }
+            }
+        }
     }
 }

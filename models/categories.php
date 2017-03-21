@@ -5,7 +5,7 @@ class Categories extends Model
     public function getProductsByCategory($category_id, $lang = 'ru')
     {
         $category_id = (int)$category_id;
-        $sql = "SELECT * FROM items WHERE items_categoryId={$category_id}";
+        $sql = "SELECT * FROM products WHERE category_id={$category_id}";
         return $this->db->query($sql);
     }
 

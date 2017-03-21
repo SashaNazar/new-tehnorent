@@ -42,4 +42,10 @@ class DB
     {
         return mysqli_escape_string($this->connection, $str);
     }
+
+    //получить id последней записи
+    public function getLastInsertId()
+    {
+        return $this->connection->insert_id;
+    }
 }

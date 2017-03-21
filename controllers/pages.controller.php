@@ -28,13 +28,12 @@ class PagesController extends Controller
             $products = $categoryModel->getProductsByCategory($category_id, $this->language);
             foreach ($products as $item) {
                 $this->template->addBlock('PRODUCTS', array(
-                    'items_id'			=>   $item['items_id'] ,
-                    'items_name'			=>   $item['items_name'],
-                    'items_param'			=>   $item['items_name'],
-                    'items_picture'			=>   $item['items_picture'],
-                    'items_typePrefix'			=>   $item['items_typePrefix'],
-                    'items_picture_loc'			=>   $item['items_picture_loc'],
-                    'items_picture_sm'			=>   $item['items_picture_sm'],
+                    'items_id'			=>   $item['id'] ,
+                    'items_name'			=>   $item['name'],
+                    'items_param'			=>   $item['params'],
+                    'items_picture'			=>   $item['picture'],
+                    'items_typePrefix'			=>   $item['title'],
+                    'items_picture_sm'			=>   $item['picture_small'],
                 ));
             }
             //$this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_index.html', false) );

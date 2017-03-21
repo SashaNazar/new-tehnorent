@@ -8,9 +8,33 @@ class Upload
 
     private $blacklist = array(".php", ".phtml", ".php3", ".php4");
 
-    public function __construct()
-    {
+    private $img_name;
 
+    public function __construct($upload_dir, $img_new_name)
+    {
+        $this->upload_dir = $upload_dir;
+
+    }
+
+    function load1($filename) {
+        $image_info = getimagesize($filename);
+        $this->image_type = $image_info[2];
+        if( $this->image_type == IMAGETYPE_JPEG ) {
+            $this->image = imagecreatefromjpeg($filename);
+        } elseif( $this->image_type == IMAGETYPE_GIF ) {
+            $this->image = imagecreatefromgif($filename);
+        } elseif( $this->image_type == IMAGETYPE_PNG ) {
+            $this->image = imagecreatefrompng($filename);
+        }
+    }
+
+    public function load($file)
+    {
+        $filename = $file['name']; // В переменную $filename заносим точное имя файла.
+
+        $ext = substr($filename, strrpos($filename,'.'), strlen($filename)-1); // В переменную $ext заносим расширение загруженного файла.
+
+        $max_filesize = 8388608; // Максимальный размер загружаемого файла в байтах (в данном случае он равен 8 Мб).
     }
 
     public function resize()
@@ -29,7 +53,7 @@ class Upload
         if(in_array($ext,$blacklist )){
             return array('error' => 'Запрещено загружать исполняемые файлы');}
 
-        $upload_dir = ROOT.DS.'webroot'.DS.$upload_dir.DS; // Место, куда будут загружаться файлы.
+        //$upload_dir = ROOT.DS.'webroot'.DS.$upload_dir.DS; // Место, куда будут загружаться файлы.
         $max_filesize = 8388608; // Максимальный размер загружаемого файла в байтах (в данном случае он равен 8 Мб).
         $prefix = date('Ymd-is_');
 

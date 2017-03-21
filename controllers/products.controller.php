@@ -41,12 +41,19 @@ class ProductsController extends Controller
 
             $result = $this->model->save($_POST);
 
-            if ($_FILES && $result) {
-                $imageUpload = new Upload();
-                $resultFile = $imageUpload->upload_file($_FILES['picture']);
-                var_dump($resultFile);die;
-            }
+            if ($_FILES && $_FILES['picture']['size'] > 0 && $result) {
 
+                $file_name = (int)$result;
+                $image = new Image_upload();
+                $image->load($_FILES['picture']['tmp_name']);
+                $image->resize(100, 100);
+                $small_image = $image->save(DS."webroot".DS."image".DS."products".DS."{$file_name}_small.png");
+                $image->load($_FILES['picture']['tmp_name']);
+                $image->resize(500, 500);
+                $big_image = $image->save(DS."webroot".DS."image".DS."products".DS."{$file_name}_big.png");
+
+                $this->model->saveImageForProduct($file_name, $big_image, $small_image);
+            }
 
             if ($result) {
                 Session::setFlash('Продукт был успешно создан.');
@@ -73,6 +80,20 @@ class ProductsController extends Controller
         if ($_POST) {
             $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
             $result = $this->model->save($_POST, $id);
+
+            if ($_FILES && $_FILES['picture']['size'] > 0 && $result) {
+                $file_name = (int)$result;
+                $image = new Image_upload();
+                $image->load($_FILES['picture']['tmp_name']);
+                $image->resize(100, 100);
+                $small_image = $image->save(DS."webroot".DS."image".DS."products".DS."{$file_name}_small.png");
+                $image->load($_FILES['picture']['tmp_name']);
+                $image->resize(500, 500);
+                $big_image = $image->save(DS."webroot".DS."image".DS."products".DS."{$file_name}_big.png");
+
+                $this->model->saveImageForProduct($file_name, $big_image, $small_image);
+            }
+
             if ($result) {
                 Session::setFlash('Данные успешно обновлены.');
             } else {
@@ -99,7 +120,7 @@ class ProductsController extends Controller
                 'PRODUCT_PRICE' =>   $result['price'],
                 'PRODUCT_VENDOR' =>   $result['vendor'],
                 'PRODUCT_VENDOR_CODE' =>   $result['vendor_code'],
-                //'NEWS_PICTURE'	=>   DS.'webroot'.DS.'image'.DS.'logo1.png',
+                'PRODUCT_PICTURE'	=>   $result['picture_small'],
             ));
 
             $categoryModel = new Categories();
@@ -117,6 +138,19 @@ class ProductsController extends Controller
 
         } else {
             Session::setFlash("Неправилный Id страницы!");
+            Router::redirect('/admin/products/');
+        }
+    }
+
+    public function admin_delete()
+    {
+        if (isset($this->params[0])) {
+            $result = $this->model->delete($this->params[0]);
+            if ($result) {
+                Session::setFlash('Page was deleted!');
+            } else {
+                Session::setFlash('Error!');
+            }
             Router::redirect('/admin/products/');
         }
     }
