@@ -123,8 +123,9 @@ class PagesController extends Controller
         if ($this->language == 'ua') {
             $breadcrumbs_title = "Головна";
         }
+        $langUrl = $this->languageForUrl == '' ? '/' : $this->languageForUrl;
         if($breadcrumbs_array){
-            $breadcrumbs = "<a href='" . $this->languageForUrl . "'>{$breadcrumbs_title}</a> | ";
+            $breadcrumbs = "<a href='" . $langUrl . "'>{$breadcrumbs_title}</a> | ";
             foreach($breadcrumbs_array as $id => $title){
                 $breadcrumbs .= "<a href='" . $this->languageForUrl . "/pages/category/{$id}'>{$title}</a> | ";
                 $title_text = $title.". ";
@@ -227,7 +228,9 @@ class PagesController extends Controller
                 Router::redirect('/'.$this->language);
             }
 
-            $breadcrumbs = "<a href='" . $this->languageForUrl . "' >{$breadcrumbs_title}</a> | ". $current_page['title'];
+            $langUrl = $this->languageForUrl == '' ? '/' : $this->languageForUrl;
+
+            $breadcrumbs = "<a href='" . $langUrl . "' >{$breadcrumbs_title}</a> | ". $current_page['title'];
 
             $this->template->addVars(array(
                 'INFOPAGE_TITLE' => $current_page['title'],
