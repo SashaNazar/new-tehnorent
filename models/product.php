@@ -2,9 +2,15 @@
 
 class Product extends Model
 {
-    public function getList1()
+    public function getTotalCount($active = false)
     {
+        $sql = "SELECT count(*) AS total FROM products WHERE 1";
+        if ($active) {
+            $sql .= " AND active = 'yes'";
+        }
+        $result = $this->db->query($sql);
 
+        return isset($result[0]) ? $result[0]['total'] : null;
     }
 
     //метод для получения продукта по его id
@@ -18,14 +24,61 @@ class Product extends Model
         return isset($result[0]) ? $result[0] : null;
     }
 
-    //метод для получение всех страниц
-    public function getList($only_published = false)
+    public function getByIdLang($id, $lang = 'ru')
     {
-        $sql = 'SELECT * FROM products WHERE 1';
-        if ($only_published) {
-            $sql .= ' AND is_published = 1';
+        $id = (int)$id;
+
+        $suffix = '';
+        if ($lang == 'ua') {
+            $suffix = $lang.'_';
         }
 
+        $sql = "SELECT id,
+                       category_id,
+                       available_kiev,
+                       {$suffix}title as title,
+                       {$suffix}name as name,
+                       {$suffix}description as description,
+                       {$suffix}params as params,
+                       price,
+                       deposit,
+                       picture,
+                       picture_small,
+                       vendor,
+                       vendor_code
+                  FROM products WHERE id = {$id} LIMIT 1";
+        $result = $this->db->query($sql);
+
+        return isset($result[0]) ? $result[0] : null;
+    }
+
+    //метод для получение всех продуктов
+    public function getList($start = 1, $per_page = 10, $active = false)
+    {
+        $sql = "SELECT products.id,
+                       products.available_kiev,
+                       products.title,
+                       products.name,
+                       products.description,
+                       products.params,
+                       products.ua_title,
+                       products.ua_name,
+                       products.ua_description,
+                       products.ua_params,
+                       products.price,
+                       products.picture,
+                       products.picture_small,
+                       products.vendor,
+                       products.vendor_code,
+                       products.deposit,
+                       category.name as category_name
+                FROM products";
+        if ($active) {
+            $sql .= ' AND active = 1';
+        }
+        $sql .= " LEFT JOIN category ON products.category_id = category.id LIMIT {$start}, {$per_page}";
+
+        //var_dump($sql);die;
         return $this->db->query($sql);
     }
 
@@ -49,6 +102,7 @@ class Product extends Model
         $params = $this->db->escape($data['params']);
         $ua_params = $this->db->escape($data['ua_params']);
         $price = number_format($this->db->escape($data['price']), 2, '.', '');
+        $deposit = number_format($this->db->escape($data['deposit']), 2, '.', '');
         $category_id = (int)$data['category_id'];
         $vendor = $this->db->escape($data['vendor']);
         $vendor_code = $this->db->escape($data['vendor_code']);
@@ -64,6 +118,7 @@ class Product extends Model
                                              params = '{$params}',
                                              ua_params = '{$ua_params}',
                                              price = '{$price}',
+                                             deposit = '{$deposit}',
                                              category_id = '{$category_id}',
                                              vendor = '{$vendor}',
                                              vendor_code = '{$vendor_code}',
@@ -79,6 +134,7 @@ class Product extends Model
                                              params = '{$params}',
                                              ua_params = '{$ua_params}',
                                              price = '{$price}',
+                                             deposit = '{$deposit}',
                                              category_id = '{$category_id}',
                                              vendor = '{$vendor}',
                                              vendor_code = '{$vendor_code}',
@@ -130,5 +186,8 @@ class Product extends Model
                 }
             }
         }
+
+        $this->saveImageForProduct($id, null, null);
+        return $this->db->query($sql);
     }
 }

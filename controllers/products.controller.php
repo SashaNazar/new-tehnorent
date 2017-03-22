@@ -10,7 +10,27 @@ class ProductsController extends Controller
 
     public function admin_index()
     {
-        $result = $this->model->getList();
+        //пагинация начало
+        $page = 1;
+        $per_page = $page_offset = 5;
+        $page_start = 0;
+        $total_records = $this->model->getTotalCount();
+
+        if (isset($_GET) && isset($_GET['page'])) {
+            $page = (int)$_GET['page'];
+            if ($page > 1) {
+                $page_start = ($page - 1) * $page_offset;
+            }
+        }
+
+        $pagination = new Pagination();
+        $pagination->setCurrent($page);
+        $pagination->setRPP($per_page);
+        $pagination->setTotal($total_records);
+        $markup = $pagination->parse();
+        //пагинация конец
+
+        $result = $this->model->getList($page_start, $page_offset);
         //var_dump($result);die;
         foreach ($result as $item) {
             $this->template->addBlock('PRODUCTS', array(
@@ -19,19 +39,13 @@ class ProductsController extends Controller
                 'ua_title'		 =>   $item['ua_title'],
                 'picture_small'		 =>   $item['picture_small'],
                 'price' =>   $item['price'],
-                'category_id' =>   $item['category_id'],
+                'deposit' =>   $item['deposit'],
+                'category_name' =>   $item['category_name'],
                 'available_kiev' => $item['available_kiev'],
             ));
-
-//            <td>{PRODUCTS.id}</td>
-//        <td>{PRODUCTS.title}</td>
-//        <td>{PRODUCTS.ua_title}</td>
-//        <td>{PRODUCTS.picture}</td>
-//        <td>{PRODUCTS.price}</td>
-//        <td>{PRODUCTS.category}</td>
-//        <td>{PRODUCTS.available_kiev}</td>
         }
 
+        $this->template->addVar('PAGINATION', $markup);
         $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('products/new_admin_index.html', false) );
     }
 
@@ -151,6 +165,21 @@ class ProductsController extends Controller
             } else {
                 Session::setFlash('Error!');
             }
+            Router::redirect('/admin/products/');
+        }
+    }
+
+    public function admin_deleteImage()
+    {
+        if (isset($this->params[0])) {
+            $result = $this->model->deleteImageForProduct($this->params[0]);
+            if ($result) {
+                Session::setFlash('Картинка удалена');
+            } else {
+                Session::setFlash("Ошибка!");
+            }
+            Router::redirect('/admin/products/edit/'.$this->params[0]);
+        } else {
             Router::redirect('/admin/products/');
         }
     }

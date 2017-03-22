@@ -51,6 +51,7 @@
             <!-- TPL_IF PRODUCT_PICTURE -->
             <div class="form-group">
                 <img src="{PRODUCT_PICTURE}">
+                <a id="deleteImage" href="/admin/products/deleteImage/{PRODUCT_ID}" onclick="return confirmDelete();" type="button" class="btn btn-sm btn-danger">delete image</a>
             </div>
             <!-- TPL_ELSE -->
             <div class="form-group">
@@ -62,6 +63,11 @@
             <div class="form-group">
                 <label for="price">Price</label>
                 <input type="number" min="1" step="0.01" name="price" id="price" class="form-control" value="{PRODUCT_PRICE}"/>
+            </div>
+
+            <div class="form-group">
+                <label for="deposit">Залог</label>
+                <input type="number" min="1" step="0.01" name="deposit" id="deposit" class="form-control" value="{PRODUCT_DEPOSIT}/>
             </div>
 
             <!-- TPL_IF ALL_CATEGORIES -->
@@ -82,8 +88,8 @@
             </div>
 
             <div class="form-group">
-                <label for="vendorCode">Vendor Code</label>
-                <input type="text" id="vendorCode" name="vendorCode" value="{PRODUCT_VENDOR_CODE}" class="form-control">
+                <label for="vendor_code">Vendor Code</label>
+                <input type="text" id="vendor_code" name="vendor_code" value="{PRODUCT_VENDOR_CODE}" class="form-control">
             </div>
 
             <div class="form-group">

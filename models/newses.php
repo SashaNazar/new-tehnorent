@@ -12,7 +12,8 @@ class Newses extends Model
 
         return isset($result[0]) ? $result[0]['total'] : null;
     }
-    //метод для получение всех yjdjcntq
+
+    //метод для получение всех новостей
     public function getList($start = 1, $per_page = 10, $active = false)
     {
         $sql = 'SELECT * FROM news WHERE 1';

@@ -10,29 +10,38 @@
 </style>
 
 <!-- TPL_IF PRODUCTS -->
-<!--<div class="row-fluid">-->
-    <!-- TPL_BEGIN PRODUCTS -->
-<!--    <div class="col-md-3 col-sm-12 col-xs-12 my-col text-center">-->
-<!--        <a href="https://tehnoskarb.ua/catalog/g11-aksessuary-dlya-mobilnyh">-->
-<!--            <div class="favor">-->
-<!--                <div class="pad">-->
-<!--                    <p>{PRODUCTS.items_typePrefix}</p>-->
-<!--                    <img src="{PRODUCTS.items_picture_sm}" alt="image1" class="text-center" />-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
 
+    <!-- TPL_BEGIN PRODUCTS -->
     <div class="favor">
-        <div class="pad">
-            <a  href="/pages/infopage/{PRODUCTS.items_id}">
-            <center><img src="{PRODUCTS.items_picture_sm}"></center><strong>{PRODUCTS.items_typePrefix}<br>
-                BOSCH gbh 2-20se</strong>
-            День - 150 грн. Сутки - 200 грн.
-<!--            <a href="#">Подробнее</a>-->
+        <div class="pad" style="text-align: center">
+            <a  href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
+            <img src="{PRODUCTS.items_picture_sm}">
+                <strong>{PRODUCTS.items_typePrefix}</strong><br>
+                <span>
+                    {
+                        "ru":"Сутки",
+                        "ua":"Доба"
+                    }
+                    - {PRODUCTS.items_price}. </span>
+                <span>
+                    {
+                        "ru":"Залог",
+                        "ua":"Завдаток"
+                    }
+                    - {PRODUCTS.items_price}</span>
+                <p style="padding-top: 20px;">
+                    <a href="{LANG}/pages/product/{PRODUCTS.items_id}">
+                        <span class="round_con btn">
+                            {
+                                "ru":"Подробнее",
+                                "ua":"Детальніше"
+                            }
+                        </span>
+                    </a>
+                </p>
             </a>
         </div>
     </div>
     <!-- TPL_END PRODUCTS -->
-<!--</div><br>-->
+
 <!-- TPL_END -->

@@ -8,6 +8,59 @@ class PagesController extends Controller
         $this->model = new Page();
     }
 
+    public function product()
+    {
+        if (isset($this->params[0])) {
+
+            $productModel = new Product();
+            $product = $productModel->getByIdLang($this->params[0], $this->language);
+
+            $categoryModel = new Categories();
+            $categoriesAll = $categoryModel->getCategoryForMenu($this->language);
+
+            $breadcrumbs_array = $this->breadcrumbs($categoriesAll, $product['category_id']);
+            $breadcrumbsTitleDescription = $this->view_breadcrumbs($breadcrumbs_array, false);
+
+            $array_category = $this->getCategoriesForMenu();
+            $categories_menu = $this->view_cat($array_category);
+
+            $pages = $this->model->getListActive($this->language);
+            $pages_menu = $this->view_pages($pages);
+
+
+//            echo "<pre>";
+//            var_dump($breadcrumbsTitleDescription);die;
+            $breadcrumbsTitleDescription['breadcrumbs'] .= " {$product['title']}";
+            //var_dump($breadcrumbsTitleDescription['breadcrumbs']);die;
+//            $breadcrumbs = "<a href='" . $this->languageForUrl . "'>{$breadcrumbs_title}</a> | ". $page['title'];
+//            $title_text = $page['title'];
+//            $infopage_title = $page['title'];
+//            $infopage_text = nl2br($page['text']);
+
+            $this->template->addVars(array(
+                'PRODUCT_NAME' => $product['name'],
+                'PRODUCT_ID' => $product['id'],
+                'PRODUCT_PRICE' => $product['price'],
+                'PRODUCT_DEPOSIT' => $product['deposit'],
+                'PRODUCT_VENDOR' => $product['vendor'],
+                'PRODUCT_VENDOR_CODE' => $product['vendor_code'],
+                'PRODUCT_PARAMS' => htmlspecialchars_decode($product['params']),
+                'PRODUCT_PICTURE_SMALL' => $product['picture_small'],
+                'PRODUCT_PICTURE_BIG' => $product['picture'],
+                'PRODUCT_DESCRIPTION' => htmlspecialchars_decode($product['description']),
+
+
+                'TITLE_TEXT' => $breadcrumbsTitleDescription['title_text'],
+                'DESCRIPTION_TEXT' => $breadcrumbsTitleDescription['description'],
+                'BREADCRUMBS' => $breadcrumbsTitleDescription['breadcrumbs'],
+                'CATEGORIES_MENU' => $categories_menu,
+                'PAGES_MENU' => $pages_menu
+            ));
+
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_product.html', false) );
+        }
+    }
+
     public function category()
     {
         if (isset($this->params[0])) {
@@ -26,14 +79,22 @@ class PagesController extends Controller
             $pages_menu = $this->view_pages($pages);
 
             $products = $categoryModel->getProductsByCategory($category_id, $this->language);
+
+            $lang = (App::getRouter()->getLanguage() == 'ua') ? '' : DS.App::getRouter()->getLanguage();
+
             foreach ($products as $item) {
                 $this->template->addBlock('PRODUCTS', array(
+                    'LANG' => $lang,
                     'items_id'			=>   $item['id'] ,
                     'items_name'			=>   $item['name'],
-                    'items_param'			=>   $item['params'],
+                    'items_params'			=>   htmlspecialchars_decode($item['params']),
                     'items_picture'			=>   $item['picture'],
                     'items_typePrefix'			=>   $item['title'],
                     'items_picture_sm'			=>   $item['picture_small'],
+                    'items_vendor'			=>   $item['vendor'],
+                    'items_vendor_code'			=>   $item['vendor_code'],
+                    'items_price'			=>   $item['price'],
+                    'items_deposit'			=>   $item['deposit'],
                 ));
             }
             //$this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_index.html', false) );
@@ -55,7 +116,7 @@ class PagesController extends Controller
 
     }
 
-    protected function view_breadcrumbs($breadcrumbs_array)
+    protected function view_breadcrumbs($breadcrumbs_array, $deleteLastLink = true)
     {
         $breadcrumbs_title = "Главная";
         $array_response = array();
@@ -69,8 +130,10 @@ class PagesController extends Controller
                 $title_text = $title.". ";
                 $description = $title.": ";
             }
-            $breadcrumbs = rtrim($breadcrumbs, " | ");
-            $breadcrumbs = preg_replace("#(.+)?<a.+>(.+)</a>$#", "$1$2", $breadcrumbs);
+            if ($deleteLastLink) {
+                $breadcrumbs = rtrim($breadcrumbs, " | ");
+                $breadcrumbs = preg_replace("#(.+)?<a.+>(.+)</a>$#", "$1$2", $breadcrumbs);
+            }
         }else{
             $breadcrumbs = "<a href='" . $this->languageForUrl . "/pages/'>{$breadcrumbs_title}</a> | Каталог";
         }

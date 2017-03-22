@@ -17,7 +17,7 @@ class NewsController extends Controller
     public function admin_index()
     {
         $page = 1;
-        $per_page = $page_offset = 2;
+        $per_page = $page_offset = 5;
         $page_start = 0;
         $total_records = $this->model->getTotalCount();
         // determine page (based on <_GET>)

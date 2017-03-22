@@ -1,0 +1,33 @@
+<h1>{TITLE_TEXT}</h1>
+
+<!-- TPL_IF PRODUCTS -->
+
+    <!-- TPL_BEGIN PRODUCTS -->
+    <a href="{LANG}/pages/product/{PRODUCTS.items_id}">
+        <div class="list">
+            <strong>{PRODUCTS.items_vendor} {PRODUCT.items_vendor_code}</strong>
+            <img class="img_list" src="{PRODUCTS.items_picture_sm}" title="{PRODUCTS.items_name} {PRODUCTS.items_vendor_code}">
+            <span class="price round_con">
+                <strong>{PRODUCTS.items_price}</strong>
+            </span>
+            <br>
+            <span>{PRODUCTS.items_name}<br>
+                  {PRODUCTS.items_params}
+            </span>
+            <br>
+        </div>
+    </a>
+    <a href="{LANG}/pages/product/{PRODUCTS.items_id}">
+        <span class="round_con btn">
+            {
+                "ru":"Подробнее",
+                "ua":"Детальніше"
+            }
+        </span>
+    </a>
+    <a href="" data-popup="cart_popup" title="" onclick="return ajax_basket({id:'cart_popup',action:'add',art:'<?=$product['items_id']?>'})"><span class="round_con btn_or">КУПИТЬ</span></a>
+    <br><br>
+
+    <!-- TPL_END PRODUCTS -->
+
+<!-- TPL_END -->

@@ -1,5 +1,8 @@
 <h3 class="text-center">Список продуктов</h3>
 <br>
+<div class="text-center">
+    {PAGINATION}
+</div>
 <table class="table table-striped table-bordered">
     <tr>
         <td><b>ID</b></td>
@@ -7,6 +10,7 @@
         <td><b>Title UA</b></td>
         <td><b>Picture</b></td>
         <td><b>Price</b></td>
+        <td><b>Залог</b></td>
         <td><b>Category</b></td>
         <td><b>Available Kiev</b></td>
         <td width="110px;"><b>Actions</b></td>
@@ -20,7 +24,8 @@
             <td>{PRODUCTS.ua_title}</td>
             <td><img src="{PRODUCTS.picture_small}"></td>
             <td>{PRODUCTS.price}</td>
-            <td>{PRODUCTS.category_id}</td>
+            <td>{PRODUCTS.deposit}</td>
+            <td>{PRODUCTS.category_name}</td>
             <td>{PRODUCTS.available_kiev}</td>
             <td align="right">
                 <a href="/admin/products/edit/{PRODUCTS.id}"><button class="btn btn-xs btn-primary">Edit</button></a>
