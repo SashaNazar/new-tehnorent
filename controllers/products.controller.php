@@ -8,6 +8,7 @@ class ProductsController extends Controller
         $this->model = new Product();
     }
 
+
     public function admin_index()
     {
         //пагинация начало
