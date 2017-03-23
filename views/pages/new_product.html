@@ -1,0 +1,38 @@
+<div class="list">
+    <h1 style="text-align: center">{PRODUCT_NAME}</h1>
+    <span class="price1 round_con">
+        <strong>{PRODUCT_PRICE} грн.</strong>
+        <br><br>
+        <a href="" data-popup="cart_popup" title="" onclick="return ajax_basket({id:'cart_popup',action:'add',art:'{PRODUCT_ID}'})">
+                <span class="round_con btn_or w_bord">
+                    <img src="/webroot/image/basket_w.png" width="20" height="19">
+                    {
+                        "ru":"Заказать",
+                        "ua":"Замовити"
+                    }
+                </span>
+        </a>
+    </span>
+    <br>
+
+    <h3 style="text-align: center">
+        {
+        "ru":"Технические характеристики",
+        "ua":"Технічні характеристики"
+        } {PRODUCT_VENDOR} {PRODUCT_VENDOR_CODE}
+    </h3>
+    <br>
+    <span>{PRODUCT_NAME}<br>
+          {PRODUCT_PARAMS}
+    </span>
+    <br><br>
+    <h3 style="text-align: center">
+        <img src="{PRODUCT_PICTURE_BIG}" class="round_con tovimg" title="{PRODUCT_NAME} {PRODUCT_VENDOR_CODE}">
+        {
+        "ru":"Описание",
+        "ua":"Опис"
+        } {PRODUCT_VENDOR} {PRODUCT_VENDOR_CODE}
+    </h3>
+    <br>
+    <span>{PRODUCT_DESCRIPTION}</span>
+</div>

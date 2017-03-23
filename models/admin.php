@@ -17,14 +17,14 @@ class Admin extends Model
 
     public function getList()
     {
-        $sql = "SELECT admins_id, admins_name, admins_active FROM admins WHERE 1";
+        $sql = "SELECT id, admins_name, admins_active FROM admins WHERE 1";
         return $this->db->query($sql);
     }
 
     public function getById($id)
     {
         $id = (int)$id;
-        $sql = "SELECT * FROM admins WHERE admins_id = {$id} LIMIT 1";
+        $sql = "SELECT * FROM admins WHERE id = {$id} LIMIT 1";
         $result = $this->db->query($sql);
         return isset($result[0]) ? $result[0] : null;
     }
@@ -32,14 +32,14 @@ class Admin extends Model
     public function setUnactive($id)
     {
         $id = (int)$id;
-        $sql = "UPDATE admins SET admins_active = 'no' WHERE admins_id = {$id}";
+        $sql = "UPDATE admins SET admins_active = 'no' WHERE id = {$id}";
         return $this->db->query($sql);
     }
 
     public function setActive($id)
     {
         $id = (int)$id;
-        $sql = "UPDATE admins SET admins_active = 'yes' WHERE admins_id = {$id}";
+        $sql = "UPDATE admins SET admins_active = 'yes' WHERE id = {$id}";
         return $this->db->query($sql);
     }
 
@@ -80,17 +80,10 @@ class Admin extends Model
                                       admins_accessgroup = '{$admins_accessgroup}',
                                       admins_active = '{$admins_active}',
                                       admins_manager = '{$admins_manager}'
-                                  WHERE admins_id = {$admins_id}";
+                                  WHERE id = {$admins_id}";
 
         }
 
-        return $this->db->query($sql);
-    }
-
-    public function delete($id)
-    {
-        $id = (int)$id;
-        $sql = "DELETE FROM admins WHERE admins_id = {$id}";
         return $this->db->query($sql);
     }
 }

@@ -13,6 +13,27 @@ if ($pages > 1 || $alwaysShowPagination === true) {
     <ul class="<?= implode(' ', $classes) ?>">
         <?php
         /**
+         * First Link
+         */
+        // anchor classes and target
+        $classes = array('copy', 'first');
+        $params = $get;
+        $params[$key] = 1;
+        $href = ($target) . '?' . http_build_query($params);
+        $href = preg_replace(
+            array('/=$/', '/=&/'),
+            array('', '&'),
+            $href
+        );
+        if ($current === 1) {
+            $href = '#';
+            array_push($classes, 'disabled');
+        }
+        ?>
+        <li class="<?= implode(' ', $classes) ?>"><a href="<?= ($href) ?>"><?= ($first) ?></a></li>
+
+        <?php
+        /**
          * Previous Link
          */
         // anchor classes and target
@@ -112,6 +133,27 @@ if ($pages > 1 || $alwaysShowPagination === true) {
         }
         ?>
         <li class="<?= implode(' ', $classes) ?>"><a href="<?= ($href) ?>"><?= ($next) ?></a></li>
+
+        <?php
+        /**
+         * Last Link
+         */
+        // anchor classes and target
+        $classes = array('copy', 'last');
+        $params = $get;
+        $params[$key] = $pages;
+        $href = ($target) . '?' . http_build_query($params);
+        $href = preg_replace(
+            array('/=$/', '/=&/'),
+            array('', '&'),
+            $href
+        );
+        if ($current === $pages) {
+            $href = '#';
+            array_push($classes, 'disabled');
+        }
+        ?>
+        <li class="<?= implode(' ', $classes) ?>"><a href="<?= ($href) ?>"><?= ($last) ?></a></li>
     </ul>
     <?php
 }

@@ -193,14 +193,6 @@ class Product extends Model
         return $this->db->query($sql);
     }
 
-    public function delete($id)
-    {
-        $id = (int)$id;
-        $this->deleteImageForProduct($id);
-        $sql = "DELETE FROM products WHERE id = {$id}";
-        return $this->db->query($sql);
-    }
-
     public function deleteImageForProduct($id)
     {
         $id = (int)$id;

@@ -18,7 +18,7 @@ class AdminsController extends Controller
         $result = $this->model->getList();
         foreach ($result as $item) {
             $this->template->addBlock('ADMINS', array(
-                'admins_id'			=>   $item['admins_id'] ,
+                'admins_id'			=>   $item['id'] ,
                 'admins_name'			=>   $item['admins_name'],
                 'admins_active'			=>   $item['admins_active'] == 'yes' ? 'yes' : ''
             ));
@@ -62,7 +62,7 @@ class AdminsController extends Controller
 
             $result = $this->model->getById($this->params[0]);
             $this->template->addVars(array(
-                'VAL_ADMINS_ID'			    =>   $result['admins_id'] ,
+                'VAL_ADMINS_ID'			    =>   $result['id'] ,
                 'VAL_ADMINS_LOGIN'			=>   $result['admins_login'],
                 'VAL_ADMINS_NAME'			=>   $result['admins_name'],
                 'VAL_ADMINS_MOBILE_PHONE'	=>   $result['admins_mobile_phone'],

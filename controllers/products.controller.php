@@ -46,7 +46,7 @@ class ProductsController extends Controller
             ));
         }
 
-        $this->template->addVar('PAGINATION', $markup);
+        $this->template->addVar('PAGINATION', $data_for_pagination['markup']);
         $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('products/new_admin_index.html', false) );
     }
 
@@ -160,6 +160,7 @@ class ProductsController extends Controller
     public function admin_delete()
     {
         if (isset($this->params[0])) {
+            $this->model->deleteImageForProduct($this->params[0]);
             $result = $this->model->delete($this->params[0]);
             if ($result) {
                 Session::setFlash('Page was deleted!');

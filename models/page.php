@@ -68,7 +68,7 @@ class Page extends Model
     //СТАРЫЙ МЕТОД, ТАБЛИЦА ИЗМЕНИЛАСЬ
     public function save($data, $id = null)
     {
-        if (empty($data['alias']) || empty($data['title']) || empty($data['content'])) {
+        if (empty($data['title']) || empty($data['description'])) {
             return false;
         }
 
@@ -91,13 +91,6 @@ class Page extends Model
                                  WHERE id = {$id}";
         }
 
-        return $this->db->query($sql);
-    }
-
-    public function delete($id)
-    {
-        $id = (int)$id;
-        $sql = "DELETE FROM pages WHERE page_id = {$id}";
         return $this->db->query($sql);
     }
 
