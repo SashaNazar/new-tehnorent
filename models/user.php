@@ -2,6 +2,9 @@
 
 class User extends Model
 {
+    //имя таблицы модели
+    protected $table_name = "users";
+
     //функция для получения пользователя по его логину
     public function getByLogin($login)
     {

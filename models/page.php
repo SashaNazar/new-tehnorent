@@ -2,6 +2,9 @@
 
 class Page extends Model
 {
+    //имя таблицы модели
+    protected $table_name = "pages";
+
     //метод для получение всех страниц
     public function getList($only_published = false)
     {

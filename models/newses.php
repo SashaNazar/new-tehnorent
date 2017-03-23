@@ -2,16 +2,19 @@
 
 class Newses extends Model
 {
-    public function getTotalCount($active = false)
-    {
-        $sql = "SELECT count(*) AS total FROM news WHERE 1";
-        if ($active) {
-            $sql .= " AND active = 'yes'";
-        }
-        $result = $this->db->query($sql);
+    //имя таблицы модели
+    protected $table_name = 'news';
 
-        return isset($result[0]) ? $result[0]['total'] : null;
-    }
+//    public function getTotalCount($active = false)
+//    {
+//        $sql = "SELECT count(*) AS total FROM news WHERE 1";
+//        if ($active) {
+//            $sql .= " AND active = 'yes'";
+//        }
+//        $result = $this->db->query($sql);
+//
+//        return isset($result[0]) ? $result[0]['total'] : null;
+//    }
 
     //метод для получение всех новостей
     public function getList($start = 1, $per_page = 10, $active = false)

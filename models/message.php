@@ -2,6 +2,9 @@
 
 class Message extends Model
 {
+    //имя таблицы модели
+    protected $table_name = "messages";
+
     //метод для получение всех сообщений
     public function getList()
     {

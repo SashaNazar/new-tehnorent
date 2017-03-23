@@ -2,6 +2,9 @@
 
 class Categories extends Model
 {
+    //имя таблицы модели
+    protected $table_name = "products";
+
     public function getProductsByCategory($category_id, $lang = 'ru')
     {
         $category_id = (int)$category_id;

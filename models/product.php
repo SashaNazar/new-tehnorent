@@ -2,16 +2,33 @@
 
 class Product extends Model
 {
-    public function getTotalCount($active = false)
+    protected $table_name = 'products';
+
+//    public function getTotalCount($active = false)
+//    {
+//        $sql = "SELECT count(*) AS total FROM products WHERE 1";
+//        if ($active) {
+//            $sql .= " AND active = 'yes'";
+//        }
+//        $result = $this->db->query($sql);
+//
+//        return isset($result[0]) ? $result[0]['total'] : null;
+//    }
+
+    public function getTotalCountWithCategory($category_id = false, $active = false)
     {
         $sql = "SELECT count(*) AS total FROM products WHERE 1";
         if ($active) {
             $sql .= " AND active = 'yes'";
         }
+        if ($category_id && is_integer($category_id)) {
+            $sql .= " AND category_id = {$category_id}";
+        }
         $result = $this->db->query($sql);
 
         return isset($result[0]) ? $result[0]['total'] : null;
     }
+
 
     //метод для получения продукта по его id
     public function getById($id)
@@ -50,6 +67,17 @@ class Product extends Model
         $result = $this->db->query($sql);
 
         return isset($result[0]) ? $result[0] : null;
+    }
+
+    public function getProductsByCategory($start, $per_page = 10, $category_id, $active = false, $lang = 'ru')
+    {
+        $category_id = (int)$category_id;
+        $sql = "SELECT * FROM products WHERE category_id={$category_id}";
+        if ($active) {
+            $sql .= " AND active = 'yes'";
+        }
+        $sql .= " LIMIT {$start}, {$per_page}";
+        return $this->db->query($sql);
     }
 
     //метод для получение всех продуктов
