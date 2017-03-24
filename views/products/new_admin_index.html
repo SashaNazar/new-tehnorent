@@ -17,7 +17,7 @@
             <td><b>Price</b></td>
             <td><b>Залог</b></td>
             <td><b>Category</b></td>
-            <td><b>Available Kiev</b></td>
+            <td><b>Active</b></td>
             <td width="110px;"><b>Actions</b></td>
         </tr>
 
@@ -31,7 +31,7 @@
                 <td>{PRODUCTS.price}</td>
                 <td>{PRODUCTS.deposit}</td>
                 <td>{PRODUCTS.category_name}</td>
-                <td>{PRODUCTS.available_kiev}</td>
+                <td>{PRODUCTS.active}</td>
                 <td align="right">
                     <a href="/admin/products/edit/{PRODUCTS.id}"><button class="btn btn-xs btn-primary">Edit</button></a>
                     <a href="/admin/products/delete/{PRODUCTS.id}" onclick="return confirmDelete();" class="btn btn-xs btn-danger">Delete</a>

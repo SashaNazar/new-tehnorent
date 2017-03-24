@@ -52,7 +52,7 @@ class Product extends Model
 
         $sql = "SELECT id,
                        category_id,
-                       available_kiev,
+                       active,
                        {$suffix}title as title,
                        {$suffix}name as name,
                        {$suffix}description as description,
@@ -84,7 +84,7 @@ class Product extends Model
     public function getList($start = 1, $per_page = 10, $active = false)
     {
         $sql = "SELECT products.id,
-                       products.available_kiev,
+                       products.active,
                        products.title,
                        products.name,
                        products.description,
@@ -134,7 +134,7 @@ class Product extends Model
         $category_id = (int)$data['category_id'];
         $vendor = $this->db->escape($data['vendor']);
         $vendor_code = $this->db->escape($data['vendor_code']);
-        $available_kiev = isset($data['available_kiev']) ? true : false;
+        $active = isset($data['active']) ? 'yes' : 'no';
 
         if (!$id) { //Add new record
             $sql = "INSERT INTO products SET title = '{$title}',
@@ -150,7 +150,7 @@ class Product extends Model
                                              category_id = '{$category_id}',
                                              vendor = '{$vendor}',
                                              vendor_code = '{$vendor_code}',
-                                             available_kiev = '{$available_kiev}'";
+                                             active = '{$active}'";
 
         } else {
             $sql = "UPDATE products SET title = '{$title}',
@@ -166,7 +166,7 @@ class Product extends Model
                                              category_id = '{$category_id}',
                                              vendor = '{$vendor}',
                                              vendor_code = '{$vendor_code}',
-                                             available_kiev = '{$available_kiev}'
+                                             active = '{$active}'
                                           WHERE id = {$id}";
 
         }
@@ -208,6 +208,13 @@ class Product extends Model
         }
 
         $this->saveImageForProduct($id, null, null);
+        return $this->db->query($sql);
+    }
+
+    public function setReserved($id)
+    {
+        $id = (int)$id;
+        $sql = "UPDATE {$this->table_name} SET active = 'no' WHERE id = {$id}";
         return $this->db->query($sql);
     }
 }

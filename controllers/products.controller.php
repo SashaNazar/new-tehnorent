@@ -24,7 +24,7 @@ class ProductsController extends Controller
                 'price' =>   $item['price'],
                 'deposit' =>   $item['deposit'],
                 'category_name' =>   $item['category_name'],
-                'available_kiev' => $item['available_kiev'],
+                'active' => $item['active'],
             ));
         }
 
@@ -118,6 +118,7 @@ class ProductsController extends Controller
                 'PRODUCT_VENDOR' =>   $result['vendor'],
                 'PRODUCT_VENDOR_CODE' =>   $result['vendor_code'],
                 'PRODUCT_PICTURE'	=>   $result['picture_small'],
+                'PRODUCT_ACTIVE'	=>   $result['active'] == 'yes' ? "checked=checked" : '',
             ));
 
             $categoryModel = new Categories();

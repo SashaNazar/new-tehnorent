@@ -4,6 +4,15 @@ class Order extends Model
 {
     protected $table_name = 'orders';
 
+    //метод для получения заказа по его id
+    public function getById($id)
+    {
+        $id = (int)$id;
+        $sql = "SELECT * FROM {$this->table_name} WHERE id = {$id} LIMIT 1";
+        $result = $this->db->query($sql);
+        return isset($result[0]) ? $result[0] : null;
+    }
+
     //метод для получение всех заказов
     public function getList($start = 1, $per_page = 10, $status = 1, $active = false)
     {

@@ -153,6 +153,14 @@
                 </table>
             </div>
         </div>
+
+
+        <!-- TPL_IF PRODUCT_ACTIVE -->
+        <span>{PRODUCT_ACTIVE}</span>
+        <!-- TPL_ELSE -->
+
+
+
         <div style="width: 40%; float: right"  id="form">
             <form method="post" action="/orders/zakaz/2" id="order">
                 <input type="hidden" name="product_id" value="{PRODUCT_ID}">
@@ -161,6 +169,7 @@
                 <input type="submit" id="findButton1" class="findButton1" value='{ "ru":"Заказать", "ua":"Замовити" }'>
             </form>
         </div>
+        <!-- TPL_END -->
 
     </div>
 </div>
