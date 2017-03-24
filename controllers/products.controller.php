@@ -115,6 +115,7 @@ class ProductsController extends Controller
                 'PRODUCT_PARAMS_RU' =>   $result['params'],
                 'PRODUCT_PARAMS_UA' =>   $result['ua_params'],
                 'PRODUCT_PRICE' =>   $result['price'],
+                'PRODUCT_DEPOSIT' =>   $result['deposit'],
                 'PRODUCT_VENDOR' =>   $result['vendor'],
                 'PRODUCT_VENDOR_CODE' =>   $result['vendor_code'],
                 'PRODUCT_PICTURE'	=>   $result['picture_small'],

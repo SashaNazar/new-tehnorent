@@ -129,8 +129,8 @@ class Product extends Model
         $ua_description = $this->db->escape($data['ua_description']);
         $params = $this->db->escape($data['params']);
         $ua_params = $this->db->escape($data['ua_params']);
-        $price = number_format($this->db->escape($data['price']), 2, '.', '');
-        $deposit = number_format($this->db->escape($data['deposit']), 2, '.', '');
+        $price = number_format(floatval($data['price']), 2, '.', '');
+        $deposit = number_format(floatval($data['deposit']), 2, '.', '');
         $category_id = (int)$data['category_id'];
         $vendor = $this->db->escape($data['vendor']);
         $vendor_code = $this->db->escape($data['vendor_code']);
