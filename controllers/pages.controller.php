@@ -22,20 +22,12 @@ class PagesController extends Controller
             $breadcrumbsTitleDescription = $this->view_breadcrumbs($breadcrumbs_array, false);
 
             $array_category = $this->getCategoriesForMenu();
-            $categories_menu = $this->view_cat($array_category);
+            $categories_menu = $this->view_cat($array_category, 1, $product['category_id']);
 
             $pages = $this->model->getListActive($this->language);
             $pages_menu = $this->view_pages($pages);
 
-
-//            echo "<pre>";
-//            var_dump($breadcrumbsTitleDescription);die;
             $breadcrumbsTitleDescription['breadcrumbs'] .= " {$product['title']}";
-            //var_dump($breadcrumbsTitleDescription['breadcrumbs']);die;
-//            $breadcrumbs = "<a href='" . $this->languageForUrl . "'>{$breadcrumbs_title}</a> | ". $page['title'];
-//            $title_text = $page['title'];
-//            $infopage_title = $page['title'];
-//            $infopage_text = nl2br($page['text']);
 
             $this->template->addVars(array(
                 'PRODUCT_NAME' => $product['name'],
@@ -66,6 +58,28 @@ class PagesController extends Controller
         if (isset($this->params[0])) {
 
             $category_id = (int)$this->params[0];
+
+            $productsModel = new Product();
+            //пагинация начало
+            $page = 1;
+            $per_page = $page_offset = 12;
+            $page_start = 0;
+            $total_records = $productsModel->getTotalCountWithCategory($category_id, false);
+
+            if (isset($_GET) && isset($_GET['page'])) {
+                $page = (int)$_GET['page'];
+                if ($page > 1) {
+                    $page_start = ($page - 1) * $page_offset;
+                }
+            }
+
+            $pagination = new Pagination();
+            $pagination->setCurrent($page);
+            $pagination->setRPP($per_page);
+            $pagination->setTotal($total_records);
+            $markup = $pagination->parse();
+            //пагинация конец
+
             $categoryModel = new Categories();
             $categoriesAll = $categoryModel->getCategoryForMenu($this->language);
 
@@ -78,7 +92,7 @@ class PagesController extends Controller
             $pages = $this->model->getListActive($this->language);
             $pages_menu = $this->view_pages($pages);
 
-            $products = $categoryModel->getProductsByCategory($category_id, $this->language);
+            $products = $productsModel->getProductsByCategory($page_start, $page_offset, $category_id);
 
             $lang = (App::getRouter()->getLanguage() == 'ua') ? '' : DS.App::getRouter()->getLanguage();
 
@@ -108,6 +122,7 @@ class PagesController extends Controller
                 'PAGES_MENU' => $pages_menu
             ));
 
+            $this->template->addVar('PAGINATION', $markup);
             $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_categories.html', false) );
 
         } else {

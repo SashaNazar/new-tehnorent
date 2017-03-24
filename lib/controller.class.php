@@ -57,4 +57,43 @@ class Controller
         }
     }
 
+    public function getDataForPagination()
+    {
+        $result = array();
+        //пагинация начало
+        $page = 1;
+        $per_page = $page_offset = 5;
+        $page_start = 0;
+        $total_records = $this->model->getTotalCount();
+
+        if (isset($_GET) && isset($_GET['page'])) {
+            $page = (int)$_GET['page'];
+            if ($page > 1) {
+                $page_start = ($page - 1) * $page_offset;
+            }
+        }
+
+        $pagination = new Pagination();
+        $pagination->setCurrent($page);
+        $pagination->setRPP($per_page);
+        $pagination->setTotal($total_records);
+        $markup = $pagination->parse();
+        //пагинация конец
+
+        $result['page_start'] = $page_start;
+        $result['page_offset'] = $page_offset;
+        $result['markup'] = $markup;
+
+        return $result;
+
+    }
+
+    /**
+     * Check if current request is AJAX.
+     */
+    function is_ajax() {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+    }
+
+
 }

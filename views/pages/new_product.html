@@ -1,18 +1,190 @@
+<style>
+    .findText1 {
+        width: 100%;
+        padding: 10px;
+        background: #F3F3F3;
+        border: 1px solid #cccccc;
+        border-radius: 6px;
+        padding-left: 1%;
+        margin-right: 5px;
+    }
+    .findButton1 {
+        display: block;
+        width: 100%;
+        background: lightseagreen;
+        border: #cd520b solid 1px;
+        border-radius: 6px;
+        color: #FFF;
+        -moz-box-shadow: 0px 0px 2px #666666;
+        -webkit-box-shadow: 0px 0px 2px #666666;
+        box-shadow: 0px 0px 2px #666666;
+        padding: 10px 0;
+        cursor: pointer;
+        color: #FFF;
+        text-decoration: none;
+        text-align: center;
+        margin-left: 1%;
+    }
+
+    .loader {
+        margin-left: 37%;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 20px;
+        height: 20px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    .note {
+        background: lightblue;
+        padding: 10px;
+        margin-bottom: 5px;
+        padding-left: -5px;
+        text-align: center;
+        width: 100%;
+        height: 20px;
+    }
+
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    #rounded-corner {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+        width: 300px;
+        text-align: left;
+        border-collapse: collapse;
+        margin: 5px;
+    }
+    .price2 {
+        display: block;
+        float: right;
+        background: steelblue;
+        font-size: 20px;
+        color: #FFF;
+        text-align: center;
+        width: auto;
+    }
+
+
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+    .alert-danger {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
+    .alert-dismissable, .alert-dismissible {
+        padding-right: 35px;
+    }
+    #alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    button.close {
+        -webkit-appearance: none;
+        padding: 0;
+        cursor: pointer;
+        background: 0 0;
+        border: 0;
+    }
+    .close {
+        float: right;
+        font-size: 21px;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        filter: alpha(opacity=20);
+        opacity: .2;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .hide {
+        display: none;
+    }
+
+
+</style>
+
 <div class="list">
-    <h1 style="text-align: center">{PRODUCT_NAME}</h1>
-    <span class="price1 round_con">
-        <strong>{PRODUCT_PRICE} грн.</strong>
-        <br><br>
-        <a href="" data-popup="cart_popup" title="" onclick="return ajax_basket({id:'cart_popup',action:'add',art:'{PRODUCT_ID}'})">
-                <span class="round_con btn_or w_bord">
-                    <img src="/webroot/image/basket_w.png" width="20" height="19">
-                    {
-                        "ru":"Заказать",
-                        "ua":"Замовити"
-                    }
-                </span>
-        </a>
-    </span>
+    <div id="loader" class="loader" style="display: none"></div>
+
+    <div id="alert" class = "hide">
+        <button type = "button" class = "close" data-dismiss = "alert" aria-hidden = "true">
+            &times;
+        </button>
+        <p class="text-center"></p>
+    </div>
+
+    <div id="note" class="note" style="display: none"></div>
+    <div style="float: left; width: 100%">
+        <div style="width: 45%; float: left">
+            <div  class="price2 round_con">
+                <table id="rounded-corner" width="300">
+                    <tr>
+                        <td>{
+                            "ru":"Цена за суткии",
+                            "ua":"Ціна за добу"
+                            }</td>
+                        <td>{
+                            "ru":"Залог",
+                            "ua":"Завдаток"
+                            }</td>
+                    </tr>
+                    <tr>
+                        <td>{PRODUCT_PRICE} </td>
+                        <td>{PRODUCT_PRICE} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="width: 40%; float: right"  id="form">
+            <form method="post" action="/orders/zakaz/2" id="order">
+                <input type="hidden" name="product_id" value="{PRODUCT_ID}">
+                <input type="text" class="findText1" name="user_name" placeholder='{ "ru":"Ваше имя", "ua":"Ваше ім`я" }'><br><br>
+                <input type="text" class="findText1" id="mobile_phone" name="user_phone" placeholder='{ "ru":"Номер телефона", "ua":"Номер телефону" }'><br><br>
+                <input type="submit" id="findButton1" class="findButton1" value='{ "ru":"Заказать", "ua":"Замовити" }'>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="list">
+    <h1>{PRODUCT_NAME}</h1>
+<!--    <div  class="price2 round_con tovimg">-->
+    <div  class="price2 round_con">
+<!--        <strong>{PRODUCT_PRICE} грн.</strong>-->
+<!--        <br><br>-->
+<!--        <a href="" data-popup="cart_popup" title="" onclick="return ajax_basket({id:'cart_popup',action:'add',art:'{PRODUCT_ID}'})">-->
+<!--                <span class="round_con btn_or w_bord">-->
+<!--                    <img src="/webroot/image/basket_w.png" width="20" height="19">-->
+<!--                    {-->
+<!--                        "ru":"Заказать",-->
+<!--                        "ua":"Замовити"-->
+<!--                    }-->
+<!--                </span>-->
+<!--        </a>-->
+    </div>
     <br>
 
     <h3 style="text-align: center">
@@ -36,3 +208,49 @@
     <br>
     <span>{PRODUCT_DESCRIPTION}</span>
 </div>
+
+<script>
+    $(document).ready(function ($) {
+
+        $('button.close').click(function (e) {
+            $('#alert').toggle();
+            $('#alert p').text('');
+        });
+
+        $("#mobile_phone").mask("+380(99)999-99-99",{placeholder:"+380(  )   -  -  "});
+
+        $('form').submit(function (){
+            $('form#order').hide();
+            $('#loader').show();
+
+            var formData = $('form#order');
+
+            $.ajax({
+                type: "POST",
+                url: formData.attr('action'),
+                data: formData.serialize(),
+                success: function (data) {
+                    var data = $.parseJSON(data);
+                    setTimeout(function () {
+                        if (data.status === 1) {
+                            $('#alert').removeClass().addClass('alert-success');
+                        } else {
+                            $('#alert').removeClass().addClass('alert-danger');
+                        }
+                        console.log(data);
+                        $('#alert p').text(data.message);
+                        $('#alert').show();
+                        $('#loader').hide();
+                        $('form').show();
+                    }, 1000);
+                },
+                error: function (jqXHR, text, error) {
+                    $('#loader').hide();
+                    $('form').show();
+                }
+            });
+            return false;
+        });
+    });
+
+</script>

@@ -16,27 +16,9 @@ class NewsController extends Controller
 
     public function admin_index()
     {
-        $page = 1;
-        $per_page = $page_offset = 5;
-        $page_start = 0;
-        $total_records = $this->model->getTotalCount();
-        // determine page (based on <_GET>)
-        if (isset($_GET) && isset($_GET['page'])) {
-            $page = (int)$_GET['page'];
-            if ($page > 1) {
-                $page_start = ($page - 1) * $page_offset;
-            }
-        }
+        $data_for_pagination = $this->getDataForPagination();
 
-        // instantiate; set current page; set number of records
-        $pagination = new Pagination();
-        $pagination->setCurrent($page);
-        $pagination->setRPP($per_page);
-        $pagination->setTotal($total_records);
-        // grab rendered/parsed pagination markup
-        $markup = $pagination->parse();
-
-        $result = $this->model->getList($page_start, $page_offset);
+        $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset']);
         foreach ($result as $item) {
             $this->template->addBlock('NEWS', array(
                 'id'			 =>   $item['id'] ,
@@ -50,9 +32,8 @@ class NewsController extends Controller
             ));
         }
 
-        $this->template->addVar('PAGINATION', $markup);
+        $this->template->addVar('PAGINATION', $data_for_pagination['markup']);
         $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/new_admin_index.html', false) );
-        //$this->data['pages'] = $this->model->getList();
     }
 
     public function admin_edit()
@@ -125,13 +106,6 @@ class NewsController extends Controller
 
             }
 
-//            $result = $this->model->save($_POST);
-//            if ($result) {
-//                Session::setFlash('Администратор был успешно создан.');
-//            } else {
-//                Session::setFlash('Ошибка!');
-//            }
-//            Router::redirect('/admin/news/');
         }
         $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/new_admin_add.html', false) );
     }

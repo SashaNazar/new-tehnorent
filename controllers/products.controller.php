@@ -11,27 +11,9 @@ class ProductsController extends Controller
 
     public function admin_index()
     {
-        //пагинация начало
-        $page = 1;
-        $per_page = $page_offset = 5;
-        $page_start = 0;
-        $total_records = $this->model->getTotalCount();
+        $data_for_pagination = $this->getDataForPagination();
 
-        if (isset($_GET) && isset($_GET['page'])) {
-            $page = (int)$_GET['page'];
-            if ($page > 1) {
-                $page_start = ($page - 1) * $page_offset;
-            }
-        }
-
-        $pagination = new Pagination();
-        $pagination->setCurrent($page);
-        $pagination->setRPP($per_page);
-        $pagination->setTotal($total_records);
-        $markup = $pagination->parse();
-        //пагинация конец
-
-        $result = $this->model->getList($page_start, $page_offset);
+        $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset']);
         //var_dump($result);die;
         foreach ($result as $item) {
             $this->template->addBlock('PRODUCTS', array(
