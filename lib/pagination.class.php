@@ -87,14 +87,14 @@
             if (App::getRouter()->getLanguage() == 'ru') {
                 $this->_variables['next'] = 'Следующая &raquo;';
                 $this->_variables['previous'] = '&laquo; Предыдущая';
-                $this->_variables['last'] = '&laquo; Последняя';
-                $this->_variables['first'] = '&laquo; Первая';
+                $this->_variables['last'] = 'Последняя &raquo;&raquo;';
+                $this->_variables['first'] = '&laquo;&laquo; Первая';
             }
             if (App::getRouter()->getLanguage() == 'ua') {
                 $this->_variables['next'] = 'Наступна &raquo;';
                 $this->_variables['previous'] = '&laquo; Попередня';
-                $this->_variables['last'] = '&laquo; Остання';
-                $this->_variables['first'] = '&laquo; Перша';
+                $this->_variables['last'] = 'Остання &raquo;&raquo;';
+                $this->_variables['first'] = '&laquo;&laquo; Перша';
             }
         }
         /**
