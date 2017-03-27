@@ -1,9 +1,58 @@
+<style>
+    span a {
+        color: darkgray;
+    }
+    .sort-active {
+        color: limegreen;
+    }
+</style>
+
 <div class="row-fluid">
-    <div>
+    <div class="col-md-12">
         <a class="text-center" href="/admin/orders/index/1"><button class="btn btn-sm btn-primary">Новые заказы</button></a>
         <a class="text-center" href="/admin/orders/index/2"><button class="btn btn-sm btn-success">Обработанные заказы</button></a>
         <a class="text-center" href="/admin/orders/index/3"><button class="btn btn-sm btn-default">Закрытая аренда</button></a>
         <a class="text-center" href="/admin/orders/index/4"><button class="btn btn-sm btn-danger">Просроченная аренда</button></a>
+    </div>
+    <br>
+    <br>
+
+    <div class="col-md-12">
+        <form class="form-inline" action="" method="get">
+            <div class="form-group">
+                <label class="sr-only" for="id">Id</label>
+                <input type="text" class="form-control" id="id" name="id" placeholder="Id заказа">
+            </div>
+
+            <div class="form-group">
+                <label class="sr-only" for="user_name">Name</label>
+                <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Имя пользователя">
+            </div>
+
+            <div class="form-group">
+                <label class="sr-only" for="user_phone">Phone</label>
+                <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Телефон пользователя">
+            </div>
+
+            <div class="form-group">
+                <label class="sr-only" for="product_id">Product Id</label>
+                <input type="text" class="form-control" id="product_id" name="product_id" placeholder="Id продукта">
+            </div>
+
+            <div class="form-group">
+                <label class="sr-only" for="created">Created</label>
+                <input type="text" class="form-control" id="created" name="created" placeholder="Дата создания">
+            </div>
+
+            <div class="form-group">
+                <label class="sr-only" for="updated">Updated</label>
+                <input type="text" class="form-control" id="updated" name="updated" placeholder="Дата обновления">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Найти</button>
+            <a type="button" class="btn btn-default" href="/admin/orders/">Сбросить</a>
+        </form>
+        </div>
     </div>
 
     <h3 class="text-center">Список заказов</h3>
@@ -12,39 +61,109 @@
         {PAGINATION}
     </div>
     <table class="table table-striped table-bordered">
-        <tr>
-            <td><b>ID</b></td>
-            <td><b>User name</b></td>
-            <td><b>User phone</b></td>
-            <td><b>Product Id</b></td>
-            <td><b>Comment</b></td>
-            <td><b>Status</b></td>
-            <td><b>Created</b></td>
-            <td><b>Updated</b></td>
-            <td width="110px;"><b>Actions</b></td>
-        </tr>
+        <thead>
+            <tr>
+                <td>
+                    <b>ID</b>
+                    <span style="float:right;">
+                        <a href="/admin/orders/index/id&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/id&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    </span>
+                </td>
+                <td>
+                    <b>User name</b>
+                    <span style="float:right;">
+                        <a href="/admin/orders/index/user_name&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/user_name&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    </span>
+                </td>
+                <td>
+                    <b>User phone</b>
+                    <span style="float:right;">
+                        <a href="/admin/orders/index/user_phone&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/user_phone&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    </span>
+                </td>
+                <td>
+                    <b>Product Id</b>
+                    <span style="float:right;">
+                        <a href="/admin/orders/index/product_id&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/product_id&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    </span>
+                </td>
+                <td>
+                    <b>Comment</b>
+                    <span style="float:right;">
+                        <a href="/admin/orders/index/comment&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/comment&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    </span>
+                </td>
+                <td>
+                    <b>Status</b>
+                    <span style="float:right;">
+                        <a href="/admin/orders/index/status&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/status&ASC"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    </span>
+                </td>
+                <td>
+                    <b>Created</b>
+                    <span style="float:right;">
+                        <a href="/admin/orders/index/created&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/created&ASC"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    </span>
+                </td>
+                <td>
+                    <b>Updated</b>
+                    <span style="float:right;">
+                        <a href="/admin/orders/index/updated&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/updated&ASC"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    </span>
+                </td>
+                <td width="110px;"><b>Actions</b></td>
+            </tr>
+        </thead>
 
-        <!-- TPL_IF ORDER -->
-        <!-- TPL_BEGIN ORDER -->
-        <tr>
-            <td>{ORDER.id}</td>
-            <td>{ORDER.user_name}</td>
-            <td>{ORDER.user_phone}</td>
-            <td><a href="/admin/products/edit/{ORDER.product_id}" target="_blank">{ORDER.product_id}</a></td>
-            <td>{ORDER.comment}</td>
-            <td>{ORDER.status}</td>
-            <td>{ORDER.created}</td>
-            <td>{ORDER.updated}</td>
-            <td align="right">
-                <a href="/admin/orders/edit/{ORDER.id}"><button class="btn btn-xs btn-primary">Edit</button></a>
-                <a href="/admin/orders/delete/{ORDER.id}" onclick="return confirmDelete();" class="btn btn-xs btn-danger">Delete</a>
-            </td>
-        </tr>
-        <!-- TPL_END ORDER -->
-        <!-- TPL_END -->
+        <tbody>
+            <!-- TPL_IF ORDER -->
+            <!-- TPL_BEGIN ORDER -->
+            <tr>
+                <td>{ORDER.id}</td>
+                <td>{ORDER.user_name}</td>
+                <td>{ORDER.user_phone}</td>
+                <td><a href="/admin/products/edit/{ORDER.product_id}" target="_blank">{ORDER.product_id}</a></td>
+                <td>{ORDER.comment}</td>
+                <td>{ORDER.status}</td>
+                <td>{ORDER.created}</td>
+                <td>{ORDER.updated}</td>
+                <td align="right">
+                    <a href="/admin/orders/edit/{ORDER.id}"><button class="btn btn-xs btn-primary">Edit</button></a>
+                    <a href="/admin/orders/delete/{ORDER.id}" onclick="return confirmDelete();" class="btn btn-xs btn-danger">Delete</a>
+                </td>
+            </tr>
+            <!-- TPL_END ORDER -->
+            <!-- TPL_END -->
+        </tbody>
 
     </table>
     <div class="text-center">
         {PAGINATION}
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        //для подсветки сортировки
+        var url = window.location.pathname;
+        $('table thead tr').find('a[href="' + url + '"]').addClass('sort-active');
+        ////////////////////////////////////////////
+
+        $('span a').click(function (e) {
+            //e.preventDefault();
+            var url = window.location;
+            console.log(url);
+            $(this).addClass('sort-active');
+
+        });
+    });
+</script>

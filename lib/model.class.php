@@ -25,6 +25,20 @@ class Model
         return isset($result[0]) ? $result[0]['total'] : null;
     }
 
+    public function getTotalCountWithCondition($condition = array())
+    {
+        $sql = "SELECT count(*) AS total FROM {$this->table_name} WHERE 1";
+        if (!empty($condition)) {
+            foreach ($condition as $key => $value) {
+                $sql .= " AND {$key} LIKE '{$this->db->escape($value)}'";
+            }
+        }
+
+        $result = $this->db->query($sql);
+
+        return isset($result[0]) ? $result[0]['total'] : null;
+    }
+
     //функция для удаления записей из таблицы по id
     public function delete($id)
     {

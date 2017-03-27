@@ -57,14 +57,16 @@ class Controller
         }
     }
 
-    public function getDataForPagination()
+    public function getDataForPagination($total_records = false)
     {
         $result = array();
         //пагинация начало
         $page = 1;
         $per_page = $page_offset = 15;
         $page_start = 0;
-        $total_records = $this->model->getTotalCount();
+        if (!$total_records) {
+            $total_records = $this->model->getTotalCount();
+        }
 
         if (isset($_GET) && isset($_GET['page'])) {
             $page = (int)$_GET['page'];

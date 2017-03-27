@@ -59,7 +59,8 @@
 
     #rounded-corner {
         font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-        width: 300px;
+        /*width: 300px;*/
+        height: 110px;
         text-align: left;
         border-collapse: collapse;
         margin: 5px;
@@ -118,6 +119,24 @@
         display: none;
     }
 
+    .product-unactive {
+        margin-top: 5px;
+        padding-top: 40px;
+        width: 40%;
+        float: right;
+        height: 68px;
+        background: wheat;
+        vertical-align: middle;
+        color: crimson;
+        font-size: 20px;
+    }
+
+    #form {
+        width: 40%;
+        float: right;
+        padding-right: 16px;
+    }
+
 
 </style>
 
@@ -133,35 +152,41 @@
 
     <div id="note" class="note" style="display: none"></div>
     <div style="float: left; width: 100%">
-        <div style="width: 45%; float: left">
-            <div  class="price2 round_con">
+        <div style="width: 50%; float: left">
+            <div  class=" round_con">
                 <table id="rounded-corner" width="300">
-                    <tr>
-                        <td>{
-                            "ru":"Цена за суткии",
-                            "ua":"Ціна за добу"
-                            }</td>
-                        <td>{
-                            "ru":"Залог",
-                            "ua":"Завдаток"
-                            }</td>
-                    </tr>
-                    <tr>
-                        <td>{PRODUCT_PRICE} </td>
-                        <td>{PRODUCT_PRICE} </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <td>{
+                                "ru":"Цена за суткии",
+                                "ua":"Ціна за добу"
+                                }
+                            </td>
+                            <td>{
+                                "ru":"Залог",
+                                "ua":"Завдаток"
+                                }
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{PRODUCT_PRICE} </td>
+                            <td>{PRODUCT_PRICE} </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
 
 
-        <!-- TPL_IF PRODUCT_ACTIVE -->
-        <span>{PRODUCT_ACTIVE}</span>
+        <!-- TPL_IF PRODUCT_UNACTIVE -->
+        <div  class="product-unactive text-center">
+            <span>{PRODUCT_UNACTIVE}</span>
+        </div>
         <!-- TPL_ELSE -->
 
-
-
-        <div style="width: 40%; float: right"  id="form">
+        <div id="form">
             <form method="post" action="/orders/zakaz/2" id="order">
                 <input type="hidden" name="product_id" value="{PRODUCT_ID}">
                 <input type="text" class="findText1" name="user_name" placeholder='{ "ru":"Ваше имя", "ua":"Ваше ім`я" }'><br><br>
@@ -243,6 +268,8 @@
                     setTimeout(function () {
                         if (data.status === 1) {
                             $('#alert').removeClass().addClass('alert-success');
+
+
                         } else {
                             $('#alert').removeClass().addClass('alert-danger');
                         }

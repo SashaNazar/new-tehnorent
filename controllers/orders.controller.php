@@ -16,6 +16,10 @@ class OrdersController extends Controller
             if ($result) {
                 $productModel = new Product();
                 $productModel->setReserved($_POST['product_id']);
+
+                $userModel = new User();
+                $userModel->setUser($_POST['user_name'], $_POST['user_phone']);
+
                 $response['status'] = 1;
                 $response['message'] = "С вами скоро свяжуться!";
                 //Session::setFlash('С вами скоро свяжуться!');
@@ -34,8 +38,60 @@ class OrdersController extends Controller
 
     public function admin_index()
     {
-        $data_for_pagination = $this->getDataForPagination();
-        $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset']);
+        $dataForSort = array(
+            'field' => 'id',
+            'by' => 'ASC'
+        );
+        if (isset($this->params[0])) {
+            $fieldSort = array('id', 'user_name', 'user_phone', 'product_id', 'status', 'comment', 'created', 'updated');
+            $bySort = array('ASC', 'DESC');
+
+            $sortParams = explode('&', $this->params[0]);
+
+            if (in_array($sortParams[0], $fieldSort)) {
+                $dataForSort['field'] = $sortParams[0];
+            }
+            if (in_array($sortParams[1], $bySort)) {
+                $dataForSort['by'] =$sortParams[1];
+            }
+        }
+
+        if (!empty($_GET)) {
+            $condition = array(
+                'id' => '',
+                'user_name' => '',
+                'user_phone' => '',
+                'product_id' => '',
+                'created' => '',
+                'updated' => ''
+            );
+
+            $dataForSearch = array_merge($condition, $_GET);
+            $dataForSearch = array_filter($dataForSearch);
+
+            $total_records = $this->model->getTotalCountWithCondition($dataForSearch);
+
+            $data_for_pagination = $this->getDataForPagination($total_records);
+            $result = $this->model->getListWithCondition($dataForSearch, $dataForSort, $data_for_pagination['page_start'], $data_for_pagination['page_offset']);
+
+        } else {
+            $data_for_pagination = $this->getDataForPagination();
+            $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset'], $dataForSort);
+        }
+
+//        if (isset($_GET['user_name']) && isset($_GET['user_phone'])) {
+//            $condition = array();
+//            if ($_GET['user_name']) {
+//                $condition['user_name'] = $_GET['user_name'];
+//            }
+//            if ($_GET['user_phone']) {
+//                $condition['user_phone'] = $_GET['user_phone'];
+//            }
+//            $total_records = $this->model->getTotalCountWithCondition($condition);
+//
+//            $data_for_pagination = $this->getDataForPagination($total_records);
+//            $result = $this->model->getListWithCondition($condition, $data_for_pagination['page_start'], $data_for_pagination['page_offset']);
+//        }
 
         foreach ($result as $order) {
             $this->template->addBlock('ORDER', $order);
@@ -43,6 +99,19 @@ class OrdersController extends Controller
 
         $this->template->addVar('PAGINATION', $data_for_pagination['markup']);
         $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('orders/admin_index.html', false) );
+    }
+
+    public function admin_delete()
+    {
+        if (isset($this->params[0])) {
+            $result = $this->model->delete($this->params[0]);
+            if ($result) {
+                Session::setFlash('Order was deleted!');
+            } else {
+                Session::setFlash('Error!');
+            }
+            Router::redirect('/admin/orders/');
+        }
     }
 
     public function admin_edit()

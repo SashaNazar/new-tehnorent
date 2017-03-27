@@ -13,8 +13,35 @@ class Order extends Model
         return isset($result[0]) ? $result[0] : null;
     }
 
+    //метод для получение всех пользователей при поиске
+    public function getListWithCondition($condition = array(), $sort = array(), $start = 1, $per_page = 10)
+    {
+        $sql = "SELECT orders.id,
+                       orders.user_name,
+                       orders.user_phone,
+                       orders.product_id,
+                       orders.status,
+                       orders.comment,
+                       orders.created,
+                       orders.updated
+                FROM {$this->table_name} WHERE 1";
+        if ($condition) {
+            foreach ($condition as $key => $value) {
+                $sql .= " AND {$key} LIKE '%{$value}%'";
+            }
+        }
+        if (!empty($sort)) {
+            $sort_field = $sort['field'];
+            $sort_by = $sort['by'];
+            $sql .= " ORDER BY {$sort_field} {$sort_by}";
+        }
+        $sql .= " LIMIT {$start}, {$per_page}";
+
+        return $this->db->query($sql);
+    }
+
     //метод для получение всех заказов
-    public function getList($start = 1, $per_page = 10, $status = 1, $active = false)
+    public function getList($start = 1, $per_page = 10, $sort = array(), $status = 1, $active = false)
     {
         $status = (int)$status;
         $sql = "SELECT orders.id,
@@ -29,10 +56,36 @@ class Order extends Model
         if ($status) {
             $sql .= " AND status = {$status}";
         }
+        if (!empty($sort)) {
+            $sort_field = $sort['field'];
+            $sort_by = $sort['by'];
+            $sql .= " ORDER BY {$sort_field} {$sort_by}";
+        }
         $sql .= " LIMIT {$start}, {$per_page}";
         //$sql .= " LEFT JOIN category ON products.category_id = category.id LIMIT {$start}, {$per_page}";
 
-        //var_dump($sql);die;
+        return $this->db->query($sql);
+    }
+
+    //метод для получение всех пользователей
+    public function getList2($start = 1, $per_page = 10, $sort = array())
+    {
+        $sql = "SELECT id,
+                       user_name,
+                       user_phone
+                FROM {$this->table_name}";
+        if (!empty($sort)) {
+            $sort_field = $sort['field'];
+            $sort_by = $sort['by'];
+            $sql .= " ORDER BY {$sort_field} {$sort_by}";
+        }
+        $sql .= " LIMIT {$start}, {$per_page}";
+
+//        $sql = "SELECT id,
+//                       user_name,
+//                       user_phone
+//                FROM {$this->table_name} ";
+
         return $this->db->query($sql);
     }
 

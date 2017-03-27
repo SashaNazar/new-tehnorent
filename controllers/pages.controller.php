@@ -40,7 +40,7 @@ class PagesController extends Controller
                 'PRODUCT_PICTURE_SMALL' => $product['picture_small'],
                 'PRODUCT_PICTURE_BIG' => $product['picture'],
                 'PRODUCT_DESCRIPTION' => htmlspecialchars_decode($product['description']),
-                'PRODUCT_ACTIVE' => $product['active'] == 'no' ? 'В прокате' : '',
+                'PRODUCT_UNACTIVE' => $product['active'] == 'no' ? 'В прокате' : '',
 
 
                 'TITLE_TEXT' => $breadcrumbsTitleDescription['title_text'],
