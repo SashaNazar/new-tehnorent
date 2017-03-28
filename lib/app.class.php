@@ -61,7 +61,7 @@ class App
 
         $currentLanguage = substr($uri_for_lang, 0, 3);
         if ($currentLanguage === '/ru' || $currentLanguage === '/ua') {
-            $uri_for_lang = substr($uri_for_lang, 3);
+            $uri_for_lang = (strlen($uri_for_lang) < 4) ? '/' : substr($uri_for_lang, 3);
         }
 
 

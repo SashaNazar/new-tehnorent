@@ -217,4 +217,136 @@ class Product extends Model
         $sql = "UPDATE {$this->table_name} SET active = 'no' WHERE id = {$id}";
         return $this->db->query($sql);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    //функции с техноскарба
+    public function findForSearch($data)
+    {
+        if (empty($data['query'])) {
+            return false;
+        }
+
+        $query = $this->db->escape($data['query']);
+        $sql = "SELECT id, name FROM {$this->table_name} WHERE name LIKE '%{$query}%'";
+        return $this->db->query($sql);
+    }
+
+    //функция с техноскарба
+    public function seatchModelStock ($sstr, $region ='', $group = '') {
+        $add_where = $this->seatchSqlCitiGroup($sstr, $region, $group);
+        $cnt = $this->cnt;
+        $sql = "SELECT DISTINCT models_id, "._suffix()."models_full_name as models_full_name, brands_name, groups_name, models_group, "._suffix()."types_name as types_name
+		FROM ".DI_DBTABLES_MODELS."
+				INNER JOIN ".DI_DBTABLES_ITEMS." ON items_model = models_id
+				INNER JOIN ".DI_DBTABLES_BRANDS." ON brands_id = models_brand
+				INNER JOIN ".DI_DBTABLES_GROUPS." ON groups_id = models_group
+				INNER JOIN ".DI_DBTABLES_TYPES." ON types_id = models_type
+		WHERE models_items > 0 " . $add_where . " and items_active = 'yes'
+		ORDER BY models_items desc
+		LIMIT 0," . $cnt ;
+        $r = DB::query($sql);
+        $html = $this->getHtmlSeatch($r);
+        return $html;
+    }
+
+    /*
+    *  Строка поиска по городам и регионам
+    */
+    private function seatchSqlCitiGroup ($sstr, $region ='', $group = '') {
+        $sstr 	= self::clean_words(stripslashes($sstr ));
+        $sstr1 = self::encodestring($sstr);
+        $clean_keywords	= explode(' ', $sstr);
+
+        for($j = 0; $j < count($clean_keywords); $j++) {
+            $add_where .= " and ("._suffix()
+                ."models_full_name like '%"
+                . trim($clean_keywords[$j])
+                ."%'  or "._suffix()
+                ."models_full_name like '%" . trim(self::encodestring($clean_keywords[$j])) ."%' )";
+        }
+        if ((int)$region) {
+            $add_where .= " and items_city = '".$region."'";
+        }
+        if ((int)$group) {
+            $groups = di_get_groups ((int)$group);
+            $add_where .= " and items_group in (".implode(",", $groups).")";
+        }
+        return $add_where;
+    }
+
+    /*
+     *  Замена спец. символов
+     */
+    static public function clean_words ($str) {
+        return trim(preg_replace('/[^a-zA-ZА-Яа-я0-9\s]/', ' ', $str));
+    }
+
+    /*
+    *  Перекодировка строки для поиска
+    */
+    static public function encodestring($st)
+    {
+        $st = strtr($st,
+            array(
+                "Панасоник"=>"Panasonic", "панасоник"=>"panasonic",
+                "алкател"=>"Alcatel", "Алкател"=>"Alcatel",
+                "Асер"=>"Acer", "асер"=>"acer",
+                "Эппл"=>"Apple", "эппл"=>"apple",
+                "Атлон"=>"Athlon", "атлон"=>"athlon",
+                "Бенкью"=>"BenQ", "бенкью"=>"BenQ",
+                "Блекбери"=>"BlackBerry", "блекбери"=>"BlackBerry",
+                "Бош"=>"BOSCH", "бош"=>"BOSCH",
+                "Кенди"=>"Candy", "кенди"=>"Candy",
+                "Селерон"=>"Celeron", "селерон"=>"Celeron",
+                "Компак"=>"Compaq", "компак"=>"Compaq",
+                "Коре"=>"Core", "коре"=>"Core",
+                "Дэу"=>"DAEWOO", "дэу"=>"DAEWOO",
+                "Делонги"=>"Delonghi", "делонги"=>"Delonghi",
+                "Флай"=>"Fly", "флай"=>"Fly",
+                "Айфон"=>"iPhone", "айфон"=>"iPhone",
+                "Айпод"=>"iPod", "айпод"=>"iPod",
+                "Жабра"=>"Jabra", "жабра"=>"Jabra",
+                "Джабра"=>"Jabra", "джабра"=>"Jabra",
+                "Кенвуд"=>"KENWOOD", "кенвуд"=>"KENWOOD",
+                "Мулинекс"=>"Moulinex", "мулинекс"=>"Moulinex",
+                "Филипс"=>"Philips", "филипс"=>"Philips",
+                "Томас"=>"THOMAS", "томас"=>"THOMAS",
+                "Томсон"=>"THOMSON", "томсон"=>"THOMSON",
+                "Вирпл"=>"Whirlpool", "вирпл"=>"Whirlpool",
+                "Ямаха"=>"Yamaha", "ямаха"=>"Yamaha",
+                "сони"=>"sony",  "Сони"=>"Sony",
+                "эриксон"=>"ericsson",  "Эриксон"=>"Ericsson",
+                "икс"=>"x", "Икс"=>"X", "ИКС"=>"X", "экс"=>"x", "Экс"=>"X", "ЭКС"=>"X"
+            )
+        );
+
+        // Сначала заменяем "односимвольные" фонемы.
+        $st=strtr($st,"абвгдеёзийклмнопрстуфхъыэ_",
+            "abvgdeeziyklmnoprstufh'iei");
+        $st=strtr($st,"АБВГДЕЁЗИЙКЛМНОПРСТУФХЪЫЭ_",
+            "ABVGDEEZIYKLMNOPRSTUFH'IEI");
+
+        // Затем - "многосимвольные".
+        $st = strtr($st,
+            array(
+                "ж"=>"zh", "ц"=>"ts", "ч"=>"ch", "ш"=>"sh",
+                "щ"=>"shch","ь"=>"", "ю"=>"yu", "я"=>"ya",
+                "Ж"=>"ZH", "Ц"=>"TS", "Ч"=>"CH", "Ш"=>"SH",
+                "Щ"=>"SHCH","Ь"=>"", "Ю"=>"YU", "Я"=>"YA",
+                "ї"=>"i", "Ї"=>"Yi", "є"=>"ie", "Є"=>"Ye"
+            )
+        );
+        // Возвращаем результат.
+        return $st;
+    }
 }

@@ -60,7 +60,7 @@
     <div class="text-center">
         {PAGINATION}
     </div>
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <td>
@@ -132,7 +132,7 @@
                 <td>{ORDER.user_phone}</td>
                 <td><a href="/admin/products/edit/{ORDER.product_id}" target="_blank">{ORDER.product_id}</a></td>
                 <td>{ORDER.comment}</td>
-                <td>{ORDER.status}</td>
+                <td class="status">{ORDER.status}</td>
                 <td>{ORDER.created}</td>
                 <td>{ORDER.updated}</td>
                 <td align="right">
@@ -156,6 +156,19 @@
         //для подсветки сортировки
         var url = window.location.pathname;
         $('table thead tr').find('a[href="' + url + '"]').addClass('sort-active');
+        ////////////////////////////////////////////
+
+        //Для подсвечивания заказа в зависимости от статуса
+        $('.status').each(function () {
+            var status = $(this).html();
+            switch (status) {
+                case '1':
+                    $(this).parent().addClass('bg-info');
+                    break;
+                default :
+                    break;
+            }
+        });
         ////////////////////////////////////////////
 
         $('span a').click(function (e) {

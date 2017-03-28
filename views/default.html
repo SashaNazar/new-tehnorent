@@ -17,6 +17,7 @@
     <script src="/webroot/js/jquery.maskedinput.js" type="text/javascript"></script>
     <script src="/webroot/js/jquery.accordion.js"></script>
     <script src="/webroot/js/jquery.cookie.js"></script>
+    <script src="/webroot/js/search.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -69,10 +70,14 @@
 
             </div>
 
-            <div class="topform"><form method="get" action="/" >
-                    <input type="submit" id="searchsubmit" value="Найти" class="findButton" />
+            <div class="topform">
+                <form role="form" method="post" action="">
                     <input type="text" id="searchbar" name="query" value=""  autocomplete="off" class="findText" />
-                </form><div id="search_advice_wrapper"></div></div>
+                    <input type="submit" id="searchsubmit" value="Найти" class="findButton" />
+                </form>
+                <div id="search_advice_wrapper">
+                </div>
+            </div>
 
         </div>
         <div style="clear:both; height:7px;"></div>

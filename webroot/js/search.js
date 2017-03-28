@@ -69,25 +69,23 @@ function ajax_search(obj) {
     if(obj.val().length>2){
         input_initial_value = obj.val();
         // производим AJAX запрос к /s_test.php, передаем ему GET query, в который мы помещаем наш запрос
-        $.get("/includes/ajax/seatch.php", {
-                "query":obj.val(),
-                "region":$('#s_region_value').val(),
-                "group":$('#s_category_value').val()
+        $.get("/pages/search", {
+                "query":obj.val()
             },
             function(data){
                 //php скрипт возвращает нам строку, ее надо распарсить в массив.
-                //console.log(data);
-                var list = eval("("+data+")");
+                var list = $.parseJSON(data);
+
                 suggest_count = list.length;
                 if(suggest_count >= 1){
                     // перед показом слоя подсказки, его обнуляем
                     $("#search_advice_wrapper").html("").show();
-                    for(var i in list){
-                        if(list[i] != ''){
-                            // добавляем слою позиции
-                            $('#search_advice_wrapper').append('<div class="advice_variant">'+list[i]+'</div>');
+
+                    $.each(list, function (index, value) {
+                        if (value.id != '' && value.name != '') {
+                            $('#search_advice_wrapper').append('<div class="advice_variant"><a href="/pages/product/' + value.id + '">' + value.name + '</a></div>');
                         }
-                    }
+                    });
                 }  else {
                     $('#search_advice_wrapper').hide();
                     return false;

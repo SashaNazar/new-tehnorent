@@ -8,6 +8,18 @@ class PagesController extends Controller
         $this->model = new Page();
     }
 
+    public function search()
+    {
+        $response = array();
+
+        if ($this->is_ajax() && $_GET) {
+            $product = new Product();
+            $response = $product->findForSearch($_GET);
+        }
+        echo json_encode($response);
+        die;
+    }
+
     public function product()
     {
         if (isset($this->params[0])) {
@@ -40,7 +52,7 @@ class PagesController extends Controller
                 'PRODUCT_PICTURE_SMALL' => $product['picture_small'],
                 'PRODUCT_PICTURE_BIG' => $product['picture'],
                 'PRODUCT_DESCRIPTION' => htmlspecialchars_decode($product['description']),
-                'PRODUCT_UNACTIVE' => $product['active'] == 'no' ? 'В прокате' : '',
+                'PRODUCT_UNACTIVE' => $product['active'] == 'no' ? 'hide' : '',
 
 
                 'TITLE_TEXT' => $breadcrumbsTitleDescription['title_text'],

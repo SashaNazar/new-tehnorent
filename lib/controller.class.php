@@ -64,7 +64,7 @@ class Controller
         $page = 1;
         $per_page = $page_offset = 15;
         $page_start = 0;
-        if (!$total_records) {
+        if ($total_records === false) {
             $total_records = $this->model->getTotalCount();
         }
 

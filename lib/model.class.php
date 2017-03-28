@@ -30,7 +30,7 @@ class Model
         $sql = "SELECT count(*) AS total FROM {$this->table_name} WHERE 1";
         if (!empty($condition)) {
             foreach ($condition as $key => $value) {
-                $sql .= " AND {$key} LIKE '{$this->db->escape($value)}'";
+                $sql .= " AND {$key} LIKE '%{$this->db->escape($value)}%'";
             }
         }
 

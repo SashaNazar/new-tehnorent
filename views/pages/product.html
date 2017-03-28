@@ -35,6 +35,7 @@
         height: 20px;
         -webkit-animation: spin 2s linear infinite;
         animation: spin 2s linear infinite;
+        z-index: 1;
     }
 
     .note {
@@ -141,12 +142,22 @@
         float: left;
         width: 100%;
     }
-
+    .wrapper-loader {
+        width: 985px;
+        background:lightgoldenrodyellow;
+        height: 110px;
+        z-index: 1;
+        position: absolute;
+        padding-top: 40px;
+        display: none;
+    }
 
 </style>
 
 <div class="list">
-    <div id="loader" class="loader" style="display: none"></div>
+    <div class="wrapper-loader">
+        <div id="loader" class="loader"></div>
+    </div>
 
     <div id="alert" class = "hide">
         <button type = "button" class = "close" data-dismiss = "alert" aria-hidden = "true">
@@ -163,7 +174,7 @@
                     <thead>
                         <tr>
                             <td>{
-                                "ru":"Цена за суткии",
+                                "ru":"Цена за сутки",
                                 "ua":"Ціна за добу"
                                 }
                             </td>
@@ -187,19 +198,21 @@
 
         <!-- TPL_IF PRODUCT_UNACTIVE -->
         <div  class="product-unactive text-center">
-            <span>{PRODUCT_UNACTIVE}</span>
-        </div>
-        <div id="form" class="hide">
-            <form method="post" action="/orders/zakaz/2" id="order">
-                <input type="hidden" name="product_id" value="{PRODUCT_ID}">
-                <input type="text" class="findText1" name="user_name" placeholder='{ "ru":"Ваше имя", "ua":"Ваше ім`я" }'><br><br>
-                <input type="text" class="findText1" id="mobile_phone" name="user_phone" placeholder='{ "ru":"Номер телефона", "ua":"Номер телефону" }'><br><br>
-                <input type="submit" id="findButton1" class="findButton1" value='{ "ru":"Заказать", "ua":"Замовити" }'>
-            </form>
+            <span>
+                {
+                    "ru":"В прокате",
+                    "ua":"У прокаті"
+                }
+            </span>
         </div>
         <!-- TPL_ELSE -->
-        <div  class="product-unactive text-center hide" id="prokat">
-            <span>{PRODUCT_UNACTIVE}</span>
+        <div  class="product-unactive text-center hide">
+            <span>
+                {
+                    "ru":"В прокате",
+                    "ua":"У прокаті"
+                }
+            </span>
         </div>
         <div id="form">
             <form method="post" action="/orders/zakaz/2" id="order">
@@ -217,22 +230,20 @@
 <br>
 <br>
 <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 
 <div class="list">
     <h1>{PRODUCT_NAME}</h1>
-<!--    <div  class="price2 round_con tovimg">-->
+
     <div  class="price2 round_con">
-<!--        <strong>{PRODUCT_PRICE} грн.</strong>-->
-<!--        <br><br>-->
-<!--        <a href="" data-popup="cart_popup" title="" onclick="return ajax_basket({id:'cart_popup',action:'add',art:'{PRODUCT_ID}'})">-->
-<!--                <span class="round_con btn_or w_bord">-->
-<!--                    <img src="/webroot/image/basket_w.png" width="20" height="19">-->
-<!--                    {-->
-<!--                        "ru":"Заказать",-->
-<!--                        "ua":"Замовити"-->
-<!--                    }-->
-<!--                </span>-->
-<!--        </a>-->
+
     </div>
     <br>
 
@@ -268,9 +279,10 @@
 
         $("#mobile_phone").mask("+380(99)999-99-99",{placeholder:"+380(  )   -  -  "});
 
-        $('form').submit(function (){
+        $('form#order').submit(function (){
+            $('#alert').hide();
             $('form#order').hide();
-            $('#loader').show();
+            $('.wrapper-loader').show();
             $('#zakaz').hide();
 
             var formData = $('form#order');
@@ -287,6 +299,7 @@
                             $('#alert').removeClass().addClass('alert-success');
                             $('#form').addClass('hide');
                             $('#prokat').removeClass('hide');
+                            $('.product-unactive').show();
 
                         } else {
                             $('#alert').removeClass().addClass('alert-danger');
@@ -294,12 +307,12 @@
                         console.log(data);
                         $('#alert p').text(data.message);
                         $('#alert').show();
-                        $('#loader').hide();
+                        $('.wrapper-loader').hide();
                         $('form').show();
-                    }, 1000);
+                    }, 100);
                 },
                 error: function (jqXHR, text, error) {
-                    $('#loader').hide();
+                    $('.wrapper-loader').hide();
                     $('form').show();
                 }
             });
