@@ -33,7 +33,7 @@ class NewsController extends Controller
         }
 
         $this->template->addVar('PAGINATION', $data_for_pagination['markup']);
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/new_admin_index.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/admin_index.html', false) );
     }
 
     public function admin_edit()
@@ -67,7 +67,7 @@ class NewsController extends Controller
                 //'NEWS_PICTURE'	=>   DS.'webroot'.DS.'image'.DS.'logo1.png',
             ));
 
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/new_admin_edit.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/admin_edit.html', false) );
 
         } else {
             Session::setFlash("Неправилный Id страницы!");
@@ -102,12 +102,12 @@ class NewsController extends Controller
                 Router::redirect('/admin/news/');
             }else{
                 Session::setFlash($error);
-                $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/new_admin_add.html', false) );
+                $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/admin_add.html', false) );
 
             }
 
         }
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/new_admin_add.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/admin_add.html', false) );
     }
 
     protected function upload_file($file, $upload_dir= 'image', $allowed_types= array('image/png','image/x-png','image/jpeg','image/webp','image/gif')){

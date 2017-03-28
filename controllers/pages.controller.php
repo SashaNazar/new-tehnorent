@@ -50,7 +50,7 @@ class PagesController extends Controller
                 'PAGES_MENU' => $pages_menu
             ));
 
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_product.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/product.html', false) );
         }
     }
 
@@ -124,7 +124,7 @@ class PagesController extends Controller
             ));
 
             $this->template->addVar('PAGINATION', $markup);
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_categories.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/categories.html', false) );
 
         } else {
             Router::redirect($this->languageForUrl.'/pages/');
@@ -208,7 +208,7 @@ class PagesController extends Controller
                 'INFOPAGE_TEXT' => $infopage_text,
             ));
 
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_infopage.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/infopage.html', false) );
         }
     }
 
@@ -253,10 +253,10 @@ class PagesController extends Controller
                 'INFOPAGE_TEXT' => nl2br($current_page['text']),
                 'BREADCRUMBS' => $breadcrumbs
             ));
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_infopage.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/infopage.html', false) );
 
         } else {
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_index.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/index.html', false) );
         }
 
     }
@@ -346,7 +346,7 @@ class PagesController extends Controller
             ));
         }
 
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_admin_index.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/admin_index.html', false) );
     }
 
     public function admin_add()
@@ -360,7 +360,7 @@ class PagesController extends Controller
             }
             Router::redirect('/admin/pages/');
         }
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_admin_add.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/admin_add.html', false) );
     }
 
     public function admin_edit()
@@ -395,7 +395,7 @@ class PagesController extends Controller
                 'PAGE_POSITION'	=>   $result['position']
             ));
 
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/new_admin_edit.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/admin_edit.html', false) );
 
         } else {
             Session::setFlash("Неправилный Id страницы!");

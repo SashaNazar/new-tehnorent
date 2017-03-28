@@ -88,7 +88,7 @@ class App
             'URI_FOR_LANG' => $uri_for_lang
         ));
 
-        $main_template = ($layout == 'admin') ? 'new_admin.html' : 'new_default.html';
+        $main_template = ($layout == 'admin') ? 'admin.html' : 'default.html';
         self::$template->parseFile($main_template);
 
     }

@@ -29,7 +29,7 @@ class ProductsController extends Controller
         }
 
         $this->template->addVar('PAGINATION', $data_for_pagination['markup']);
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('products/new_admin_index.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('products/admin_index.html', false) );
     }
 
     public function admin_add()
@@ -69,7 +69,7 @@ class ProductsController extends Controller
             ));
         }
 
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('products/new_admin_add.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('products/admin_add.html', false) );
     }
 
     public function admin_edit()
@@ -133,7 +133,7 @@ class ProductsController extends Controller
                 ));
             }
 
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('products/new_admin_edit.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('products/admin_edit.html', false) );
 
         } else {
             Session::setFlash("Неправилный Id страницы!");

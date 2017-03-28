@@ -165,7 +165,7 @@ class OrdersController extends Controller
                 //'NEWS_PICTURE'	=>   DS.'webroot'.DS.'image'.DS.'logo1.png',
             ));
 
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/new_admin_edit.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/admin_edit.html', false) );
 
         } else {
             Session::setFlash("Неправилный Id страницы!");

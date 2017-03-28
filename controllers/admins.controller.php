@@ -23,7 +23,7 @@ class AdminsController extends Controller
                 'admins_active'			=>   $item['admins_active'] == 'yes' ? 'yes' : ''
             ));
         }
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_index.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/admin_index.html', false) );
 
         //$this->data['admins'] = $this->model->getList();
     }
@@ -39,7 +39,7 @@ class AdminsController extends Controller
             }
             Router::redirect('/admin/admins/');
         }
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_add.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/admin_add.html', false) );
     }
 
     public function admin_edit()
@@ -73,7 +73,7 @@ class AdminsController extends Controller
                 'CHK_ADMINS_MANAGER'		=>   $result['admins_manager'] == 'yes'? 'checked="checked"':'',
             ));
 
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_edit.html', false) );
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/admin_edit.html', false) );
 
         } else {
             Session::setFlash("Неправилный Id администратора!");
@@ -137,7 +137,7 @@ class AdminsController extends Controller
             }
         }
 
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_login.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/admin_login.html', false) );
     }
 
     public function admin_logout()

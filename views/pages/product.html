@@ -137,6 +137,11 @@
         padding-right: 16px;
     }
 
+    #zakaz {
+        float: left;
+        width: 100%;
+    }
+
 
 </style>
 
@@ -151,7 +156,7 @@
     </div>
 
     <div id="note" class="note" style="display: none"></div>
-    <div style="float: left; width: 100%">
+    <div id="zakaz">
         <div style="width: 50%; float: left">
             <div  class=" round_con">
                 <table id="rounded-corner" width="300">
@@ -184,8 +189,18 @@
         <div  class="product-unactive text-center">
             <span>{PRODUCT_UNACTIVE}</span>
         </div>
+        <div id="form" class="hide">
+            <form method="post" action="/orders/zakaz/2" id="order">
+                <input type="hidden" name="product_id" value="{PRODUCT_ID}">
+                <input type="text" class="findText1" name="user_name" placeholder='{ "ru":"Ваше имя", "ua":"Ваше ім`я" }'><br><br>
+                <input type="text" class="findText1" id="mobile_phone" name="user_phone" placeholder='{ "ru":"Номер телефона", "ua":"Номер телефону" }'><br><br>
+                <input type="submit" id="findButton1" class="findButton1" value='{ "ru":"Заказать", "ua":"Замовити" }'>
+            </form>
+        </div>
         <!-- TPL_ELSE -->
-
+        <div  class="product-unactive text-center hide" id="prokat">
+            <span>{PRODUCT_UNACTIVE}</span>
+        </div>
         <div id="form">
             <form method="post" action="/orders/zakaz/2" id="order">
                 <input type="hidden" name="product_id" value="{PRODUCT_ID}">
@@ -256,6 +271,7 @@
         $('form').submit(function (){
             $('form#order').hide();
             $('#loader').show();
+            $('#zakaz').hide();
 
             var formData = $('form#order');
 
@@ -264,11 +280,13 @@
                 url: formData.attr('action'),
                 data: formData.serialize(),
                 success: function (data) {
+                    $('#zakaz').show();
                     var data = $.parseJSON(data);
                     setTimeout(function () {
                         if (data.status === 1) {
                             $('#alert').removeClass().addClass('alert-success');
-
+                            $('#form').addClass('hide');
+                            $('#prokat').removeClass('hide');
 
                         } else {
                             $('#alert').removeClass().addClass('alert-danger');

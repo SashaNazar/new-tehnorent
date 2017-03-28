@@ -35,7 +35,7 @@ class CategoryController extends Controller
                 'name' => $category['name'],
             ));
         }
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('category/new_admin_add.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('category/admin_add.html', false) );
     }
 
     public function admin_index()
@@ -94,7 +94,7 @@ class CategoryController extends Controller
 
 
         $this->template->addVar('CATEGORIES_MENU', $categories_menu);
-        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('category/new_admin_index.html', false) );
+        $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('category/admin_index.html', false) );
 
     }
 
