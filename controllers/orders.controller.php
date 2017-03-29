@@ -79,8 +79,9 @@ class OrdersController extends Controller
                 'updated' => ''
             );
 
-            $dataForSearch = array_merge($condition, $_GET);
+            $dataForSearch = array_intersect_key($_GET, $condition);
             $dataForSearch = array_filter($dataForSearch);
+            $dataForSearch = array_map('trim', $dataForSearch);
 
             $total_records = $this->model->getTotalCountWithCondition($dataForSearch);
 
