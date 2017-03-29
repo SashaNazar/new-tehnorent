@@ -51,22 +51,16 @@ class OrdersController extends Controller
 
     public function admin_index()
     {
+        $all_statuses_orders = array(1, 2, 3, 4, 5);
+
         $dataForSort = array(
             'field' => 'id',
             'by' => 'ASC'
         );
         if (isset($this->params[0])) {
-            $fieldSort = array('id', 'user_name', 'user_phone', 'product_id', 'status', 'comment', 'created', 'updated');
-            $bySort = array('ASC', 'DESC');
-
-            $sortParams = explode('&', $this->params[0]);
-
-            if (in_array($sortParams[0], $fieldSort)) {
-                $dataForSort['field'] = $sortParams[0];
-            }
-            if (in_array($sortParams[1], $bySort)) {
-                $dataForSort['by'] =$sortParams[1];
-            }
+            $status_order = (int)$this->params[0];
+            $key = array_search($status_order, $all_statuses_orders);
+            $status = ($key === false) ? false : $all_statuses_orders[$key];
         }
 
         if (!empty($_GET)) {
@@ -90,7 +84,7 @@ class OrdersController extends Controller
 
         } else {
             $data_for_pagination = $this->getDataForPagination();
-            $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset'], $dataForSort);
+            $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset'], $dataForSort, $status);
         }
 
 //        if (isset($_GET['user_name']) && isset($_GET['user_phone'])) {
