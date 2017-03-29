@@ -12,7 +12,8 @@
         display: block;
         width: 100%;
         background: lightseagreen;
-        border: #cd520b solid 1px;
+        /*border: #cd520b solid 1px;*/
+        border: none;
         border-radius: 6px;
         color: #FFF;
         -moz-box-shadow: 0px 0px 2px #666666;
@@ -23,7 +24,7 @@
         color: #FFF;
         text-decoration: none;
         text-align: center;
-        margin-left: 1%;
+        margin-left: 2%;
     }
 
     .note {
@@ -48,11 +49,12 @@
 
     #rounded-corner {
         font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-        /*width: 300px;*/
+        width: 98%;
         height: 110px;
         text-align: left;
         border-collapse: collapse;
         margin: 5px;
+        background: azure;
     }
     .price2 {
         display: block;
@@ -136,11 +138,24 @@
         background: #F27935 url(/image/preloader.svg) center center no-repeat;
         background-size:76px;
         opacity: 0.6;
-        height: 110px;
+        height: 125px;
         z-index: 1;
         position: absolute;
-        padding-top: 40px;
+        padding-top: 45px;
+        margin-top: -10px;
         display: none;
+    }
+
+    .wrapper-table {
+        width: 50%;
+        float: left;
+        background: teal;
+        /*margin-top: 10px;*/
+        margin-left: 10px;
+    }
+
+    .table-head {
+        text-align: center;
     }
 
 </style>
@@ -159,11 +174,11 @@
 
     <div id="note" class="note" style="display: none"></div>
     <div id="zakaz">
-        <div style="width: 50%; float: left">
+        <div class="wrapper-table">
             <div  class=" round_con">
-                <table id="rounded-corner" width="300">
+                <table id="rounded-corner" width="295">
                     <thead>
-                        <tr>
+                        <tr class="table-head">
                             <td>{
                                 "ru":"Цена за сутки",
                                 "ua":"Ціна за добу"
@@ -177,9 +192,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{PRODUCT_PRICE} </td>
-                            <td>{PRODUCT_PRICE} </td>
+                        <tr class="table-head">
+                            <td>{PRODUCT_PRICE} грн.</td>
+                            <td>{PRODUCT_PRICE} грн.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -206,10 +221,10 @@
             </span>
         </div>
         <div id="form">
-            <form method="post" action="/orders/zakaz/2" id="order">
+            <form method="post" action="/orders/zakaz/" id="order">
                 <input type="hidden" name="product_id" value="{PRODUCT_ID}">
                 <input type="text" class="findText1" name="user_name" placeholder='{ "ru":"Ваше имя", "ua":"Ваше ім`я" }'><br><br>
-                <input type="text" class="findText1" id="mobile_phone" name="user_phone" placeholder='{ "ru":"Номер телефона", "ua":"Номер телефону" }'><br><br>
+                <input type="text" class="findText1" id="mobile_phone" name="user_phone" placeholder='{ "ru":"Ваш номер телефона", "ua":"Ваш номер телефону" }'><br><br>
                 <input type="submit" id="findButton1" class="findButton1" value='{ "ru":"Заказать", "ua":"Замовити" }'>
             </form>
         </div>
@@ -239,18 +254,16 @@
     <br>
 
     <h3 style="text-align: center">
+        <img src="{PRODUCT_PICTURE_BIG}" class="round_con tovimg" title="{PRODUCT_NAME} {PRODUCT_VENDOR_CODE}">
         {
         "ru":"Технические характеристики",
         "ua":"Технічні характеристики"
         } {PRODUCT_VENDOR} {PRODUCT_VENDOR_CODE}
     </h3>
     <br>
-    <span>{PRODUCT_NAME}<br>
-          {PRODUCT_PARAMS}
-    </span>
+    <span>{PRODUCT_PARAMS}</span>
     <br><br>
     <h3 style="text-align: center">
-        <img src="{PRODUCT_PICTURE_BIG}" class="round_con tovimg" title="{PRODUCT_NAME} {PRODUCT_VENDOR_CODE}">
         {
         "ru":"Описание",
         "ua":"Опис"

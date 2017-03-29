@@ -10,14 +10,55 @@ class PagesController extends Controller
 
     public function search()
     {
-        $response = array();
-
         if ($this->is_ajax() && $_GET) {
             $product = new Product();
-            $response = $product->findForSearch($_GET);
+            $response = $product->findForSearchAjax($_GET);
+            echo json_encode($response);
+            die;
+        } else {
+            $product = new Product();
+            $products = $product->findForSearchFull($_GET);
+
+            $categoryModel = new Categories();
+            $categoriesAll = $categoryModel->getCategoryForMenu($this->language);
+
+            $breadcrumbs_array = $this->breadcrumbs($categoriesAll, 1);
+            $breadcrumbsTitleDescription = $this->view_breadcrumbs($breadcrumbs_array, false);
+
+            $array_category = $this->getCategoriesForMenu();
+            $categories_menu = $this->view_cat($array_category, 1, 1);
+
+            $pages = $this->model->getListActive($this->language);
+            $pages_menu = $this->view_pages($pages);
+
+            $lang = (App::getRouter()->getLanguage() == 'ua') ? '' : DS.App::getRouter()->getLanguage();
+            foreach ($products as $item) {
+                $this->template->addBlock('PRODUCTS', array(
+                    'LANG' => $lang,
+                    'items_id'			=>   $item['id'] ,
+                    'items_name'			=>   $item['name'],
+                    'items_params'			=>   htmlspecialchars_decode($item['params']),
+                    'items_picture'			=>   $item['picture'],
+                    'items_typePrefix'			=>   $item['title'],
+                    'items_picture_sm'			=>   $item['picture_small'],
+                    'items_vendor'			=>   $item['vendor'],
+                    'items_vendor_code'			=>   $item['vendor_code'],
+                    'items_price'			=>   $item['price'],
+                    'items_deposit'			=>   $item['deposit'],
+                    'items_active' => $item['active'] == 'yes' ? '' : 'no',
+                ));
+            }
+            $query = htmlspecialchars($_GET['query']);
+            $this->template->addVars(array(
+                'QUERY' => $query,
+                'TITLE_TEXT' => $breadcrumbsTitleDescription['title_text'],
+                'DESCRIPTION_TEXT' => $breadcrumbsTitleDescription['description'],
+                'BREADCRUMBS' => $breadcrumbsTitleDescription['breadcrumbs'],
+                'CATEGORIES_MENU' => $categories_menu,
+                'PAGES_MENU' => $pages_menu
+            ));
+            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/search.html', false) );
         }
-        echo json_encode($response);
-        die;
     }
 
     public function product()
@@ -122,6 +163,7 @@ class PagesController extends Controller
                     'items_vendor_code'			=>   $item['vendor_code'],
                     'items_price'			=>   $item['price'],
                     'items_deposit'			=>   $item['deposit'],
+                    'items_active' => $item['active'] == 'yes' ? '' : 'no',
                 ));
             }
             //$this->template->addVar('OUTPUTMAIN', $this->template->parseFile('admins/new_admin_index.html', false) );

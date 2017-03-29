@@ -163,7 +163,13 @@
             var status = $(this).html();
             switch (status) {
                 case '1':
-                    $(this).parent().addClass('bg-info');
+                    $(this).parent().addClass('bg-success');
+                    break;
+                case '2':
+                    $(this).parent().addClass('bg-primary');
+                    break;
+                case '5':
+                    $(this).parent().addClass('bg-danger')
                     break;
                 default :
                     break;

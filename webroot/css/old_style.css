@@ -20,7 +20,12 @@ H2 span {background:#333; color:#FFF; border-radius:6px; font-size:18px; padding
 #lan { position:absolute; top:40px; right:20px; border-left:#666 solid 1px; padding-left:12px;}
 .pad{ padding:20px; font-size:12px; font-style:italic; height:100%;}
 .pad strong { display:block; padding:0 0 0px 0; text-transform:uppercase; font-weight: 600; color: #336; font-style: normal;}
-.pad img { width:100%; height:auto; max-width:120px;}
+.pad img {
+    width:100%;
+    height:auto;
+    max-width:120px;
+    padding-top: 15px;
+}
 .tmen { display:block; width: auto; padding:12px; background:#333; border:#000 solid 1px; border-radius:6px 6px 0 0; text-align:center; color:#CCC;text-transform:uppercase;}
 .tmen a { font-size:12px; }
 .content{
@@ -171,7 +176,9 @@ table .imgcol { width:110px}
 .notvalid { background:#FF9396;}
 .err { background:#F00; color:#FFF; padding:0px; margin:0px; text-align:center}
 .err p {padding: 5px;}
-td { padding:10px; border:dotted 1px #CCCCCC;}
+td {
+    padding:10px;
+    border:solid 1px teal;}
 .foot{ background:#333; border-radius:6px; color:#FFF; text-align:center; font-size:12px;}
 .foot a { color:#FFF;}
 .cotc{ width:100%; font-size:12px; text-align:center; border-bottom:#F3F3F3 solid 1px;}
@@ -271,7 +278,11 @@ td { padding:10px; border:dotted 1px #CCCCCC;}
     .img_list { width:50px;}
     table .imgcol { width:60px;}
     .category a {font-size:24px; font-weight:normal;}
-    .round_con {font-size:16px; font-weight:normal;}
+    .round_con {
+        font-size:16px;
+        font-weight:normal;
+        padding-right: 7px;
+    }
     .btn, .btn_or {font-size:24px; font-weight:normal;}
     .tmen a {font-size:22px; font-weight:normal; }
     .tmen { display:block; margin:20px 5px; text-align:center;}

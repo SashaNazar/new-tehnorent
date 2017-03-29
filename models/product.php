@@ -218,19 +218,8 @@ class Product extends Model
         return $this->db->query($sql);
     }
 
-
-
-
-
-
-
-
-
-
-
-
     //функции с техноскарба
-    public function findForSearch($data)
+    public function findForSearchAjax($data)
     {
         if (empty($data['query'])) {
             return false;
@@ -240,6 +229,45 @@ class Product extends Model
         $sql = "SELECT id, name FROM {$this->table_name} WHERE name LIKE '%{$query}%'";
         return $this->db->query($sql);
     }
+
+    public function findForSearchFull($data)
+    {
+        if (empty($data['query'])) {
+            return false;
+        }
+        $query = $this->db->escape($data['query']);
+
+        $sql = "SELECT products.id,
+                       products.active,
+                       products.title,
+                       products.name,
+                       products.description,
+                       products.params,
+                       products.ua_title,
+                       products.ua_name,
+                       products.ua_description,
+                       products.ua_params,
+                       products.price,
+                       products.picture,
+                       products.picture_small,
+                       products.vendor,
+                       products.vendor_code,
+                       products.deposit
+                FROM {$this->table_name} WHERE name LIKE '%{$query}%'";
+        return $this->db->query($sql);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //функция с техноскарба
     public function seatchModelStock ($sstr, $region ='', $group = '') {

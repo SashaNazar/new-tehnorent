@@ -1,13 +1,14 @@
 <style>
-    .test {
-        width: 300px;
-        border: #CCC solid 1px;
-        border-radius: 6px;
-        background: #FFF;
-        height: 220px;
-        margin: 10px;
+    .reserved {
+        position: absolute;
+        padding: 2px;
+        border-radius: 5px;
+        background: darkseagreen;
+        margin-top: 5px;
+        margin-left: 5px;
     }
 </style>
+
 <div style="text-align: center">
     {PAGINATION}
 </div>
@@ -16,6 +17,14 @@
 
     <!-- TPL_BEGIN PRODUCTS -->
     <div class="favor">
+        <!-- TPL_IF PRODUCTS.items_active -->
+          <span class="reserved">
+              {
+              "ru":"В прокате",
+              "ua":"У прокаті"
+              }
+          </span>
+        <!-- TPL_END -->
         <div class="pad" style="text-align: center">
             <a  href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
             <img src="{PRODUCTS.items_picture_sm}">
@@ -33,7 +42,7 @@
                     }
                     - {PRODUCTS.items_price}</span>
                 <p style="padding-top: 20px;">
-                    <a href="{LANG}/pages/product/{PRODUCTS.items_id}">
+                    <a href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
                         <span class="round_con btn">
                             {
                                 "ru":"Подробнее",

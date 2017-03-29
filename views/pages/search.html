@@ -1,0 +1,54 @@
+<div style="text-align: center">
+    {PAGINATION}
+</div>
+
+<h2 style="text-align: center">
+    {
+    "ru":"Результаты поиска по запросу ",
+    "ua":"Результати пошуку за запитом "
+    }
+    <i style="background: yellow; color: black">"{QUERY}"</i>
+</h2>
+<!-- TPL_IF PRODUCTS -->
+
+<!-- TPL_BEGIN PRODUCTS -->
+<div class="favor">
+    <div class="pad" style="text-align: center">
+        <a  href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
+            <img src="{PRODUCTS.items_picture_sm}">
+            <strong>{PRODUCTS.items_typePrefix}</strong><br>
+            <span>
+                    {
+                        "ru":"Сутки",
+                        "ua":"Доба"
+                    }
+                    - {PRODUCTS.items_price}. </span>
+            <span>
+                    {
+                        "ru":"Залог",
+                        "ua":"Завдаток"
+                    }
+                    - {PRODUCTS.items_price}</span>
+            <p style="padding-top: 20px;">
+                <a href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
+                        <span class="round_con btn">
+                            {
+                                "ru":"Подробнее",
+                                "ua":"Детальніше"
+                            }
+                        </span>
+                </a>
+            </p>
+        </a>
+    </div>
+</div>
+<!-- TPL_END PRODUCTS -->
+
+<!-- TPL_ELSE -->
+<div>
+    {
+    "ru":"По Вашему запросу ничего не найдено.",
+    "ua":"За Вашим запитом нічого не знайдено."
+    }
+</div>
+<!-- TPL_END -->

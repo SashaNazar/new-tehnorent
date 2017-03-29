@@ -41,9 +41,8 @@ class Order extends Model
     }
 
     //метод для получение всех заказов
-    public function getList($start = 1, $per_page = 10, $sort = array(), $status = 1, $active = false)
+    public function getList($start = 1, $per_page = 10, $sort = array(), $status = false, $active = false)
     {
-        $status = (int)$status;
         $sql = "SELECT orders.id,
                        orders.user_name,
                        orders.user_phone,
@@ -53,7 +52,8 @@ class Order extends Model
                        orders.created,
                        orders.updated
                 FROM {$this->table_name} WHERE 1";
-        if ($status) {
+        if ($status !== false) {
+            $status = (int)$status;
             $sql .= " AND status = {$status}";
         }
         if (!empty($sort)) {
@@ -107,6 +107,13 @@ class Order extends Model
                                                         user_phone = '{$user_phone}',
                                                         product_id = '{$product_id}',
                                                         created = '{$created}'";
+        } else {
+            $status = (int)$data['status'];
+            $sql = "UPDATE {$this->table_name} SET user_name = '{$user_name}',
+                                                   user_phone = '{$user_phone}',
+                                                   product_id = '{$product_id}',
+                                                   status = '{$status}'
+                                               WHERE id = {$id}";
         }
 
         $this->db->query($sql);
