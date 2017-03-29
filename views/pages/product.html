@@ -26,18 +26,6 @@
         margin-left: 1%;
     }
 
-    .loader {
-        margin-left: 37%;
-        border: 16px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 16px solid #3498db;
-        width: 20px;
-        height: 20px;
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-        z-index: 1;
-    }
-
     .note {
         background: lightblue;
         padding: 10px;
@@ -143,8 +131,11 @@
         width: 100%;
     }
     .wrapper-loader {
+        border-radius: 5px;
         width: 985px;
-        background:lightgoldenrodyellow;
+        background: #F27935 url(/image/preloader.svg) center center no-repeat;
+        background-size:76px;
+        opacity: 0.6;
         height: 110px;
         z-index: 1;
         position: absolute;
@@ -281,16 +272,17 @@
 
         $('form#order').submit(function (){
             $('#alert').hide();
-            $('form#order').hide();
             $('.wrapper-loader').show();
             $('#zakaz').hide();
 
             var formData = $('form#order');
+            var currentLanguage = window.location.pathname.substr(0,3) === '/ru' ? 'ru' : 'ua';
+            var data = formData.serialize() + '&lang=' + currentLanguage;
 
             $.ajax({
                 type: "POST",
                 url: formData.attr('action'),
-                data: formData.serialize(),
+                data: data,
                 success: function (data) {
                     $('#zakaz').show();
                     var data = $.parseJSON(data);
@@ -309,7 +301,7 @@
                         $('#alert').show();
                         $('.wrapper-loader').hide();
                         $('form').show();
-                    }, 100);
+                    }, 1000);
                 },
                 error: function (jqXHR, text, error) {
                     $('.wrapper-loader').hide();

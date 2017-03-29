@@ -10,8 +10,23 @@ class OrdersController extends Controller
 
     public function zakaz()
     {
+        $lang = 'ua';
+        $messages_array = array(
+            'ua' => array(
+                'success' => "Дякуєм за замовлення. Вам зателефонують на вказаний Вами номер.",
+                'error' => "Некоректно введені дані."
+            ),
+            'ru' => array(
+                'success' => "Спасибо за заказ. Вам перезвонят на указанный Вами номер.",
+                'error' => "Некорректно введенные данные."
+            )
+        );
+
         $response = array();
         if ($this->is_ajax() && $_POST) {
+            if (!empty($_POST['lang']) && $_POST['lang'] === 'ru') {
+                $lang = 'ru';
+            }
             $result = $this->model->save($_POST);
             if ($result) {
                 $productModel = new Product();
@@ -21,12 +36,10 @@ class OrdersController extends Controller
                 $userModel->setUser($_POST['user_name'], $_POST['user_phone']);
 
                 $response['status'] = 1;
-                $response['message'] = "С вами скоро свяжуться!";
-                //Session::setFlash('С вами скоро свяжуться!');
+                $response['message'] = $messages_array[$lang]['success'];
             } else {
                 $response['status'] = 0;
-                $response['message'] = "Ошибка!";
-               // Session::setFlash('Ошибка!');
+                $response['message'] = $messages_array[$lang]['error'];
             }
 
         }
