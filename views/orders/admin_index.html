@@ -2,6 +2,9 @@
     span a {
         color: darkgray;
     }
+    td > a {
+        color: darkgreen;
+    }
     .sort-active {
         color: limegreen;
     }
@@ -50,7 +53,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Найти</button>
-            <a type="button" class="btn btn-default" href="/admin/orders/">Сбросить</a>
+            <a type="button" class="btn btn-default" href="/admin/orders/index/all">Сбросить</a>
         </form>
         </div>
     </div>
@@ -66,57 +69,57 @@
                 <td>
                     <b>ID</b>
                     <span style="float:right;">
-                        <a href="/admin/orders/index/id&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
-                        <a href="/admin/orders/index/id&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/id&DESC/{PAGE}"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/id&ASC/{PAGE}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                     </span>
                 </td>
                 <td>
                     <b>User name</b>
                     <span style="float:right;">
-                        <a href="/admin/orders/index/user_name&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
-                        <a href="/admin/orders/index/user_name&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/user_name&DESC/{PAGE}"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/user_name&ASC/{PAGE}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                     </span>
                 </td>
                 <td>
                     <b>User phone</b>
                     <span style="float:right;">
-                        <a href="/admin/orders/index/user_phone&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
-                        <a href="/admin/orders/index/user_phone&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/user_phone&DESC/{PAGE}"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/user_phone&ASC/{PAGE}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                     </span>
                 </td>
                 <td>
                     <b>Product Id</b>
                     <span style="float:right;">
-                        <a href="/admin/orders/index/product_id&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
-                        <a href="/admin/orders/index/product_id&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/product_id&DESC/{PAGE}"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/product_id&ASC/{PAGE}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                     </span>
                 </td>
                 <td>
                     <b>Comment</b>
                     <span style="float:right;">
-                        <a href="/admin/orders/index/comment&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
-                        <a href="/admin/orders/index/comment&ASC/"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/comment&DESC/{PAGE}"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/comment&ASC/{PAGE}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                     </span>
                 </td>
                 <td>
                     <b>Status</b>
                     <span style="float:right;">
-                        <a href="/admin/orders/index/status&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
-                        <a href="/admin/orders/index/status&ASC"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/status&DESC/{PAGE}"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/status&ASC/{PAGE}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                     </span>
                 </td>
                 <td>
                     <b>Created</b>
                     <span style="float:right;">
-                        <a href="/admin/orders/index/created&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
-                        <a href="/admin/orders/index/created&ASC"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/created&DESC/{PAGE}"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/created&ASC/{PAGE}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                     </span>
                 </td>
                 <td>
                     <b>Updated</b>
                     <span style="float:right;">
-                        <a href="/admin/orders/index/updated&DESC/"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
-                        <a href="/admin/orders/index/updated&ASC"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/updated&DESC/{PAGE}"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                        <a href="/admin/orders/index/{STATUS}/updated&ASC/{PAGE}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                     </span>
                 </td>
                 <td width="110px;"><b>Actions</b></td>
@@ -155,7 +158,8 @@
 
         //для подсветки сортировки
         var url = window.location.pathname;
-        $('table thead tr').find('a[href="' + url + '"]').addClass('sort-active');
+        var search = window.location.search;
+        $('table thead tr').find('a[href="' + url + search + '"]').addClass('sort-active');
         ////////////////////////////////////////////
 
         //Для подсвечивания заказа в зависимости от статуса

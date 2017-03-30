@@ -14,7 +14,7 @@ class Order extends Model
     }
 
     //метод для получение всех пользователей при поиске
-    public function getListWithCondition($condition = array(), $sort = array(), $start = 1, $per_page = 10)
+    public function getListWithCondition($start = 1, $per_page = 10, $sort = array(), $status = 'all', $condition = array())
     {
         $sql = "SELECT orders.id,
                        orders.user_name,
@@ -30,6 +30,10 @@ class Order extends Model
                 $sql .= " AND {$key} LIKE '%{$value}%'";
             }
         }
+        if ($status !== 'all') {
+            $status = (int)$status;
+            $sql .= " AND status = {$status}";
+        }
         if (!empty($sort)) {
             $sort_field = $sort['field'];
             $sort_by = $sort['by'];
@@ -41,7 +45,7 @@ class Order extends Model
     }
 
     //метод для получение всех заказов
-    public function getList($start = 1, $per_page = 10, $sort = array(), $status = false, $active = false)
+    public function getList($start = 1, $per_page = 10, $sort = array(), $status = 'all', $active = false)
     {
         $sql = "SELECT orders.id,
                        orders.user_name,
@@ -52,7 +56,7 @@ class Order extends Model
                        orders.created,
                        orders.updated
                 FROM {$this->table_name} WHERE 1";
-        if ($status !== false) {
+        if ($status !== 'all') {
             $status = (int)$status;
             $sql .= " AND status = {$status}";
         }

@@ -85,6 +85,7 @@ class Controller
         $result['page_start'] = $page_start;
         $result['page_offset'] = $page_offset;
         $result['markup'] = $markup;
+        $result['page'] = $page;
 
         return $result;
 

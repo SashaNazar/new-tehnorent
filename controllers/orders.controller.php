@@ -51,16 +51,40 @@ class OrdersController extends Controller
 
     public function admin_index()
     {
+        $dataForSearch = array();
+        $status = 'all';
+        $page = '?page=1';
         $all_statuses_orders = array(1, 2, 3, 4, 5);
 
         $dataForSort = array(
             'field' => 'id',
             'by' => 'ASC'
         );
+        //какие заказы показывать
         if (isset($this->params[0])) {
-            $status_order = (int)$this->params[0];
-            $key = array_search($status_order, $all_statuses_orders);
-            $status = ($key === false) ? false : $all_statuses_orders[$key];
+            if ($this->params[0] !== 'all') {
+                $status_order = (int)$this->params[0];
+                $key = array_search($status_order, $all_statuses_orders);
+                $status = ($key === false) ? 'all' : $all_statuses_orders[$key];
+            }
+        }
+
+        if (isset($this->params[1])) {
+            $fieldSort = array('id', 'user_name', 'user_phone', 'product_id', 'status', 'comment', 'created', 'updated');
+            $bySort = array('ASC', 'DESC');
+
+            $sortParams = explode('&', $this->params[1]);
+
+            if (in_array($sortParams[0], $fieldSort)) {
+                $dataForSort['field'] = $sortParams[0];
+            }
+            if (in_array($sortParams[1], $bySort)) {
+                $dataForSort['by'] = $sortParams[1];
+            }
+        }
+
+        if ($status !== 'all' && is_integer($status)) {
+            $dataForSearch['status'] = $status;
         }
 
         if (!empty($_GET)) {
@@ -73,39 +97,34 @@ class OrdersController extends Controller
                 'updated' => ''
             );
 
-            $dataForSearch = array_intersect_key($_GET, $condition);
-            $dataForSearch = array_filter($dataForSearch);
-            $dataForSearch = array_map('trim', $dataForSearch);
+            $filter = array_intersect_key($_GET, $condition);
+            $filter = array_filter($filter);
+            $filter = array_map('trim', $filter);
+            $dataForSearch = array_merge($dataForSearch, $filter);
 
             $total_records = $this->model->getTotalCountWithCondition($dataForSearch);
-
             $data_for_pagination = $this->getDataForPagination($total_records);
-            $result = $this->model->getListWithCondition($dataForSearch, $dataForSort, $data_for_pagination['page_start'], $data_for_pagination['page_offset']);
+            $result = $this->model->getListWithCondition($data_for_pagination['page_start'], $data_for_pagination['page_offset'], $dataForSort, $status, $dataForSearch);
 
         } else {
-            $data_for_pagination = $this->getDataForPagination();
-            $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset'], $dataForSort, $status);
+            $total_records = $this->model->getTotalCountWithCondition($dataForSearch);
+            $data_for_pagination = $this->getDataForPagination($total_records);
+            $result = $this->model->getListWithCondition($data_for_pagination['page_start'], $data_for_pagination['page_offset'], $dataForSort, $status, $dataForSearch);
         }
-
-//        if (isset($_GET['user_name']) && isset($_GET['user_phone'])) {
-//            $condition = array();
-//            if ($_GET['user_name']) {
-//                $condition['user_name'] = $_GET['user_name'];
-//            }
-//            if ($_GET['user_phone']) {
-//                $condition['user_phone'] = $_GET['user_phone'];
-//            }
-//            $total_records = $this->model->getTotalCountWithCondition($condition);
-//
-//            $data_for_pagination = $this->getDataForPagination($total_records);
-//            $result = $this->model->getListWithCondition($condition, $data_for_pagination['page_start'], $data_for_pagination['page_offset']);
-//        }
 
         foreach ($result as $order) {
             $this->template->addBlock('ORDER', $order);
         }
 
-        $this->template->addVar('PAGINATION', $data_for_pagination['markup']);
+        if ($data_for_pagination['page'] > 1) {
+            $page = "?page={$data_for_pagination['page']}";
+        }
+
+        $this->template->addVars(array(
+            'PAGINATION' => $data_for_pagination['markup'] ,
+            'STATUS' => $status,
+            'PAGE' => $page
+        ));
         $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('orders/admin_index.html', false) );
     }
 
@@ -140,44 +159,6 @@ class OrdersController extends Controller
             ));
 
             $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('orders/admin_edit.html', false) );
-        }
-    }
-    public function admin_edit1()
-    {
-        if ($_POST) {
-            $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
-            $result = $this->model->save($_POST, $id);
-            if ($result) {
-                Session::setFlash('Данные успешно обновлены.');
-            } else {
-                Session::setFlash("Ошибка!");
-            }
-            Router::redirect('/admin/pages/');
-        }
-
-        //  нужно доделать, чтобы при несуществующем айдишнике тоже перебрасывало на главную
-        if (isset($this->params[0])) {
-            //$this->data['admin'] = $this->model->getById($this->params[0]);
-
-            $result = $this->model->getById($this->params[0]);
-            $this->template->addVars(array(
-                'NEWS_ID'	 =>   $result['id'] ,
-                'NEWS_TITLE_RU'			=>   $result['title'],
-                'NEWS_TITLE_UA'			=>   $result['ua_title'],
-                'NEWS_ALIAS'			=>   $result['alias'],
-                'NEWS_DESCRIPTION_RU' =>   $result['description'],
-                'NEWS_DESCRIPTION_UA' =>   $result['ua_description'],
-                'NEWS_TEXT_RU'	=>   nl2br($result['text']),
-                'NEWS_TEXT_UA'	=>   nl2br($result['ua_text']),
-                'NEWS_ACTIVE'	=>   $result['active'],
-                //'NEWS_PICTURE'	=>   DS.'webroot'.DS.'image'.DS.'logo1.png',
-            ));
-
-            $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('news/admin_edit.html', false) );
-
-        } else {
-            Session::setFlash("Неправилный Id страницы!");
-            Router::redirect('/admin/admins/');
         }
     }
 }

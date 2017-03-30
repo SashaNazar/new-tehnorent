@@ -53,8 +53,9 @@
         height: 110px;
         text-align: left;
         border-collapse: collapse;
-        margin: 5px;
+        /*margin: 5px;*/
         background: azure;
+        position: relative;
     }
     .price2 {
         display: block;
@@ -132,26 +133,12 @@
         float: left;
         width: 100%;
     }
-    .wrapper-loader {
-        border-radius: 5px;
-        width: 985px;
-        background: #F27935 url(/image/preloader.svg) center center no-repeat;
-        background-size:76px;
-        opacity: 0.6;
-        height: 125px;
-        z-index: 1;
-        position: absolute;
-        padding-top: 45px;
-        margin-top: -10px;
-        display: none;
-    }
 
     .wrapper-table {
         width: 50%;
+        min-width: 200px;
         float: left;
-        background: teal;
-        /*margin-top: 10px;*/
-        margin-left: 10px;
+        margin-left: 5px;
     }
 
     .table-head {
@@ -175,30 +162,28 @@
     <div id="note" class="note" style="display: none"></div>
     <div id="zakaz">
         <div class="wrapper-table">
-            <div  class=" round_con">
-                <table id="rounded-corner" width="295">
-                    <thead>
-                        <tr class="table-head">
-                            <td>{
-                                "ru":"Цена за сутки",
-                                "ua":"Ціна за добу"
-                                }
-                            </td>
-                            <td>{
-                                "ru":"Залог",
-                                "ua":"Завдаток"
-                                }
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table-head">
-                            <td>{PRODUCT_PRICE} грн.</td>
-                            <td>{PRODUCT_PRICE} грн.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table id="rounded-corner" width="295">
+                <thead>
+                    <tr class="table-head">
+                        <td>{
+                            "ru":"Цена за сутки",
+                            "ua":"Ціна за добу"
+                            }
+                        </td>
+                        <td>{
+                            "ru":"Залог",
+                            "ua":"Завдаток"
+                            }
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-head">
+                        <td>{PRODUCT_PRICE} грн.</td>
+                        <td>{PRODUCT_PRICE} грн.</td>
+                    </tr>
+                </tbody>
+               </table>
         </div>
 
 

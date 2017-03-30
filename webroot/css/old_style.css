@@ -7,6 +7,8 @@ H2 { padding-top:40px; padding-bottom:10px; margin-left:1%; margin-bottom:12px;}
 H2 span {background:#333; color:#FFF; border-radius:6px; font-size:18px; padding:12px 20px; text-transform:uppercase; font-weight:normal;}
 .wrapper{
     margin: auto;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .sidebar{
     position:relative;
@@ -178,13 +180,34 @@ table .imgcol { width:110px}
 .err p {padding: 5px;}
 td {
     padding:10px;
-    border:solid 1px teal;}
+    border:solid 3px teal;
+    border-radius: 5px;
+}
 .foot{ background:#333; border-radius:6px; color:#FFF; text-align:center; font-size:12px;}
 .foot a { color:#FFF;}
 .cotc{ width:100%; font-size:12px; text-align:center; border-bottom:#F3F3F3 solid 1px;}
+
+/*стили для прелоадера */
+.wrapper-loader {
+    border-radius: 5px;
+    width: 52%;
+    background: #F27935 url(/image/preloader.svg) center center no-repeat;
+    background-size:76px;
+    opacity: 0.6;
+    height: 125px;
+    z-index: 1;
+    position: absolute;
+    padding-top: 45px;
+    margin-top: -10px;
+    display: none;
+}
+
 @media (min-width:1366px){
     .wrapper{
         width: 1300px;
+    }
+    .wrapper-loader {
+        width: 52%;
     }
     .sidebar{
         width: 300px;
@@ -197,6 +220,9 @@ td {
     .wrapper{
         width: 1200px;
     }
+    .wrapper-loader {
+        width: 73%;
+    }
     .sidebar{
         width: 300px;
     }
@@ -207,6 +233,9 @@ td {
 @media (max-width:1280px){
     .wrapper{
         width: 1000px;
+    }
+    .wrapper-loader {
+        width: 63%;
     }
     .sidebar{
         width: 300px;
@@ -225,6 +254,9 @@ td {
     .wrapper{
         width: 740px;
         margin: auto;
+    }
+    .wrapper-loader {
+        width: 49%;
     }
     .sidebar{
         float: left;
@@ -258,6 +290,9 @@ td {
     .wrapper{
         width: 95%;
     }
+    .wrapper-loader {
+        width: 92%;
+    }
     .sidebar{
         float: none;
         width: 95%;
@@ -281,7 +316,7 @@ td {
     .round_con {
         font-size:16px;
         font-weight:normal;
-        padding-right: 7px;
+        /*padding-right: 7px;*/
     }
     .btn, .btn_or {font-size:24px; font-weight:normal;}
     .tmen a {font-size:22px; font-weight:normal; }
