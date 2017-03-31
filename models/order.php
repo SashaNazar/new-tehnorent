@@ -23,7 +23,9 @@ class Order extends Model
                        orders.status,
                        orders.comment,
                        orders.created,
-                       orders.updated
+                       orders.updated,
+                       orders.start_rent,
+                       orders.end_rent
                 FROM {$this->table_name} WHERE 1";
         if ($condition) {
             foreach ($condition as $key => $value) {
@@ -113,13 +115,18 @@ class Order extends Model
                                                         created = '{$created}'";
         } else {
             $status = (int)$data['status'];
+            $start_rent = !empty($data['start_rent']) ? $data['start_rent'] : '0000-00-00 00:00:00';
+            $end_rent = !empty($data['end_rent']) ? $data['end_rent'] : '0000-00-00 00:00:00';
             $sql = "UPDATE {$this->table_name} SET user_name = '{$user_name}',
                                                    user_phone = '{$user_phone}',
                                                    product_id = '{$product_id}',
-                                                   status = '{$status}'
+                                                   status = '{$status}',
+                                                   start_rent = '{$start_rent}',
+                                                   end_rent = '{$end_rent}'
                                                WHERE id = {$id}";
         }
 
+        //var_dump($sql);die;
         $this->db->query($sql);
         if (!$id) {
             $id = $this->db->getLastInsertId();
