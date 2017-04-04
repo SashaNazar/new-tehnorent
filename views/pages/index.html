@@ -1,30 +1,90 @@
+<style>
+    .reserved {
+        position: absolute;
+        padding: 2px;
+        border-radius: 5px;
+        background: darkseagreen;
+        margin-top: 5px;
+        margin-left: 5px;
+        font-size: 12px;
+    }
+
+    .order {
+        position: relative;
+        bottom: -15px;
+        color: black;
+        padding: 2px;
+        border-radius: 5px;
+        background: lightgrey;
+    }
+
+    .price-main {
+        top: -5px;
+        position: relative;
+    }
+</style>
+
 <a href="https://tehnoskarb.ua/"><img src="https://tehnoskarb.ua/img/main_ban/pb.jpg" class="banner_top"></a>
 
 <h2>
-    <span>Почему выбирают нас?</span>
+    <span>
+         {
+            "ru":"Почему выбирают нас?",
+            "ua":"Чому обирають нас?"
+        }
+    </span>
 </h2>
 <div class="favor3">
     <div class="pad">
-        <strong>Только качественный инструмент</strong><br>
-        Мы предлагаем прокат электроинструменов лучших моделей проверенных брендов.
+        <strong>
+            {
+            "ru":"Только качественный инструмент",
+            "ua":"Тільки якісний інструмент"
+            }
+        </strong><br>
+        {
+        "ru":"Мы предлагаем прокат электроинструменов лучших моделей проверенных брендов.",
+        "ua":"Ми пропонуємо прокат електроінструментів кращих моделей перевірених брендів."
+        }
     </div>
 </div>
 <div class="favor3">
-    <div class="pad"><strong>Экономия времени и денег</strong><br>
-        Прокат электроинструмента помогает сэкономить деньги и время на выполняемой вручную работе
+    <div class="pad">
+        <strong>
+            {
+            "ru":"Экономия времени и денег",
+            "ua":"Економія часу і грошей"
+            }
+        </strong><br>
+        {
+        "ru":"Прокат электроинструмента помогает сэкономить деньги и время на выполняемой вручную работе.",
+        "ua":"Прокат електроінструментів допомагає заощадити час та гроші на роботі, яку Ви виконуєте власноруч."
+        }
     </div></div>
 <div class="favor3">
     <div class="pad">
-        <strong>Широкий ассортимент моделей</strong><br>
-        Надежная и безопасная электротехника напрокат поможет вам быстро и качественно выполнить работу.
+        <strong>
+            {
+            "ru":"Широкий ассортимент моделей",
+            "ua":"Широкий асортимент моделей"
+            }
+        </strong><br>
+        {
+        "ru":"Надежная и безопасная электротехника напрокат поможет Вам быстро и качественно выполнить работу.",
+        "ua":"Надійна та безпечна електротехніка напрокат допоможе Вам швидко і якісно виконати роботу."
+        }
     </div>
 </div>
 
 <div style="clear:both"></div>
 
-
 <h2>
-    <span>Популярное:</span>
+    <span>
+        {
+            "ru":"Популярное:",
+            "ua":"Популярне:"
+        }
+    </span>
 </h2>
 
 <!-- TPL_IF PRODUCTS -->
@@ -34,29 +94,33 @@
     <div class="pad" style="text-align: center">
         <a  href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
             <img src="{PRODUCTS.items_picture_sm}">
-            <strong>{PRODUCTS.items_typePrefix}</strong><br>
+            <span><strong>{PRODUCTS.items_typePrefix}</strong></span><br>
+            <p class="price-main">
             <span>
-                    {
-                        "ru":"Сутки",
-                        "ua":"Доба"
-                    }
-                    - {PRODUCTS.items_price}. </span>
+                {
+                    "ru":"Сутки",
+                    "ua":"Доба"
+                }
+                - {PRODUCTS.items_price}.
+            </span>
             <span>
-                    {
-                        "ru":"Залог",
-                        "ua":"Завдаток"
-                    }
-                    - {PRODUCTS.items_price}</span>
-            <p style="padding-top: 20px;">
-                <a href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
-                        <span class="order">
-                            {
-                                "ru":"Подробнее",
-                                "ua":"Детальніше"
-                            }
-                        </span>
-                </a>
+                {
+                    "ru":"Залог",
+                    "ua":"Завдаток"
+                }
+                - {PRODUCTS.items_price}
+            </span>
             </p>
+<!--            <p style="padding-top: 10px;">-->
+<!--                <a href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">-->
+                    <span class="order">
+                        {
+                        "ru":"Подробнее",
+                        "ua":"Детальніше"
+                        }
+                    </span>
+<!--                </a>-->
+<!--            </p>-->
         </a>
     </div>
 </div>
@@ -67,12 +131,26 @@
 <div style="clear:both; height:0px"></div>
 
 <h2>
-    <span>Контакты:</span>
+    <span>
+        {
+            "ru":"Контакты:",
+            "ua":"Контакти:"
+        }
+    </span>
 </h2>
 <div class="kontakt">
     <strong>тел. 050-463-01-55</strong><br>
-    Петропавловская Борщаговка, Петропавловская 14 (напротив Обойного рынка).
-    <a href="#">Как добраться?</a>
+    {
+        "ru":"Петропавловская Борщаговка, Петропавловская 14 (напротив Обойного рынка).",
+        "ua":"Петропавлівська Борщагівка, Петропавлівська 14 (напроти Шпалерного ринку)."
+    }
+
+    <a href="#">
+        {
+            "ru":"Как добраться?",
+            "ua":"Як дістатися?"
+        }
+    </a>
     <br>
     <br>
     <style>
