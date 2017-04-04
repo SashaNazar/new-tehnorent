@@ -6,6 +6,13 @@
         background: darkseagreen;
         margin-top: 5px;
         margin-left: 5px;
+        font-size: 12px;
+    }
+
+    .order {
+        padding: 2px;
+        border-radius: 5px;
+        background: lightgrey;
     }
 </style>
 
@@ -43,7 +50,7 @@
                     - {PRODUCTS.items_price}</span>
                 <p style="padding-top: 20px;">
                     <a href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
-                        <span class="round_con btn">
+                        <span class="order">
                             {
                                 "ru":"Подробнее",
                                 "ua":"Детальніше"
@@ -57,3 +64,7 @@
     <!-- TPL_END PRODUCTS -->
 
 <!-- TPL_END -->
+
+<div style="text-align: center">
+    {PAGINATION}
+</div>

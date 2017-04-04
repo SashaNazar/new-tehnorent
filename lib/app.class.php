@@ -91,6 +91,14 @@ class App
         $main_template = ($layout == 'admin') ? 'admin.html' : 'default.html';
         self::$template->parseFile($main_template);
 
+//        if ($layout != 'admin') {
+//            self::$template->parseFile($main_template);
+//        } else {
+//            $layout_path = VIEWS_PATH.DS.'vue'.DS.'admin_vue_5'.'.html';
+//            $layout_view_object = new View('', $layout_path);
+//            echo  $layout_view_object->render();
+//        }
+
     }
 
     /*

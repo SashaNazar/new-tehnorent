@@ -4,17 +4,6 @@ class Product extends Model
 {
     protected $table_name = 'products';
 
-//    public function getTotalCount($active = false)
-//    {
-//        $sql = "SELECT count(*) AS total FROM products WHERE 1";
-//        if ($active) {
-//            $sql .= " AND active = 'yes'";
-//        }
-//        $result = $this->db->query($sql);
-//
-//        return isset($result[0]) ? $result[0]['total'] : null;
-//    }
-
     public function getTotalCountWithCategory($category_id = false, $active = false)
     {
         $sql = "SELECT count(*) AS total FROM products WHERE 1";
@@ -77,6 +66,28 @@ class Product extends Model
             $sql .= " AND active = 'yes'";
         }
         $sql .= " LIMIT {$start}, {$per_page}";
+        return $this->db->query($sql);
+    }
+
+    public function popularProducts()
+    {
+        $sql = "SELECT products.id,
+                       products.active,
+                       products.title,
+                       products.name,
+                       products.description,
+                       products.params,
+                       products.ua_title,
+                       products.ua_name,
+                       products.ua_description,
+                       products.ua_params,
+                       products.price,
+                       products.picture,
+                       products.picture_small,
+                       products.vendor,
+                       products.vendor_code,
+                       products.deposit
+                FROM products WHERE 1 LIMIT 8";
         return $this->db->query($sql);
     }
 

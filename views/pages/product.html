@@ -272,6 +272,7 @@
             $('#alert').hide();
             $('.wrapper-loader').show();
             $('#zakaz').hide();
+            $('#findButton1').prop('disabled', true);
 
             var formData = $('form#order');
             var currentLanguage = window.location.pathname.substr(0,3) === '/ru' ? 'ru' : 'ua';
@@ -283,6 +284,7 @@
                 data: data,
                 success: function (data) {
                     $('#zakaz').show();
+                    $('#findButton1').prop('disabled', false);
                     var data = $.parseJSON(data);
                     setTimeout(function () {
                         if (data.status === 1) {
@@ -304,6 +306,7 @@
                 error: function (jqXHR, text, error) {
                     $('.wrapper-loader').hide();
                     $('form').show();
+                    $('#findButton1').prop('disabled', false);
                 }
             });
             return false;

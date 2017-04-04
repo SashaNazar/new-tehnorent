@@ -19,6 +19,24 @@ class PagesController extends Controller
             $product = new Product();
             $products = $product->findForSearchFull($_GET);
 
+            //пагинация начало
+            $page = 1;
+            $per_page = $page_offset = 12;
+            $page_start = 0;
+            $total_records = count($products);
+            if (isset($_GET) && isset($_GET['page'])) {
+                $page = (int)$_GET['page'];
+                if ($page > 1) {
+                    $page_start = ($page - 1) * $page_offset;
+                }
+            }
+            $pagination = new Pagination();
+            $pagination->setCurrent($page);
+            $pagination->setRPP($per_page);
+            $pagination->setTotal($total_records);
+            $markup = $pagination->parse();
+            //пагинация конец
+
             $categoryModel = new Categories();
             $categoriesAll = $categoryModel->getCategoryForMenu($this->language);
 
@@ -32,21 +50,24 @@ class PagesController extends Controller
             $pages_menu = $this->view_pages($pages);
 
             $lang = (App::getRouter()->getLanguage() == 'ua') ? '' : DS.App::getRouter()->getLanguage();
-            foreach ($products as $item) {
-                $this->template->addBlock('PRODUCTS', array(
-                    'LANG' => $lang,
-                    'items_id'			=>   $item['id'] ,
-                    'items_name'			=>   $item['name'],
-                    'items_params'			=>   htmlspecialchars_decode($item['params']),
-                    'items_picture'			=>   $item['picture'],
-                    'items_typePrefix'			=>   $item['title'],
-                    'items_picture_sm'			=>   $item['picture_small'],
-                    'items_vendor'			=>   $item['vendor'],
-                    'items_vendor_code'			=>   $item['vendor_code'],
-                    'items_price'			=>   $item['price'],
-                    'items_deposit'			=>   $item['deposit'],
-                    'items_active' => $item['active'] == 'yes' ? '' : 'no',
-                ));
+
+            for ($i = $page_start; $i < $page_start+$per_page; $i++) {
+                if (isset($products[$i])) {
+                    $this->template->addBlock('PRODUCTS', array(
+                        'LANG' => $lang,
+                        'items_id'			=>   $products[$i]['id'] ,
+                        'items_name'			=>   $products[$i]['name'],
+                        'items_params'			=>   htmlspecialchars_decode($products[$i]['params']),
+                        'items_picture'			=>   $products[$i]['picture'],
+                        'items_typePrefix'			=>   $products[$i]['title'],
+                        'items_picture_sm'			=>   $products[$i]['picture_small'],
+                        'items_vendor'			=>   $products[$i]['vendor'],
+                        'items_vendor_code'			=>   $products[$i]['vendor_code'],
+                        'items_price'			=>   $products[$i]['price'],
+                        'items_deposit'			=>   $products[$i]['deposit'],
+                        'items_active' => $products[$i]['active'] == 'yes' ? '' : 'no',
+                    ));
+                }
             }
             $query = htmlspecialchars($_GET['query']);
             $this->template->addVars(array(
@@ -55,7 +76,8 @@ class PagesController extends Controller
                 'DESCRIPTION_TEXT' => $breadcrumbsTitleDescription['description'],
                 'BREADCRUMBS' => $breadcrumbsTitleDescription['breadcrumbs'],
                 'CATEGORIES_MENU' => $categories_menu,
-                'PAGES_MENU' => $pages_menu
+                'PAGES_MENU' => $pages_menu,
+                'PAGINATION' => $markup
             ));
             $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/search.html', false) );
         }
@@ -174,10 +196,10 @@ class PagesController extends Controller
                 'DESCRIPTION_TEXT' => $breadcrumbsTitleDescription['description'],
                 'BREADCRUMBS' => $breadcrumbsTitleDescription['breadcrumbs'],
                 'CATEGORIES_MENU' => $categories_menu,
-                'PAGES_MENU' => $pages_menu
+                'PAGES_MENU' => $pages_menu,
+                'PAGINATION' => $markup
             ));
 
-            $this->template->addVar('PAGINATION', $markup);
             $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('pages/categories.html', false) );
 
         } else {
@@ -285,6 +307,25 @@ class PagesController extends Controller
             'PAGES_MENU' => $pages_menu
         ));
 
+        $product = new Product();
+        $products = $product->popularProducts();
+
+        foreach ($products as $item) {
+            $this->template->addBlock('PRODUCTS', array(
+                'items_id'			=>   $item['id'] ,
+                'items_name'			=>   $item['name'],
+                'items_params'			=>   htmlspecialchars_decode($item['params']),
+                'items_picture'			=>   $item['picture'],
+                'items_typePrefix'			=>   $item['title'],
+                'items_picture_sm'			=>   $item['picture_small'],
+                'items_vendor'			=>   $item['vendor'],
+                'items_vendor_code'			=>   $item['vendor_code'],
+                'items_price'			=>   $item['price'],
+                'items_deposit'			=>   $item['deposit'],
+                'items_active' => $item['active'] == 'yes' ? '' : 'no',
+            ));
+        }
+
         if ($this->params[0] && is_string($this->params[0])) {
 
             $breadcrumbs_title = "Главная";
@@ -340,9 +381,9 @@ class PagesController extends Controller
 
         foreach ($array as $key => $item) {
             if ($key === $array_size-1) {
-                $begin .= "<a href='" . $this->languageForUrl ."/pages/index/" . $item['alias'] . "'>" . $item['title'] . "</a>";
+                $begin .= "<a href='" . $this->languageForUrl ."/pages/index/" . $item['alias'] . "'>" . $item['name'] . "</a>";
             } else {
-                $begin .= "<a href='" . $this->languageForUrl ."/pages/index/" . $item['alias'] . "'>" . $item['title'] . "</a> | ";
+                $begin .= "<a href='" . $this->languageForUrl ."/pages/index/" . $item['alias'] . "'>" . $item['name'] . "</a> | ";
             }
         }
         $begin .= '</p>';
@@ -367,14 +408,11 @@ class PagesController extends Controller
         }
         //перебираем в цикле массив и выводим на экран
         for($i = 0; $i < count($arr[$parent_id]);$i++) {
-            //$str .= '<li><a href="/' . $this->language . '/pages/category/'.$arr[$parent_id][$i]['id'].'">'.$arr[$parent_id][$i]['name'].'</a>';
-
             if ($current_category && $current_category == $arr[$parent_id][$i]['id']) {
                 $str .= '<li><a href="' . $this->languageForUrl . '/pages/category/'.$arr[$parent_id][$i]['id'].'"><strong>'.$arr[$parent_id][$i]['name'].'</strong></a>';
             } else {
                 $str .= '<li><a href="' . $this->languageForUrl . '/pages/category/' . $arr[$parent_id][$i]['id'] . '">' . $arr[$parent_id][$i]['name'] . '</a>';
             }
-
             //рекурсия - проверяем нет ли дочерних категорий
             $str .= $this->view_cat($arr,$arr[$parent_id][$i]['id'], $current_category);
             $str .= '</li>';

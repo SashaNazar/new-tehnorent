@@ -23,6 +23,7 @@ class Page extends Model
             $suffix = $lang.'_';
         }
         $sql = "SELECT id,
+                       {$suffix}name as name,
                        {$suffix}title as title,
                        alias,
                        {$suffix}description as description,
@@ -43,6 +44,7 @@ class Page extends Model
         }
 
         $sql = "SELECT id,
+                       {$suffix}name as name, 
                        {$suffix}title as title,
                        alias,
                        {$suffix}description as description,
