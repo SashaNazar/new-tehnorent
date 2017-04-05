@@ -56,7 +56,7 @@
 
             <div class="form-group">
                 <label for="ua_params">Params Ua</label>
-                <textarea id="ua_params" name="ua_params" class="form-control" rows="6">{PRODUCT_PARAMS_RU}</textarea>
+                <textarea id="ua_params" name="ua_params" class="form-control" rows="6">{PRODUCT_PARAMS_UA}</textarea>
             </div>
 
             <!-- TPL_IF PRODUCT_PICTURE -->
@@ -107,3 +107,20 @@
         </form>
     </div>
 </div>
+
+<script type="text/javascript" src="/webroot/js/tinymce/tinymce.min.js"></script>
+
+<script>
+    tinymce.init({
+        selector:'textarea',
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code'
+        ],
+        toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+//        content_css: '//www.tinymce.com/css/codepen.min.css'
+    });
+</script>
+
