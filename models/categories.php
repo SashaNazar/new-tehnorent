@@ -3,7 +3,7 @@
 class Categories extends Model
 {
     //имя таблицы модели
-    protected $table_name = "products";
+    protected $table_name = "category";
 
     public function getProductsByCategory($category_id, $lang = 'ru')
     {
@@ -107,5 +107,17 @@ class Categories extends Model
         $id = (int)$id;
         $sql = "UPDATE category SET active = 'yes' WHERE id = {$id}";
         return $this->db->query($sql);
+    }
+
+    public function getChildrenCategories($cat_id)
+    {
+        $id = (int)$cat_id;
+        $sql = "SELECT id FROM {$this->table_name} WHERE p_id = $id";
+        $result = $this->db->query($sql);
+        $categories = array();
+        foreach ($result as $item) {
+            $categories[] += (int)$item['id'];
+        }
+        return $categories;
     }
 }

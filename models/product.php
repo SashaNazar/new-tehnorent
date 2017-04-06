@@ -12,6 +12,9 @@ class Product extends Model
         }
         if ($category_id && is_integer($category_id)) {
             $sql .= " AND category_id = {$category_id}";
+        } elseif ($category_id && is_array($category_id)) {
+            $category_id = implode(',', $category_id);
+            $sql .= " AND category_id IN ('{$category_id}')";
         }
         $result = $this->db->query($sql);
 
@@ -60,8 +63,13 @@ class Product extends Model
 
     public function getProductsByCategory($start, $per_page = 10, $category_id, $active = false, $lang = 'ru')
     {
-        $category_id = (int)$category_id;
-        $sql = "SELECT * FROM products WHERE category_id={$category_id}";
+        if (is_array($category_id)) {
+            $category_id = implode(',', $category_id);
+            $sql = "SELECT * FROM products WHERE category_id IN ({$category_id})";
+        } else {
+            $category_id = (int)$category_id;
+            $sql = "SELECT * FROM products WHERE category_id={$category_id}";
+        }
         if ($active) {
             $sql .= " AND active = 'yes'";
         }
@@ -87,7 +95,7 @@ class Product extends Model
                        products.vendor,
                        products.vendor_code,
                        products.deposit
-                FROM products WHERE 1 LIMIT 8";
+                FROM {$this->table_name} WHERE 1 LIMIT 8";
         return $this->db->query($sql);
     }
 
@@ -111,7 +119,7 @@ class Product extends Model
                        products.vendor_code,
                        products.deposit,
                        category.name as category_name
-                FROM products";
+                FROM {$this->table_name}";
         if ($active) {
             $sql .= ' AND active = 1';
         }

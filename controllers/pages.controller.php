@@ -135,12 +135,24 @@ class PagesController extends Controller
 
             $category_id = (int)$this->params[0];
 
+            $categoryModel = new Categories();
+            $category_info = $categoryModel->getById($category_id);
+
+            $cat = $category_id;
+
+            if ((int)$category_info['p_id'] === 1) {
+                $childrenCategory = $categoryModel->getChildrenCategories($category_id);
+                if (!empty($childrenCategory)) {
+                    $cat = $childrenCategory;
+                }
+            }
+
             $productsModel = new Product();
             //пагинация начало
             $page = 1;
             $per_page = $page_offset = 12;
             $page_start = 0;
-            $total_records = $productsModel->getTotalCountWithCategory($category_id, false);
+            $total_records = $productsModel->getTotalCountWithCategory($cat, false);
 
             if (isset($_GET) && isset($_GET['page'])) {
                 $page = (int)$_GET['page'];
@@ -156,7 +168,6 @@ class PagesController extends Controller
             $markup = $pagination->parse();
             //пагинация конец
 
-            $categoryModel = new Categories();
             $categoriesAll = $categoryModel->getCategoryForMenu($this->language);
 
             $breadcrumbs_array = $this->breadcrumbs($categoriesAll, $category_id);
@@ -168,7 +179,7 @@ class PagesController extends Controller
             $pages = $this->model->getListActive($this->language);
             $pages_menu = $this->view_pages($pages);
 
-            $products = $productsModel->getProductsByCategory($page_start, $page_offset, $category_id);
+            $products = $productsModel->getProductsByCategory($page_start, $page_offset, $cat);
 
             $lang = (App::getRouter()->getLanguage() == 'ua') ? '' : DS.App::getRouter()->getLanguage();
 

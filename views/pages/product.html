@@ -27,6 +27,10 @@
         margin-left: 2%;
     }
 
+    .findButton1:hover {
+        background: mediumspringgreen;
+    }
+
     .note {
         background: lightblue;
         padding: 10px;
@@ -218,33 +222,21 @@
     </div>
 </div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
+<div style="clear:both"></div>
+<br><br>
 
 <div class="list">
-    <h1>{PRODUCT_NAME}</h1>
+    <h1 style="text-align: center">{PRODUCT_NAME}</h1>
 
-    <div  class="price2 round_con">
-
-    </div>
     <br>
 
     <h3 style="text-align: center">
-        <img src="{PRODUCT_PICTURE_BIG}" class="round_con tovimg" title="{PRODUCT_NAME} {PRODUCT_VENDOR_CODE}">
         {
         "ru":"Технические характеристики",
         "ua":"Технічні характеристики"
         } {PRODUCT_VENDOR} {PRODUCT_VENDOR_CODE}
     </h3>
+    <img src="{PRODUCT_PICTURE_BIG}" class="round_con tovimg" title="{PRODUCT_NAME} {PRODUCT_VENDOR_CODE}">
     <br>
     <span>{PRODUCT_PARAMS}</span>
     <br><br>
@@ -255,7 +247,7 @@
         } {PRODUCT_VENDOR} {PRODUCT_VENDOR_CODE}
     </h3>
     <br>
-    <span>{PRODUCT_DESCRIPTION}</span>
+    {PRODUCT_DESCRIPTION}
 </div>
 
 <script>

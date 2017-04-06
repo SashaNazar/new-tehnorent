@@ -14,7 +14,7 @@ class ProductsController extends Controller
         $data_for_pagination = $this->getDataForPagination();
 
         $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset']);
-        //var_dump($result);die;
+
         foreach ($result as $item) {
             $this->template->addBlock('PRODUCTS', array(
                 'id'	=>   $item['id'] ,
