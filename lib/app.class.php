@@ -75,9 +75,9 @@ class App
         }
 
         if (self::$router->getLanguage() == 'ru') {
-            self::$template->addVar('DOMAIN_RU_CURR', ' curr');
+            self::$template->addVar('DOMAIN_RU_CURR', 'curr');
         } else {
-            self::$template->addVar('DOMAIN_UA_CURR', ' curr');
+            self::$template->addVar('DOMAIN_UA_CURR', 'curr');
         }
 
         $lang = (self::$router->getLanguage() == 'ua') ? '' : DS.self::$router->getLanguage();

@@ -55,6 +55,7 @@ class OrdersController extends Controller
         $status = 'all';
         $page = '?page=1';
         $all_statuses_orders = array(1, 2, 3, 4, 5);
+        $search = '?' . $_SERVER['QUERY_STRING'];
 
         $dataForSort = array(
             'field' => 'id',
@@ -93,8 +94,11 @@ class OrdersController extends Controller
                 'user_name' => '',
                 'user_phone' => '',
                 'product_id' => '',
+                'status' => '',
                 'created' => '',
-                'updated' => ''
+                'updated' => '',
+                'start_rent' => '',
+                'end_rent' => ''
             );
 
             $filter = array_intersect_key($_GET, $condition);
@@ -123,7 +127,7 @@ class OrdersController extends Controller
         $this->template->addVars(array(
             'PAGINATION' => $data_for_pagination['markup'] ,
             'STATUS' => $status,
-            'PAGE' => $page
+            'PAGE' => $search
         ));
         $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('orders/admin_index.html', false) );
     }

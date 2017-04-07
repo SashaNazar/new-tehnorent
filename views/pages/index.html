@@ -1,30 +1,3 @@
-<style>
-    .reserved {
-        position: absolute;
-        padding: 2px;
-        border-radius: 5px;
-        background: darkseagreen;
-        margin-top: 5px;
-        margin-left: 5px;
-        font-size: 12px;
-    }
-
-    .order {
-        position: relative;
-        bottom: -15px;
-        color: black;
-        padding: 2px;
-        border-radius: 5px;
-        background: lightgrey;
-    }
-
-    .price-main {
-        top: -5px;
-        position: relative;
-    }
-</style>
-
-<!--<a href="https://tehnoskarb.ua/"><img src="https://tehnoskarb.ua/img/main_ban/pb.jpg" class="banner_top"></a>-->
 <a href="#map"><img src="/webroot/image/banner/ban.jpg" class="banner_top"></a>
 
 <h2>
@@ -92,8 +65,8 @@
 
 <!-- TPL_BEGIN PRODUCTS -->
 <div class="favor">
-    <div class="pad" style="text-align: center">
-        <a  href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
+    <a  href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
+    <div class="pad text-center">
             <img src="{PRODUCTS.items_picture_sm}">
             <span><strong>{PRODUCTS.items_typePrefix}</strong></span><br>
             <p class="price-main">
@@ -122,8 +95,8 @@
                     </span>
 <!--                </a>-->
 <!--            </p>-->
-        </a>
     </div>
+    </a>
 </div>
 <!-- TPL_END PRODUCTS -->
 

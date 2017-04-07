@@ -1,25 +1,4 @@
-<style>
-    .reserved {
-        position: absolute;
-        padding: 2px;
-        border-radius: 5px;
-        background: darkseagreen;
-        margin-top: 5px;
-        margin-left: 5px;
-        font-size: 12px;
-    }
-
-    .order {
-        position: relative;
-        bottom: -15px;
-        color: black;
-        padding: 2px;
-        border-radius: 5px;
-        background: lightgrey;
-    }
-</style>
-
-<div style="text-align: center">
+<div class="text-center">
     {PAGINATION}
 </div>
 <br>
@@ -36,8 +15,8 @@
               }
           </span>
         <!-- TPL_END -->
-        <div class="pad" style="text-align: center">
-            <a  href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
+        <a  href="{PRODUCTS.LANG}/pages/product/{PRODUCTS.items_id}">
+        <div class="pad text-center">
             <img src="{PRODUCTS.items_picture_sm}">
                 <span><strong>{PRODUCTS.items_typePrefix}</strong></span><br>
                 <p>
@@ -66,14 +45,14 @@
                         </span>
 <!--                    </a>-->
 <!--                </p>-->
-            </a>
         </div>
+        </a>
     </div>
     <!-- TPL_END PRODUCTS -->
 
 <!-- TPL_END -->
 <br>
 <div style="clear:both"></div>
-<div style="text-align: center">
+<div class="text-center">
     {PAGINATION}
 </div>
