@@ -388,14 +388,6 @@ td {
     margin-left: 5px;
     font-size: 12px;
 }
-.order {
-    position: relative;
-    bottom: -15px;
-    color: black;
-    padding: 2px;
-    border-radius: 5px;
-    background: lightgrey;
-}
 .price-main {
     top: -5px;
     position: relative;
