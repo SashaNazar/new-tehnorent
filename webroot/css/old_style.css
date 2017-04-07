@@ -375,7 +375,8 @@ td {
 .popup .in_scr img {vertical-align:middle; width:40px; height:auto; padding-right:10px;}
 
 .lang.curr {
-    background: greenyellow;
+    color: darkorange;
+    /*background: greenyellow;*/
 }
 /****************************************************************************/
 /**********************     Стили для пагинатора     ************************/
