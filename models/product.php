@@ -99,6 +99,46 @@ class Product extends Model
         return $this->db->query($sql);
     }
 
+    //метод для получение всех продуктов при поиске
+    public function getListWithCondition($start = 1, $per_page = 10, $sort = array(), $status = 'all', $condition = array())
+    {
+        $sql = "SELECT products.id,
+                       products.active,
+                       products.title,
+                       products.name,
+                       products.description,
+                       products.params,
+                       products.ua_title,
+                       products.ua_name,
+                       products.ua_description,
+                       products.ua_params,
+                       products.price,
+                       products.picture,
+                       products.picture_small,
+                       products.vendor,
+                       products.vendor_code,
+                       products.deposit,
+                       category.name as category_name
+                FROM {$this->table_name} LEFT JOIN category ON products.category_id = category.id WHERE 1";
+        if ($condition) {
+            foreach ($condition as $key => $value) {
+                $sql .= " AND {$this->table_name}.{$key} LIKE '%{$value}%'";
+            }
+        }
+        if ($status !== 'all') {
+            $status = (int)$status;
+            $sql .= " AND active = {$status}";
+        }
+        if (!empty($sort)) {
+            $sort_field = $sort['field'];
+            $sort_by = $sort['by'];
+            $sql .= " ORDER BY {$sort_field} {$sort_by}";
+        }
+        $sql .= " LIMIT {$start}, {$per_page}";
+
+        return $this->db->query($sql);
+    }
+
     //метод для получение всех продуктов
     public function getList($start = 1, $per_page = 10, $active = false)
     {
@@ -119,13 +159,13 @@ class Product extends Model
                        products.vendor_code,
                        products.deposit,
                        category.name as category_name
-                FROM {$this->table_name}";
+                FROM {$this->table_name} LEFT JOIN category ON products.category_id = category.id WHERE 1";
         if ($active) {
-            $sql .= ' AND active = 1';
+            $sql .= " AND {$this->table_name}.active = 'yes'";
         }
-        $sql .= " LEFT JOIN category ON products.category_id = category.id LIMIT {$start}, {$per_page}";
+        $sql .= " LIMIT {$start}, {$per_page}";
+        //$sql .= " LEFT JOIN category ON products.category_id = category.id LIMIT {$start}, {$per_page}";
 
-        //var_dump($sql);die;
         return $this->db->query($sql);
     }
 

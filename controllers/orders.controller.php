@@ -53,7 +53,6 @@ class OrdersController extends Controller
     {
         $dataForSearch = array();
         $status = 'all';
-        $page = '?page=1';
         $all_statuses_orders = array(1, 2, 3, 4, 5);
         $search = '?' . $_SERVER['QUERY_STRING'];
 
@@ -120,14 +119,12 @@ class OrdersController extends Controller
             $this->template->addBlock('ORDER', $order);
         }
 
-        if ($data_for_pagination['page'] > 1) {
-            $page = "?page={$data_for_pagination['page']}";
-        }
-
         $this->template->addVars(array(
             'PAGINATION' => $data_for_pagination['markup'] ,
             'STATUS' => $status,
-            'PAGE' => $search
+            'SEARCH' => $search,
+            'TOTAL' => $total_records,
+            'QUERY' => json_encode($_GET)
         ));
         $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('orders/admin_index.html', false) );
     }

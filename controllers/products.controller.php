@@ -11,9 +11,69 @@ class ProductsController extends Controller
 
     public function admin_index()
     {
-        $data_for_pagination = $this->getDataForPagination();
+        $dataForSearch = array();
+        $status = 'all';
+        $products_statuses = array('yes', 'no');
+        $search = '?' . $_SERVER['QUERY_STRING'];
 
-        $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset']);
+        $dataForSort = array(
+            'field' => 'id',
+            'by' => 'ASC'
+        );
+
+        //какие продукты показывать
+        if (isset($this->params[0])) {
+            if ($this->params[0] !== 'all') {
+                $status_products = (int)$this->params[0];
+                $key = array_search($status_products, $products_statuses);
+                $status = ($key === false) ? 'all' : $products_statuses[$key];
+            }
+        }
+
+        /// Условия сортировки
+        if (isset($this->params[1])) {
+            $fieldSort = array('id', 'title', 'ua_title', 'price', 'deposit', 'category_id', 'active');
+            $bySort = array('ASC', 'DESC');
+
+            $sortParams = explode('&', $this->params[1]);
+
+            if (in_array($sortParams[0], $fieldSort)) {
+                $dataForSort['field'] = $sortParams[0];
+            }
+            if (in_array($sortParams[1], $bySort)) {
+                $dataForSort['by'] = $sortParams[1];
+            }
+        }
+
+        if (!empty($_GET)) {
+            $condition = array(
+                'id' => '',
+                'title' => '',
+                'ua_title' => '',
+                'price' => '',
+                'deposit' => '',
+                'category_id' => '',
+                'active' => ''
+            );
+
+            $filter = array_intersect_key($_GET, $condition);
+            $filter = array_filter($filter);
+            $filter = array_map('trim', $filter);
+            $dataForSearch = array_merge($dataForSearch, $filter);
+
+            $total_records = $this->model->getTotalCountWithCondition($dataForSearch);
+            $data_for_pagination = $this->getDataForPagination($total_records);
+            $result = $this->model->getListWithCondition($data_for_pagination['page_start'], $data_for_pagination['page_offset'], $dataForSort, $status, $dataForSearch);
+
+        } else {
+            $total_records = $this->model->getTotalCountWithCondition($dataForSearch);
+            $data_for_pagination = $this->getDataForPagination($total_records);
+            $result = $this->model->getListWithCondition($data_for_pagination['page_start'], $data_for_pagination['page_offset'], $dataForSort, $status, $dataForSearch);
+        }
+
+//        $data_for_pagination = $this->getDataForPagination();
+//
+//        $result = $this->model->getList($data_for_pagination['page_start'], $data_for_pagination['page_offset'], true);
 
         foreach ($result as $item) {
             $this->template->addBlock('PRODUCTS', array(
@@ -28,7 +88,14 @@ class ProductsController extends Controller
             ));
         }
 
-        $this->template->addVar('PAGINATION', $data_for_pagination['markup']);
+        $this->template->addVars(array(
+            'PAGINATION' => $data_for_pagination['markup'] ,
+            'STATUS' => $status,
+            'SEARCH' => $search,
+            'TOTAL' => $total_records,
+            'QUERY' => json_encode($_GET)
+        ));
+
         $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('products/admin_index.html', false) );
     }
 
