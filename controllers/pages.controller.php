@@ -407,14 +407,8 @@ class PagesController extends Controller
         if(empty($arr[$parent_id])) {
             return;
         }
-        $title_menu = '<strong>Электроинструменты<br>напрокат</strong>';
-        if ($this->language == 'ua') {
-            $title_menu = '<strong>Електроінструменти<br>напрокат</strong>';
-        }
 
-        if ($parent_id == 1) {
-            $str = "<ul class='category'><div class='tmen'>{$title_menu}</div>";
-        } else {
+        if ($parent_id !== 1) {
             $str =  '<ul style="display: none;">';
         }
         //перебираем в цикле массив и выводим на экран
@@ -429,7 +423,9 @@ class PagesController extends Controller
             $str .= '</li>';
         }
 
-        $str .= '</ul>';
+        if ($parent_id !== 1) {
+            $str .= '</ul>';
+        }
 
         return $str;
     }
