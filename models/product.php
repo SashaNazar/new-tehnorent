@@ -316,6 +316,11 @@ class Product extends Model
         return $this->db->query($sql);
     }
 
+    public function setActiveProduct($product_id)
+    {
+        $sql = "UPDATE {$this->table_name} SET active = 'yes' WHERE id = {$product_id}";
+        $this->db->query($sql);
+    }
 
 
 

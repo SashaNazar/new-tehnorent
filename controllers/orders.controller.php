@@ -159,6 +159,13 @@ class OrdersController extends Controller
                 'ORDER_COMMENT' =>   $result['comment']
             ));
 
+            $statusModel = new Status();
+            $statuses = $statusModel->getAllStatus();
+            foreach ($statuses as $status) {
+                $status['selected'] = ($status['id'] === $result['status']) ? 'selected' : '';
+                $this->template->addBlock('STATUS', $status);
+            }
+
             $this->template->addVar('OUTPUTMAIN', $this->template->parseFile('orders/admin_edit.html', false) );
         }
     }

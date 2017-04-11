@@ -1,8 +1,4 @@
 <div class="list">
-    <div class="wrapper-loader">
-        <div id="loader" class="loader"></div>
-    </div>
-
     <div id="alert" class = "hide">
         <button type = "button" class = "close" data-dismiss = "alert" aria-hidden = "true">
             &times;
@@ -10,13 +6,16 @@
         <p class="text-center"></p>
     </div>
 
-    <div id="note" class="note" style="display: none"></div>
-    <div id="zakaz">
-        <div class="wrapper-table">
-            <table id="rounded-corner" width="295">
+    <div style="width: 100%; height: 100px;">
+        <div class="wrapper-loader">
+            <div id="loader" class="loader"></div>
+        </div>
+        <div id="div-price">
+            <table id="rounded-corner">
                 <thead>
                     <tr class="table-head">
-                        <td>{
+                        <td>
+                            {
                             "ru":"Цена за сутки",
                             "ua":"Ціна за добу"
                             }
@@ -34,39 +33,43 @@
                         <td>{PRODUCT_PRICE} грн.</td>
                     </tr>
                 </tbody>
-               </table>
+            </table>
         </div>
+        <div id="test"></div>
+        <div id="div-form">
 
+            <!-- TPL_IF PRODUCT_UNACTIVE -->
+            <div  class="product-unactive text-center">
+                <span class="message">
+                    {
+                        "ru":"В прокате",
+                        "ua":"У прокаті"
+                    }
+                </span>
+            </div>
+            <!-- TPL_ELSE -->
+            <div  class="product-unactive text-center hide">
+                <span class="message">
+                    {
+                        "ru":"В прокате",
+                        "ua":"У прокаті"
+                    }
+                </span>
+            </div>
+            <div id="form-order">
+                <form method="post" action="/orders/zakaz/" id="order">
+                    <input type="hidden" name="product_id" value="{PRODUCT_ID}">
+                    <input type="text" class="findText1" name="user_name" placeholder='{ "ru":"Ваше имя", "ua":"Ваше ім`я" }'><br><br>
+                    <input type="text" class="findText1" id="mobile_phone" name="user_phone" placeholder='{ "ru":"Ваш номер телефона", "ua":"Ваш номер телефону" }'><br><br>
+                    <input type="submit" id="findButton1" class="findButton1" value='{ "ru":"Заказать", "ua":"Замовити" }'>
+                </form>
+            </div>
+            <!-- TPL_END -->
 
-        <!-- TPL_IF PRODUCT_UNACTIVE -->
-        <div  class="product-unactive text-center">
-            <span>
-                {
-                    "ru":"В прокате",
-                    "ua":"У прокаті"
-                }
-            </span>
         </div>
-        <!-- TPL_ELSE -->
-        <div  class="product-unactive text-center hide">
-            <span>
-                {
-                    "ru":"В прокате",
-                    "ua":"У прокаті"
-                }
-            </span>
-        </div>
-        <div id="form">
-            <form method="post" action="/orders/zakaz/" id="order">
-                <input type="hidden" name="product_id" value="{PRODUCT_ID}">
-                <input type="text" class="findText1" name="user_name" placeholder='{ "ru":"Ваше имя", "ua":"Ваше ім`я" }'><br><br>
-                <input type="text" class="findText1" id="mobile_phone" name="user_phone" placeholder='{ "ru":"Ваш номер телефона", "ua":"Ваш номер телефону" }'><br><br>
-                <input type="submit" id="findButton1" class="findButton1" value='{ "ru":"Заказать", "ua":"Замовити" }'>
-            </form>
-        </div>
-        <!-- TPL_END -->
-
     </div>
+    <br>
+    <div id="note" class="note" style="display: none"></div>
 </div>
 
 <div style="clear:both"></div>
@@ -126,7 +129,7 @@
                     setTimeout(function () {
                         if (data.status === 1) {
                             $('#alert').removeClass().addClass('alert-success');
-                            $('#form').addClass('hide');
+                            $('#form-order').addClass('hide');
                             $('#prokat').removeClass('hide');
                             $('.product-unactive').show();
 

@@ -126,10 +126,15 @@ class Order extends Model
                                                WHERE id = {$id}";
         }
 
-        //var_dump($sql);die;
-        $this->db->query($sql);
-        if (!$id) {
-            $id = $this->db->getLastInsertId();
+        $result = $this->db->query($sql);
+        if ($result) {
+            if (!$id) {
+                $id = $this->db->getLastInsertId();
+            }
+            if (isset($status) && $status === 4) {
+                $modelProduct = new Product();
+                $modelProduct->setActiveProduct($product_id);
+            }
         }
 
         return $id;
